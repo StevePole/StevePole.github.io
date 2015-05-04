@@ -6931,9 +6931,6 @@ footer {
 .form-control-feedback {
   font-size: 16px;
 }
-.has-feedback label ~ .form-control-feedback {
-  top: 30px;
-}
 .input-sm .form-control-feedback,
 .input-group-sm .form-control-feedback,
 .form-group-sm .form-control-feedback {
