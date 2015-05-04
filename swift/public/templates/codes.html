@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <h2 class="text-center">Validate Swift code</h2>
+            <p class="text-center">
+                <small>
+                    Enter your swift code to discover which bank it belongs to
+                </small>
+            </p>
+
+            <div class="row">
+                <form class="col-sm-8 col-sm-offset-2"
+                    ng-submit="vm.search()">
+                    <div class="form-group form-group-lg has-feedback"
+                        ng-class="{'has-success': vm.status === 1}">
+                        <label class="control-label sr-only" for="swift-code">
+                            Swift code
+                        </label>
+                        <input type="text"
+                            id="swift-code"
+                            class="form-control"
+                            placeholder="Enter Swift code"
+                            ng-model="vm.code">
+                        <span class="glyphicon glyphicon-ok-sign form-control-feedback"
+                            ng-if="vm.status === 1"></span>
+
+                        <span class="glyphicon glyphicon-ok-sign form-control-feedback"
+                            ng-if="vm.status === 2"></span>
+                    </div>
+
+                    <input type="submit" value="Check Code"
+                        class="btn btn-primary btn-lg btn-block">
+                </form>
+            </div>
+            <br />
+            <div class="row">
+                <div ng-class="{
+                    'col-sm-4 col-sm-offset-4': vm.banks.length === 1,
+                    'col-sm-6': vm.banks.length === 2,
+                    'col-sm-4': vm.banks.length > 2}"
+                    ng-repeat="bank in vm.banks">
+                    <bank-address address="branch"
+                        ng-repeat="branch in bank.branches"></bank-address>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <h2 class="text-center">Browse by Country</h2>
+
+            <div class="alphabet well well-sm">
+                <a class="letter" href="#/directory/a">A</a>
+                <a class="letter" href="#/directory/b">B</a>
+                <a class="letter" href="#/directory/c">C</a>
+                <a class="letter" href="#/directory/d">D</a>
+                <a class="letter" href="#/directory/e">E</a>
+                <a class="letter" href="#/directory/f">F</a>
+                <a class="letter" href="#/directory/g">G</a>
+                <a class="letter" href="#/directory/h">H</a>
+                <a class="letter" href="#/directory/i">I</a>
+                <a class="letter" href="#/directory/j">J</a>
+                <a class="letter" href="#/directory/k">K</a>
+                <a class="letter" href="#/directory/l">L</a>
+                <a class="letter" href="#/directory/m">M</a>
+                <a class="letter" href="#/directory/n">N</a>
+                <a class="letter" href="#/directory/o">O</a>
+                <a class="letter" href="#/directory/p">P</a>
+                <a class="letter" href="#/directory/q">Q</a>
+                <a class="letter" href="#/directory/r">R</a>
+                <a class="letter" href="#/directory/s">S</a>
+                <a class="letter" href="#/directory/t">T</a>
+                <a class="letter" href="#/directory/u">U</a>
+                <a class="letter" href="#/directory/v">V</a>
+                <a class="letter" href="#/directory/w">W</a>
+                <a class="letter" href="#/directory/x">X</a>
+                <a class="letter" href="#/directory/y">Y</a>
+                <a class="letter" href="#/directory/z">Z</a>
+            </div>
+
+            <hr />
+            <span class="hr-caption">{{vm.search}}</span>
+
+            <div class="row" ng-if="vm.countries.length > 0">
+                <div class="text-center"
+                    ng-class="{
+                        'col-sm-4 col-sm-offset-4': vm.countries.length === 1,
+                        'col-sm-6': vm.countries.length === 2,
+                        'col-sm-4': vm.countries.length === 3,
+                        'col-sm-3': vm.countries.length > 3}"
+                    ng-repeat="country in vm.countries | orderBy:'id'">
+                    Flag
+                    <h4>
+                        <a href="#/countries/{{country.id}}">
+                            {{country.name}}
+                        </a>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="row text-center" ng-if="vm.countries.length === 0">
+                <p>No countries found</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+
+        <h2 class="text-center">{{vm.bank.name}}</h2>
+
+        <br />
+
+        <div class="row">
+            <div ng-class="{
+                'col-sm-4 col-sm-offset-4': vm.bank.branches.length === 1,
+                'col-sm-6': vm.bank.branches.length === 2,
+                'col-sm-4': vm.bank.branches.length > 2}"
+                ng-repeat="branch in vm.bank.branches">
+                <bank-address address="branch"></bank-address>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Branch name</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Address</th>
+                        <th>BIC/Swift Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="branch in vm.bank.branches">
+                        <th>{{branch.name}}</th>
+                        <td>{{branch.country}}</td>
+                        <td>{{branch.city}}</td>
+                        <td>{{branch.address1}}, {{branch.address2}}</td>
+                        <td><a href="#/banks/{{branch.swift}}">{{branch.swift}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>

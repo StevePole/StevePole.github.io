@@ -1,0 +1,72 @@
+[{
+    "id": "natwest",
+    "name": "Natwest",
+    "branches": [
+        {
+            "name": "Natwest Islington",
+            "address1": "192 Upper Street",
+            "address2": "Islington",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "NAGBNAT345"
+        },
+        {
+            "name": "Natwest Shoreditch",
+            "address1": "74 Shoreditch High Street",
+            "address2": "Shoreditch",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "NAGBNAT347"
+        },
+        {
+            "name": "Natwest Bishopsgate",
+            "address1": "123 Bishopsgate",
+            "address2": "City of London",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "NAGBNAT348"
+        },
+        {
+            "name": "Natwest Camden",
+            "address1": "65 Camden High Street",
+            "address2": "Camden",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "NAGBNAT631"
+        }
+    ]
+},{
+    "id": "barclays",
+    "name": "Barclays",
+    "branches": [
+        {
+            "name": "Barclays Angel",
+            "address1": "10 Upper Street",
+            "address2": "Islington",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "BAGBBAC836"
+        }
+    ]
+},{
+    "id": "hsbc",
+    "name": "HSBC",
+    "branches": [
+        {
+            "name": "HSBC Angel",
+            "address1": "17 Upper Street",
+            "address2": "Islington",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "HSGBHSB124"
+        },
+        {
+            "name": "HSBC Bishopsgate",
+            "address1": "187 Bishopsgate",
+            "address2": "City of London",
+            "city": "London",
+            "country": "United Kingdom",
+            "swift": "HSGBHSB139"
+        }
+    ]
+}]

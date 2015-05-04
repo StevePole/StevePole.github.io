@@ -1,0 +1,124 @@
+@brand-info: #01A4DF;
+@gray-light: #819DA9;
+@font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+.home {
+    .circle-badge {
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 40px;
+
+        p {
+            color: #FFF;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+            color: @brand-info;
+        }
+
+        .circle {
+            border: 1px solid @brand-info;
+            color: @brand-info;
+            height: 100px;
+            width: 100px;
+            font-size: 30px;
+        }
+    }
+
+    .circle-outer {
+        display: inline-block;
+    }
+
+    .circle {
+        border-radius: 50%;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        margin-bottom: 10px;
+
+        border: 1px solid @gray-light;
+        color: @gray-light;
+        height: 35px;
+        width: 35px;
+        font-size: 20px;
+
+        &:hover {
+            background-color: #FFF;
+            border-color: #FFF;
+        }
+
+        .glyphicon {
+            top: 5px;
+            left: 0px;
+        }
+    }
+
+    .swift-components {
+        font-size: 12px;
+        margin-bottom: 20px;
+
+        .circle {
+            float: left;
+            margin-right: 10px;
+            padding-top: 8.5px;
+            font-size: 12px;
+            padding-left: 1px;
+        }
+
+        .swift-description {
+            margin: 10px 0;
+            cursor: pointer;
+
+            &.active {
+                strong {
+                    color: @brand-info;
+                }
+                .circle {
+                    border-color: @brand-info;
+                    background-color: @brand-info;
+                    color: #FFF;
+                }
+            }
+        }
+    }
+    .swift-card {
+        font-family: @font-family-monospace;
+        padding: 100px 15px 15px;
+
+
+        .swift-number {
+            font-size: 22px;
+
+            a {
+                color: #FFF;
+
+                &:hover,
+                &:active,
+                &:focus {
+                    text-decoration: none;
+                }
+            }
+
+            .active {
+                color: @brand-info;
+            }
+        }
+
+    }
+
+    > .bg-primary {
+        margin-top: -21px;
+    }
+
+    .thumbnail {
+        margin-top: 25px;
+    }
+
+    .faqs {
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+}
