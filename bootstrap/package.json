@@ -1,0 +1,28 @@
+{
+  "name": "tw-bootstrap",
+  "version": "0.0.1",
+  "description": "TransferWise Bootstrap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "Swift",
+    "BIC"
+  ],
+  "author": "Steve Pole <steve.pole@transferwise.com>",
+  "license": "",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

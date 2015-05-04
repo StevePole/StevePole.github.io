@@ -1,0 +1,8 @@
+{
+  "name": "tw-bootstrap",
+  "version": "0.0.1",
+  "componentsDirectory": "bower/",
+  "directory" : "bower",
+  "dependencies": {},
+  "private": true
+}
