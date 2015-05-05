@@ -34,17 +34,42 @@
                 <span class="sr-only" ng-if="vm.active === 'banks'">(current)</span>
             </a>
         </li>
+        <li ng-class="{'active': vm.active === 'banks'}">
+            <a href="#/banks">
+                Codes
+                <span class="sr-only" ng-if="vm.active === 'codes'">(current)</span>
+            </a>
+        </li>
         <li><a href="">{{vm.active}}</a></li>
       </ul>
-      -->
+       -->
       <form class="navbar-form navbar-right">
         <a href="" class="btn btn-primary">Send Money</a>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Transfers</a></li>
-        <li><a href="#">Recipients</a></li>
-        <li><a href="#">Invite</a></li>
+        <li ng-class="{'active': vm.active === 'countries'}">
+            <a href="#/directory">
+                Countries
+                <span class="sr-only" ng-if="vm.active === 'countries'">(current)</span>
+            </a>
+        </li>
+        <li ng-class="{'active': vm.active === 'banks'}">
+            <a href="#/banks">
+                Banks
+                <span class="sr-only" ng-if="vm.active === 'banks'">(current)</span>
+            </a>
+        </li>
+        <li ng-class="{'active': vm.active === 'banks'}">
+            <a href="#/swift-codes">
+                Codes
+                <span class="sr-only" ng-if="vm.active === 'codes'">(current)</span>
+            </a>
+        </li>
 
+           <!--
+          <li><a href="#">Transfers</a></li>
+          <li><a href="#">Recipients</a></li>
+          <li><a href="#">Invite</a></li>
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             Steve <span class="caret"></span>
@@ -57,6 +82,7 @@
             <li><a href="#">Separated link</a></li>
         </ul>
         </li>
+        -->
       </ul>
     </div><!-- /.navbar-collapse -->
   </div>

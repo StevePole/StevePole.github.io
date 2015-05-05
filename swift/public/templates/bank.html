@@ -33,7 +33,12 @@
                         <td>{{branch.country}}</td>
                         <td>{{branch.city}}</td>
                         <td>{{branch.address1}}, {{branch.address2}}</td>
-                        <td><a href="#/banks/{{branch.swift}}">{{branch.swift}}</a></td>
+                        <td>
+                            <a href="#/banks/{{branch.swift}}"
+                                class="">
+                                {{branch.swift}}
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
