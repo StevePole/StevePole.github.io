@@ -121,6 +121,10 @@
 .bank-address address {
   margin-bottom: 0;
 }
+.bank-address h6 {
+  margin-top: 1px;
+  margin-bottom: 3px;
+}
 
 /* Generic styles not specific to one component */
 div[ng-view].ng-enter {
