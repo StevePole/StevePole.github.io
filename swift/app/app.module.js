@@ -16,6 +16,7 @@
     ]);
 })(window.angular);
 
+
 (function(angular) {
     'use strict';
 
@@ -24,7 +25,9 @@
         .module('swift-app')
         .config(config);
 
-    function config($routeProvider) {
+    function config($routeProvider, $locationProvider) {
+        //$locationProvider.html5Mode(true);
+
         $routeProvider
             .when('/home', {
                 templateUrl: 'templates/home.html',

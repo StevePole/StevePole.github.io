@@ -5,21 +5,26 @@
             <h2 class="text-center">Search by Bank Name</h2>
             <h3 class="text-center">
                 <small>
-                Search the name of the bank you're looking for
+                    Search the name of the bank you're looking for
                 </small>
             </h3>
             <br />
             <div class="row">
                 <form class="col-sm-8 col-sm-offset-2"
+                    name="bankForm"
                     ng-submit="vm.search()">
                     <div class="form-group form-group-lg">
-                        <label class="control-label sr-only" for="">Hidden label</label>
+                        <label class="control-label sr-only" for="">
+                            Hidden label
+                        </label>
                         <div class="input-group">
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" required
+                                name="query"
                                 placeholder="Enter bank name"
                                 ng-model="vm.query" />
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
+                                <button class="btn btn-default" type="button"
+                                    ng-disabled="bankForm.query.$error.required">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </span>
@@ -29,6 +34,11 @@
             </div>
 
             <br />
+
+            <p class="text-danger text-center" ng-if="vm.status === 2">
+                Sorry, no banks with that name were found
+            </p>
+
             <div class="row">
                 <div ng-class="{
                     'col-sm-4 col-sm-offset-4': vm.banks.length === 1,

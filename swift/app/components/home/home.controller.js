@@ -15,7 +15,7 @@
         function init() {
             $rootScope.active = "Home";
 
-            vm.section = "a";
+            vm.section = "home";
         }
 
         init();

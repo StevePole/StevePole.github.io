@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    
+
     angular
         .module('swift-app.mocks')
         .service('CountriesServiceMock', CountriesServiceMock);
@@ -12,15 +12,15 @@
         self.get = get;
         self.list = list;
         self.save = save;
-        
+
         var data = [{
-            id: 1,
-            name: "Mock!"
+            id: "united-kingdom",
+            name: "United Kingdom"
         },{
             id: 2,
             name: "Another mock?"
         }];
-        
+
         function get(id) {
             var deferred = $q.defer();
             deferred.resolve(data[0]);

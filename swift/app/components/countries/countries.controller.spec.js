@@ -1,4 +1,4 @@
-describe('Controller: CountryController', function() {
+describe('Controller: CountriesController', function() {
     var controller, $rootScope, CountriesService;
 
     beforeEach(function() {
@@ -40,8 +40,8 @@ describe('Controller: CountryController', function() {
             expect(controller.countries.length).toBe(2);
 
             var resource = controller.countries[0];
-            expect(resource.id).toBe(1);
-            expect(resource.name).toBe("Mock!");
+            expect(resource.id).toBe("united-kingdom");
+            expect(resource.name).toBe("United Kingdom");
 
             resource = controller.countries[1];
             expect(resource.id).toBe(2);

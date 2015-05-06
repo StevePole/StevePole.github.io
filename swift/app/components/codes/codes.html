@@ -4,31 +4,43 @@
 
             <h2 class="text-center">Validate Swift code</h2>
             <h3 class="text-center">
-                <small>Enter your swift code to discover the bank to which it belongs</small>
+                <small>
+                    Enter your swift code to discover the bank to which it belongs
+                </small>
             </h3>
 
             <div class="row">
                 <form class="col-sm-8 col-sm-offset-2"
+                    name="codeForm"
                     ng-submit="vm.search()">
                     <div class="form-group form-group-lg has-feedback"
-                        ng-class="{'has-success': vm.status === 1}">
+                        ng-class="{
+                            'has-success': vm.status === 1,
+                            'has-error': vm.status === 2
+                        }">
                         <label class="control-label sr-only" for="swift-code">
                             Swift code
                         </label>
-                        <input type="text"
+                        <input type="text" name="code" required
                             id="swift-code"
                             class="form-control"
-                            placeholder="Enter Swift code"
-                            ng-model="vm.code">
+                            placeholder="Enter Swift code!"
+                            ng-model="vm.code"
+                            ng-change="vm.clear()">
+
                         <span class="glyphicon glyphicon-ok-sign form-control-feedback"
                             ng-if="vm.status === 1"></span>
-
                         <span class="glyphicon glyphicon-ok-sign form-control-feedback"
                             ng-if="vm.status === 2"></span>
                     </div>
 
+                    <p class="text-danger text-center" ng-if="vm.status === 2">
+                        The code you have provided is incorrect
+                    </p>
+
                     <input type="submit" value="Check Code"
-                        class="btn btn-primary btn-lg btn-block">
+                        class="btn btn-primary btn-lg btn-block"
+                        ng-disabled="codeForm.code.$error.required">
                 </form>
             </div>
             <br />

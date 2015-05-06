@@ -7,6 +7,10 @@
   min-width: 8px;
   width: 3.3%;
   text-align: center;
+  line-height: 36px;
+}
+.alphabet .letter.active {
+  font-weight: bold;
 }
 
 .country .loading {
@@ -59,7 +63,6 @@
   left: 0px;
 }
 .home .swift-components {
-  font-size: 12px;
   margin-bottom: 20px;
 }
 .home .swift-components .circle {
@@ -70,7 +73,7 @@
   padding-left: 1px;
 }
 .home .swift-components .swift-description {
-  margin: 10px 0;
+  margin: 15px 0;
   cursor: pointer;
 }
 .home .swift-components .swift-description.active strong {
@@ -83,7 +86,7 @@
 }
 .home .swift-card {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  padding: 100px 15px 15px;
+  padding: 120px 15px 15px;
 }
 .home .swift-card .swift-number {
   font-size: 22px;
@@ -103,11 +106,18 @@
   margin-top: -21px;
 }
 .home .thumbnail {
-  margin-top: 25px;
+  margin-top: 35px;
 }
 .home .faqs {
   padding-top: 10px;
   padding-bottom: 20px;
+}
+.home .flag-info {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
 }
 
 .bank-address .panel-body {
@@ -124,6 +134,10 @@
 .bank-address h6 {
   margin-top: 1px;
   margin-bottom: 3px;
+}
+.bank-address .bank-address-link {
+  display: block;
+  margin-top: 5px;
 }
 
 /* Generic styles not specific to one component */
@@ -183,7 +197,7 @@ footer {
   width: 100%;
 }
 footer .btn {
-  margin-top: -14px;
+  margin-top: 5px;
 }
 .navbar-brand .flag {
   width: 20px;

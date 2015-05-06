@@ -14,6 +14,7 @@
         vm.init = init;
         vm.country = {};
         vm.countries = [];
+        vm.banks = [];
         vm.single = true;
 
         function init() {
@@ -25,7 +26,6 @@
                     vm.country = country;
                     return country;
                 });
-
 
             CountriesService.list()
                 .then(function(countries) {

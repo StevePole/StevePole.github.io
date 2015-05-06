@@ -11,6 +11,7 @@
         var vm = this;
         vm.init = init;
         vm.search = search;
+        vm.clear = clear;
         vm.banks = [];
 
         vm.status = 0;  // 0 = Not checked, 1 = Valid, 2 = Invalid
@@ -24,10 +25,19 @@
         function search() {
             BanksService.getByCode(vm.code)
                 .then(function(banks) {
-                    vm.banks = banks;
-                    vm.status = 1;
+                    if (banks.length) {
+                        vm.banks = banks;
+                        vm.status = 1;
+                    } else {
+                        vm.status = 2;
+                    }
                     return banks;
                 });
+        }
+
+        function clear() {
+            vm.status = 0;
+            vm.banks = [];
         }
 
         init();

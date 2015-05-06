@@ -6903,6 +6903,9 @@ footer {
 .btn-default .glyphicon {
   color: #01a4df;
 }
+.btn-default[disabled] .glyphicon {
+  color: #819da9;
+}
 .btn-default:hover,
 .btn-default:focus {
   background-color: #e2e6e8;

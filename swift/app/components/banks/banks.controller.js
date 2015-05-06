@@ -11,10 +11,11 @@
         var vm = this;
         vm.init = init;
         vm.search = search;
+        vm.clear = clear;
         vm.banks = [];
 
+        vm.status = 0;  // 0 = Not checked, 1 = Valid, 2 = Invalid
         vm.query = "";
-
 
         function init() {
             $rootScope.active = "Banks";
@@ -23,9 +24,19 @@
         function search() {
             BanksService.getByCode(vm.query)
                 .then(function(banks) {
-                    vm.banks = banks;
+                    if (banks.length) {
+                        vm.banks = banks;
+                        vm.status = 1;
+                    } else {
+                        vm.status = 2;
+                    }
                     return banks;
                 });
+        }
+
+        function clear() {
+            vm.status = 0;
+            vm.banks = [];
         }
 
         init();
