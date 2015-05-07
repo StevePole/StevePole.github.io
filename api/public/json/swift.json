@@ -1,5 +1,5 @@
 {
-    "basePath": "https://swift-tool.herokuapp.com/",
+    "basePath": "https://swift-tool.herokuapp.com",
     "apiVersion": 1,
     "info": {
         "title": "Swift Check API",
