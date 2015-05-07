@@ -199,16 +199,3 @@ footer {
 footer .btn {
   margin-top: 5px;
 }
-.navbar-brand .flag {
-  width: 20px;
-  height: 18px;
-  position: absolute;
-  top: 15px;
-}
-.navbar-brand .logo-inverse {
-  margin-top: -26px;
-  margin-left: 19px;
-  margin-right: 5px;
-  height: 16px;
-  width: 120px;
-}
