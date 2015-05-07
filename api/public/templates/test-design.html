@@ -1,0 +1,302 @@
+
+<h2 class="page-header">
+    Test Suites
+    <small>{{vm.json.testSuites.length}} test
+        suite<span ng-if="vm.json.testSuites.length > 1">s</span> found
+    </small>
+</h2>
+<div>
+    <div class="table-responsive">
+        <table class="table form-inline">
+            <thead>
+                <tr>
+                    <th>Test Suite Name</th>
+                    <th>Test Calls</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!vm.json.testSuites.length">
+                    <td colspan="3">No tests suites found.</td>
+                </tr>
+                <tr ng-repeat="(idx, testSuite) in vm.json.testSuites">
+                    <td>{{vm.testSuite.name}}</td>
+                    <td>{{vm.testSuite.tests.length}}</td>
+                    <td>
+                        <a href="" ng-click="vm.editTestSuite(testSuite, idx);">
+                            edit
+                        </a>
+                        -
+                        <a href="../js/jasmine/ApiTestRunner.html?catch=false&amp;ls={{json.basePath}}&amp;testSuite={{idx}}"
+                            target="_blank">
+                            run
+                        </a>
+                        -
+                        <a href="" ng-click="vm.remove(json.testSuites, idx);">
+                            remove
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default" ng-click="vm.addTestSuite()">
+        <i class="glyphicon glyphicon-plus"></i> Add Test Suite
+    </button>
+</div>
+
+<h2 class="page-header">Edit Test Suite <small>{{vm.testSuite.name}}</small></h2>
+<div class="row">
+    <div class="col-md-6">
+        <p>Add tests by selecting the end point, the method, and the
+            expected HTTP response code (which dictates the response model).</p>
+        <p>Enter the desired parameters to accompany the request,
+            parameters will be sent as header/path/query depending on how
+            they were specified.</p>
+        <p>For PUTs and POSTs you can specify a model to send in the body
+            of the request. Tick the box next to a key to include it
+            in the request. Specify the value to send in the input box.</p>
+        <p>Arrays of simple types can be supplied by comma separating the
+            relevant values.</p>
+        <p>Arrays of complex types are not currently possible, a single
+            entry will be sent as specified by your supplied values.</p>
+    </div>
+    <div class="col-md-6">
+        <p>All values that appear in the response will be checked to see
+            if they are documented and to see if the returned value is of
+            the correct type.</p>
+        <p>If you enter a number for the maximum array iterations, it
+            will only check the first X entries in any arrays it finds.</p>
+        <p>If you wish to check that a specific key appears in the
+            response, check the tick box next to that key, this will
+            create an assertion that the key exists, and it will check
+            the type conforms to the specification.</p>
+        <p>To check for a specific value in the response enter/choose a
+            value for the key, an additional assertion will be created
+            to check the returned value matches.</p>
+        <p>If your response is an array, and you choose a specific value,
+            it will check that the first entry in the array matches the
+            supplied value.</p>
+
+        <a class="btn btn-default" data-toggle="modal" href="#new-test-modal"
+            ng-click="vm.addTest()">
+            <i class="glyphicon glyphicon-plus"></i> Add Test
+        </a>
+    </div>
+</div>
+<h3 class="page-header">Test Details</h3>
+<div class="row form-horizontal">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                Suite name
+            </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                    ng-model="vm.testSuite.name" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                Max array iterations
+            </label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control"
+                    ng-model="vm.testSuite.iterationLimit" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<p ng-if="!vm.testSuite.tests.length">No tests found.</p>
+
+<div ng-repeat="(idx, test) in vm.testSuite.tests" ng-cloak>
+    <h4>
+        <a ng-class="{rotate: test.visible}" ng-click="test.visible = !test.visible" class="api-toggle" href="">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            {{test.method}} {{test.path}}
+        </a>
+        <span class="pull-right">
+            <a ng-click="up(vm.testSuite.tests, idx)" href=""
+                ng-if="idx > 0">
+                <i class="glyphicon glyphicon-arrow-up"></i>
+            </a>
+            <a data-toggle="modal" href="#new-test-modal"
+               ng-click="vm.editTest(test, idx)">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </a>
+            <a ng-click="vm.remove(vm.testSuite.tests, idx)" class="api-delete" href="">
+                <i class="glyphicon glyphicon-remove"></i>
+            </a>
+        </span>
+    </h4>
+
+    <div class="row form-horizontal" ng-if="test.visible">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label" title="Use the ID from the previous response as the value for a parameter.">
+                    Pass ID into
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control"
+                        ng-options="parameter.name as parameter.name for (idx, parameter) in test.operation.parameters"
+                        ng-model="test.idTarget"
+                        ng-disabled="$first">
+                        <option value="">-- Do not pass ID --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Skip test?
+                </label>
+                <div class="col-sm-8 checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="test.skip" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-horizontal" ng-if="test.visible">
+        <div class="col-md-6">
+            <h3>Request Parameters</h3>
+            <div class="form-group param"
+                ng-repeat="parameter in test.operation.parameters"
+                ng-if="parameter.paramType !== 'body'" ng-cloak>
+                <label class="col-sm-4 control-label">
+                    {{parameter.name}}
+                </label>
+                <div class="col-sm-8">
+                    <input type="number" step="1" class="form-control param-val"
+                        placeholder="{{parameter.format}}"
+                        name="{{parameter.name}}"
+                        ng-if="parameter.type === 'integer' && !parameter.enum"
+                        ng-required="parameter.required"
+                        ng-pattern="vm.validators.numeric"
+                        ng-model="parameter.example"
+                        ng-disabled="parameter.name == test.idTarget" />
+
+                    <input type="text" class="form-control param-val"
+                        placeholder="{{parameter.format}}"
+                        name="{{parameter.name}}"
+                        ng-if="parameter.type === 'string' && !parameter.enum"
+                        ng-required="parameter.required"
+                        ng-model="parameter.example"
+                        ng-disabled="parameter.name == test.idTarget" />
+
+                    <select name="{{parameter.name}}" class="form-control"
+                        ng-if="parameter.enum"
+                        ng-options="enum as enum for (idx, enum) in parameter.enum"
+                        placeholder="Select {{parameter.name}}"
+                        ng-model="parameter.example"
+                        ng-disabled="parameter.name === test.idTarget">
+                    </select>
+                    <!--<span ng-if="parameter.displayType == 'object'" ng-init="property=parameter">
+                        <pre>{{property | json}}</pre>
+                    </span>-->
+                    <span
+                        ng-include="templates.model"
+                        ng-if="parameter.model"
+                        ng-init="property=parameter"></span>
+                </div>
+            </div>
+            <div ng-if="test.operation.hasBody">
+                <h3>Request Body</h3>
+
+                <div class="well">
+                    <span ng-include="templates.model"
+                        ng-if="test.operation"
+                        ng-init="property=test.operation; property.model=test.operation.request.model"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Response Expectations</h3>
+            <div class="well">
+                <span ng-include="templates.model"
+                    ng-if="test.operation.response"
+                    ng-init="property=test.operation.response"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--*******************************************************************
+***************************** Test Modal *****************************
+********************************************************************-->
+<div class="modal fade" id="new-test-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Test</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Path</label>
+                    <div class="col-sm-8">
+                        <select class="form-control"
+                            ng-options="path as path for (path, apiIter) in vm.json.apis"
+                            ng-model="vm.test.path" ng-required
+                            ng-change="vm.changePath()"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Method</label>
+                    <div class="col-sm-8">
+                        <select class="form-control"
+                            ng-options="method as method for (method, operation) in vm.api.operations"
+                            ng-model="vm.test.method"
+                            ng-required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Response code</label>
+                    <div class="col-sm-8">
+                        <select class="form-control"
+                            ng-options="responseMessage.code as responseMessage.code + ' ' + responseMessage.summary for responseMessage in vm.responseMessages"
+                            ng-model="vm.test.responseCode"
+                            ng-required></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-default" data-dismiss="modal"
+                    ng-click="vm.cancelTestUpdate()">Cancel</a>
+                <a id="save-model-button" href="" class="btn btn-primary"
+                    data-dismiss="modal" ng-click="vm.saveTestUpdate()">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-toolbar">
+    <a class="btn btn-default" data-toggle="modal" href="#new-test-modal"
+        ng-click="addTest()">
+        <i class="glyphicon glyphicon-plus"></i>
+        Add Test
+    </a>
+    <button ng-click="vm.saveTests()" class="btn btn-primary">
+        Save JSON
+    </button>
+    <a href="../js/jasmine/ApiTestRunner.html?catch=true&amp;ls={{json.basePath}}"
+        class="btn btn-default">
+        Run Tests
+    </a>
+</div>
+
+<h3>JSON spec</h3>
+<textarea id="api_spec" class="form-control sevenHigh"></textarea>
+
+<div id="errors" class="alert alert-danger" ng-show="vm.errors.length" ng-cloak>
+    <p ng-repeat="error in vm.errors">{{error}}</p>
+</div>
+<div id="success" class="alert alert-success" style="display: none;">
+    JSON validates successfully!
+</div>

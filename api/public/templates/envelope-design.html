@@ -1,0 +1,93 @@
+<h3 class="page-header">Standard Response Envelope</h3>
+<div class="row">
+    <div class="col-md-6">
+        <p>The standard response envelope allows you to nest your main
+            response content within an envelope, and to provide additional
+            meta data alongside your responses.</p>
+
+        <p>Recommended uses for this include standard error keys and
+            formats, and links and meta data relating to pages of data.</p>
+    </div>
+    <div class="col-md-6">
+        <p>If you prefer not to use an envelope deselect the "Use Envelope?"
+            option in your API responses.  If none of your methods use the
+            envelope this section will not be displayed in the docs.</p>
+
+        <p>Envelope properties may not be present in all API methods,
+            you can mark specific properties as only available in paged
+            responses.</p>
+    </div>
+</div>
+<div id="envelope-section" class="table-responsive">
+    <table class="table  form-inline" ng-cloak>
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Paged Only?</th>
+                <!--<th>Main Response?</th>-->
+            </tr>
+        </thead>
+        <tbody id="envelope">
+        <tr class="model-property"
+            ng-repeat="(idx, property) in vm.model.properties">
+            <td><a href="" class="close existing-property-remove"
+                   ng-click="vm.remove(vm.model.properties, idx)"
+                   ng-if="!property.main">&times;</a>
+                <span ng-if="property.main">&nbsp;&nbsp;&nbsp;</span>
+            </td>
+            <td>
+                <input type="text" class="property-name form-control col-md-2"
+                    ng-model="property.name"
+                    ng-pattern="validators.camelCaseNumericUnderscore"
+                    placeholder="Property name"
+                    required />
+            </td>
+            <td>
+                <input type="text" class="form-control property-description col-md-4"
+                    ng-model="property.description"
+                    placeholder="Description of the property"
+                    required />
+            </td>
+            <td>
+                <select class="form-control col-md-2"
+                    ng-model="property.displayType"
+                    ng-options="shortName for shortName in vm.displayTypes"
+                    ng-disabled="property.main"
+                    ng-if="!property.main">
+                </select>
+                <select class="form-control col-md-2"
+                    disabled="disabled"
+                    ng-if="property.main">
+                    <option>automatic</option>
+                </select>
+            </td>
+            <td class="input-fixed-md">
+                <input type="text" class="form-control"
+                    ng-model="property.enum" ng-list
+                    ng-show="property.displayType == 'enum'"
+                    ng-if="!property.main"
+                    placeholder="Comma separate values" />
+                <select class="form-control models"
+                    ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                    ng-disabled="property.displayType != 'object' || property.main"
+                    ng-hide="property.displayType == 'enum'"
+                    ng-model="property.displayModel"
+                    ng-if="!property.main">
+                </select>
+            </td>
+            <td>
+                <input type="checkbox" ng-model="property.pagedOnly"
+                    ng-if="!property.main"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<button id="envelope-add" class="btn btn-default"
+    ng-click="vm.addEnvelopeProperty()">
+    <i class="glyphicon glyphicon-plus"></i> Add Property
+</button>

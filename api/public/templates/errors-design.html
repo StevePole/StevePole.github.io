@@ -1,0 +1,147 @@
+<h3 class="page-header">Error Model</h3>
+<div class="row">
+    <div class="col-md-6">
+        <p>This section allows you to define the structure of your error model.
+            You may use the error model in your response envelope, or as an
+            alternative response type for non 200 HTTP responses.</p>
+
+        <p>Specifying the purpose of error model properties will allow the SDKs
+            to behave more appropriately in the case of errors.</p>
+    </div>
+    <div class="col-md-6">
+        <p>It's strongly recommended to include the HTTP code within your error
+            model, in the case of JSONP this allows the client to parse the
+            response and handle the error.</p>
+    </div>
+</div>
+<div id="errors-section"
+    ng-repeat="(modelName, model) in vm.models"
+    ng-if="model.isError">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Model name</label>
+            <div class="col-sm-8">
+                <div class="input-button-append">
+                    <input type="text"
+                        class="form-control"
+                        ng-model="model.name"
+                        disabled="disabled" />
+                    <a class="btn btn-default"
+                        ng-click="vm.editModel(model, modelName)"
+                        href="#new-model-modal"
+                        data-toggle="modal">
+                        Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="properties table-responsive">
+        <table class="table form-inline">
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th>Property Name</th>
+                <th>Description</th>
+                <th title="Basic type of the property">Type</th>
+                <th>Model / Enum / Example</th>
+                <th title="Property is an array?">Array?</th>
+                <th title="Property is a dictionary">Dict?</th>
+                <th>Purpose</th>
+                <!--
+                <th title="Is this the name of the error?">Name?</th>
+                <th title="Is this the message for the error?">Message?</th>
+                -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="no-parameters">
+                <td colspan="8">No properties</td>
+            </tr>
+            <tr class="model-property"
+                ng-repeat="(propertyName, property) in model.properties">
+                <td>
+                    <a href="" class="close remove-row"
+                       ng-click="vm.remove(model.properties, propertyName)"
+                       ng-if="!property.isId">&times;</a>
+                </td>
+                <td class="input-fixed-md">
+                    <input type="text"
+                        class="form-control property-name"
+                        ng-model="property.name"
+                        ng-pattern="vm.validators.camelCaseNumericUnderscore"
+                        placeholder="Property name"
+                        required />
+                </td>
+                <td class="">
+                    <input type="text"
+                        class="form-control property-description"
+                        ng-model="property.description"
+                        placeholder="Description of the property"
+                        required />
+                </td>
+                <td class="input-fixed-md">
+                    <select class="form-control"
+                        ng-model="property.displayType"
+                        ng-options="shortName for shortName in vm.displayTypes">
+                    </select>
+                </td>
+                <td class="input-fixed-md">
+                    <input type="text" class="form-control"
+                        placeholder="Comma separate values"
+                        ng-show="property.displayType == 'enum'"
+                        ng-model="property.enum"
+                        ng-list />
+
+                    <select class="form-control models"
+                        ng-model="property.displayModel"
+                        ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                        ng-disabled="property.displayType != 'object'"
+                        ng-show="property.displayType == 'object'">
+                    </select>
+
+                    <input type="text" class="form-control"
+                        placeholder="Example response"
+                        ng-show="property.displayType != 'enum' && property.displayType != 'object'"
+                        ng-model="property.example"
+                        ng-disabled="property.displayType == 'void'" />
+                </td>
+                <td>
+                    <input type="checkbox" class="property-array"
+                        ng-model="property.isArray"
+                        ng-disabled="property.isDictionary" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.isDictionary"
+                        ng-disabled="property.isArray" />
+                </td>
+                <td class="input-fixed-md">
+                    <select class="form-control"
+                        ng-model="property.purpose">
+                        <option value="code">HTTP code</option>
+                        <option value="name">Error name</option>
+                        <option value="message">Error message</option>
+                        <!--<option value="appCode">App error code</option>-->
+                        <option value="">Other</option>
+                    </select>
+                </td>
+
+                <!--
+                <td>
+                    <input type="radio" name="propertyIsName"
+                        ng-model="property.isName" />
+                </td>
+                <td>
+                    <input type="radio" name="propertyIsMessage"
+                        ng-model="property.isMessage" />
+                </td>
+                -->
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default" ng-click="vm.addProperty(model)">
+        <i class="glyphicon glyphicon-plus"></i> Add Property
+    </button>
+</div>

@@ -1,0 +1,119 @@
+<div id="meta-data">
+    <div id="api-meta-header" class="page-header">
+        <h2>API Meta Data</h2>
+    </div>
+    <div id="api-meta" class="row">
+        <div class="col-md-6 form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    API name
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control"
+                        ng-model="vm.info.title" required
+                        placeholder="Friendly name for the API" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    API base path
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control"
+                        ng-model="vm.json.basePath" required
+                        placeholder="The base path" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    API version
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control"
+                        ng-model="vm.version" required
+                        placeholder="Version number for the API" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Contact email
+                </label>
+                <div class="col-sm-8">
+                    <input type="email"
+                        class="form-control"
+                        ng-model="vm.info.contact"
+                        placeholder="A contact email address" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Terms URL
+                </label>
+                <div class="col-sm-8">
+                    <input type="url"
+                        class="form-control"
+                        ng-model="vm.info.termsOfServiceUrl"
+                        placeholder="Terms of service URL" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    License name
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control"
+                        ng-model="vm.info.license"
+                        placeholder="Name of the license" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    License URL
+                </label>
+                <div class="col-sm-8">
+                    <input type="url"
+                        class="form-control"
+                        ng-model="vm.info.licenseUrl"
+                        placeholder="URL of the license terms" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Description
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control"
+                        ng-model="vm.info.description"
+                        placeholder="Enter a short description"
+                        required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Notes
+                </label>
+                <div class="col-sm-8">
+                    <textarea class="form-control fiveHigh"
+                        ng-model="vm.info.notes"
+                        placeholder="Enter notes (markdown compatible)"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    API test path
+                </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control"
+                        ng-model="vm.json.testPath"
+                        placeholder="Alternative path for tests" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

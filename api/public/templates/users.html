@@ -1,0 +1,92 @@
+<div class="row table-responsive">
+    <div class="col-md-6">
+        <h3 class="page-header">Create User</h3>
+        <label class="col-sm-4 control-label">User Email</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control"
+                ng-model="user.username"
+                ng-disabled="loading">
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-default" ng-click="createUser()" ng-disabled="loading">
+                <i class="glyphicon glyphicon-plus"></i> Create
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3 class="page-header">Edit User Permissions</h3>
+        <label class="col-sm-4 control-label">User Email</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control"
+                ng-model="user.username"
+                    ng-disabled="loading">
+        </div>
+        <label class="col-sm-4 control-label">Permissions</label>
+        <div class="col-sm-8">
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="view" 
+                    ng-model="user.privileges.view"
+                    ng-disabled="loading">
+                View
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="view" 
+                    ng-model="user.privileges.create"
+                    ng-disabled="loading">
+                Create
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="edit" 
+                    ng-model="user.privileges.edit"
+                    ng-disabled="loading">
+                Edit
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="publish" 
+                    ng-model="user.privileges.publish"
+                    ng-disabled="loading">
+                Publish
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="delete" 
+                    ng-model="user.privileges.delete"
+                    ng-disabled="loading">
+                Delete
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="privileges[]" value="admin" 
+                    ng-model="user.privileges.admin"
+                    ng-disabled="loading">
+                Admin
+            </label>
+        </div>
+        <div class="form-actions">
+            
+            <!--<button class="btn btn-default" ng-click="viewUser()" ng-disabled="loading">
+                <i class="glyphicon glyphicon-ok"></i> Load User
+            </button>-->
+            <button class="btn btn-default" ng-click="editUserPrivileges()" ng-disabled="loading">
+                <i class="glyphicon glyphicon-pencil"></i> Save User
+            </button>
+            
+            <!--<i class="glyphicon glyphicon-ok icon-green" ng-if="success"></i>-->
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger" 
+    ng-repeat="error in errors track by $index">{{error}}</div>
+
+<table class="table  form-inline" ng-if="users">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Permissions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users track by $index">
+            <td><a href="#" ng-click="loadUser(user)">{{user}}</a></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

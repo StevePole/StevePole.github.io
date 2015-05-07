@@ -1,0 +1,137 @@
+<div id="model-header" class="page-header">
+    <h2>Models</h2>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <p><strong>Use singular nouns for models</strong> -
+            <code>GET /albums</code> returns a list of <code>album</code> models.</p>
+
+        <p><strong>Avoid deep nesting in responses</strong> - Model properties
+            may reference other models to create more complex structures.
+            Attempt to keep nesting to a minimum to make it easier to work with
+            your API.</p>
+
+        <p><strong>Use the same model for <code>GET</code>, <code>POST</code>
+            and <code>PUT</code></strong> - Some parameters may be required
+            when creating but not allowed when editing, use the "POSTs?" and
+            "PUTs?" options to specify which methods a property is available in.</p>
+
+        <p><strong>Required POST properties are also required in PUTs</strong> -
+            PUTs replace the model so must contain all required properties.</p>
+
+        <p><strong>Properties are never required for PATCH</strong> - If the
+            property is required in POST it must already exist so is not required
+            in a partial update.</p>
+
+        <p>Some properties may be read-only and not used in <code>POST</code>,
+            <code>PUT</code> or <code>PATCH</code> but may appear in responses</p>
+    </div>
+    <div class="col-md-6">
+        <p><strong>Use Javascript naming conventions i.e. camelCase</strong> -
+            Default response format is JSON so Parameters and model properties
+            should use <code>camelCase</code> rather than underscores, do not
+            capitalise the first letter.</p>
+
+        <p><strong>Specify example values</strong> - your documentation and mock
+            APIs will be much more useful if you specify realistic examples for
+            properties.</p>
+
+        <p>Example values will also be used as defaults for test requests.
+            For enums the first value will be used as the example.</p>
+
+        <a class="btn btn-default"
+            data-toggle="modal"
+            href="#new-model-modal"
+            id="new-model-button"
+            ng-click="vm.addModel()">
+            <i class="glyphicon glyphicon-plus"></i> Add Model
+        </a>
+        <!--<button class="button" ng-click="sortByName(json.models)">Sort A-Z</button>-->
+    </div>
+</div>
+<div id="models">
+    <div id="model-{{idx}}" class="model"
+        ng-repeat="(idx, model) in vm.models"
+        ng-if="!model.isEnvelope && !model.isError">
+        <h4>
+            <span class="pull-right">
+                <!--
+                <a ng-click="top(json.models, idx)" href=""
+                    ng-if="idx > 0">
+                    <i class="glyphicon glyphicon-circle-arrow-up"></i>
+                </a>
+                <a ng-click="bottom(json.models, idx)" href=""
+                    ng-if="idx < json.models.length - 1">
+                    <i class="glyphicon glyphicon-circle-arrow-down"></i>
+                </a>
+                -->
+                <a ng-click="vm.utility.arrayUp(vm.models, idx)" href=""
+                    ng-if="idx > 0">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </a>
+                <a ng-click="vm.utility.arrayDown(vm.models, idx)" href=""
+                    ng-if="idx < json.models.length - 1">
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                </a>
+                <a class="model-edit" data-toggle="modal" href="#new-model-modal"
+                    ng-click="vm.editModel(model, idx)">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a href="" class="model-delete"
+                   ng-click="vm.utility.remove(vm.models, idx)">
+                   <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </span>
+            <a href="" class="model-toggle"
+                ng-click="visible = !visible"
+                ng-class="{rotate: visible}">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                {{model.name}}
+            </a>
+        </h4>
+
+        <model-design model="model" models="vm.models" ng-if="visible"></model-design>
+    </div>
+</div>
+
+
+<!--*******************************************************************
+***************************** Model Modal *****************************
+********************************************************************-->
+<div class="modal fade" id="new-model-modal">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Model</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <input type="hidden" name="old-model-id" id="old-model-id" value="" />
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">
+                        Model name
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control"
+                            id="new-model-id" name="new-model-id"
+                            value="" placeholder="Enter a name..."
+                            ng-model="vm.model.name">
+                            <!--
+                            ng-pattern="vm.validators.camelCaseNumericUnderscore">
+                            -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-default" data-dismiss="modal"
+                    ng-click="vm.cancelModelUpdate()">Cancel</a>
+                <input type="submit"
+                    id="save-model-button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                    ng-click="vm.saveModelUpdate()"
+                    value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

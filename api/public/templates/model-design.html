@@ -1,0 +1,162 @@
+
+<div class="model-content">
+    <input type="hidden"
+        class="model-id"
+        ng-model="vm.model.name" />
+    <!--
+    <div class="table-responsive">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                Model name
+            </label>
+            <div class="col-sm-8">
+                <input type="text"
+                    lass="model-id span"
+                    ng-model="vm.model.name" />
+            </div>
+        </div>
+    </div>
+    -->
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="vm.model.onlyIdsForNestedPosts" />
+            If this model is nested in a POST/PUT, should the user supply
+            just the id?
+        </label>
+    </div>
+    <div class="properties table-responsive">
+        <table class="table">
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th>Property Name</th>
+                <th>Description</th>
+                <th title="Basic type of the property">Type</th>
+                <th>Model / Enum / Example</th>
+                <th title="Property is an array?">Array?</th>
+                <th title="Property is a dictionary">Dict?</th>
+                <th title="Property appears in responses?">In Resp?</th>
+                <th title="Always present in response? (Useful for testing)">Always in Resp?</th>
+                <th title="Property available in creates?">POSTs?</th>
+                <th title="Required when used in creates?">POST Rqrd?</th>
+                <th title="Property available for updates?">PUTs?</th>
+                <th title="Required when used in updates?">PUT Rqrd?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="no-parameters">
+                <td colspan="13">No properties</td>
+            </tr>
+            <tr class="model-property"
+                ng-repeat="(propertyIdx, property) in vm.model.properties">
+                <td>
+                    <a href="" class="close remove-row"
+                       ng-click="vm.remove(vm.model.properties, propertyIdx)"
+                       ng-if="!property.isId">&times;</a>
+                    <div ng-if="property.isId" class="id">{id}</div>
+                </td>
+                <td class="nowrap form-inline">
+                    <input type="text" class="form-control input-fixed-md"
+                        ng-model="property.name"
+                        ng-pattern="vm.validators.alphaNumericChars"
+                        placeholder="Property name"
+                        required />
+                    <a href="" ng-click="utility.arrayUp(vm.model.properties, propertyIdx)"
+                       ng-if="propertyIdx > 0" class="up"><i class="glyphicon glyphicon-arrow-up"></i>
+                    </a>
+                </td>
+                <td class="">
+                    <input type="text" class="form-control property-description"
+                        ng-model="property.description"
+                        placeholder="Description of the property"
+                        required />
+                </td>
+                <td class="input-fixed-md">
+                    <select class="form-control"
+                        ng-model="property.displayType"
+                        ng-options="shortName for shortName in vm.displayTypes">
+                    </select>
+                </td>
+                <td class="input-fixed-lg">
+                    <input type="text" class="form-control"
+                        placeholder="Comma separate values"
+                        ng-if="property.displayType == 'enum'"
+                        ng-model="property.enum"
+                        ng-list />
+
+                    <select class="form-control models"
+                        ng-model="property.displayModel"
+                        ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                        ng-disabled="property.displayType != 'object'"
+                        ng-if="property.displayType == 'object'">
+                    </select>
+
+                    <input type="text" class="form-control"
+                        placeholder="Example response"
+                        ng-if="property.displayType != 'enum' && (property.displayType == 'string' || property.displayType == 'date' || property.displayType == 'date-time')"
+                        ng-model="property.example"
+                        ng-disabled="property.displayType == 'void'" />
+
+                    <input type="number" step="1" class="form-control"
+                        placeholder="Example value"
+                        ng-if="property.displayType != 'enum' && (property.displayType == 'int32' || property.displayType == 'int64')"
+                        ng-model="property.example" />
+
+                    <input type="number" class="form-control"
+                        placeholder="Example value"
+                        ng-if="property.displayType != 'enum' && (property.displayType == 'double' || property.displayType == 'float')"
+                        ng-model="property.example" />
+
+                    <input type="checkbox" class=""
+                        ng-if="property.displayType != 'enum' && (property.displayType == 'boolean' || property.displayType == 'byte')"
+                        ng-model="property.example" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.isArray"
+                        ng-disabled="property.isDictionary" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.isDictionary"
+                        ng-disabled="property.isArray" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.usedInResponses"
+                        ng-change="property.expectedInResponses = property.usedInResponses" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.expectedInResponses"
+                        ng-disabled="!property.usedInResponses" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.usedInPosts"
+                        ng-change="vm.toggleRequest(property.usedInPosts, property.required)" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.required"
+                        ng-disabled="!property.usedInPosts" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.usedInPuts"
+                        ng-change="vm.toggleRequest(property.usedInPuts, property.requiredPut)" />
+                </td>
+                <td>
+                    <input type="checkbox"
+                        ng-model="property.requiredPut"
+                        ng-disabled="!property.usedInPuts" />
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default add-property"
+        ng-click="vm.addProperty(vm.model)">
+        <i class="glyphicon glyphicon-plus"></i> Add Property
+    </button>
+</div>

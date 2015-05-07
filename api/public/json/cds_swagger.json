@@ -1,0 +1,2411 @@
+{
+    "apiVersion": "1",
+    "basePath": "example",
+    "contact": "",
+    "envelope": {
+        "mainParam": "data",
+        "properties": {
+            "data": {
+                "description": "The main response",
+                "expectedInResponses": true,
+                "main": true,
+                "name": "data"
+            },
+            "paging": {
+                "description": "Information and links on how to navigate pages of this response",
+                "$ref": "paging",
+                "type": "paging",
+                "name": "paging",
+                "expectedInResponses": true,
+                "pagedOnly": true
+            }
+        }
+    },
+    "parameters": [
+        {
+            "name": "format",
+            "description": "The response format, defaults to JSON.",
+            "type": "string",
+            "enum": [
+                "json",
+                "xml"
+            ],
+            "paramType": "query",
+            "format": "string",
+            "global": true
+        },
+        {
+            "name": "version",
+            "description": "Optional value to reference earlier versions of the API.",
+            "type": "integer",
+            "paramType": "header",
+            "format": "int32",
+            "global": true,
+            "example": 1
+        },
+        {
+            "name": "jsonp",
+            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+            "type": "string",
+            "paramType": "query",
+            "format": "string",
+            "global": true,
+            "example": "callback"
+        },
+        {
+            "name": "method",
+            "description": "Some browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+            "required": false,
+            "type": "string",
+            "paramType": "query",
+            "enum": [
+                "POST",
+                "GET",
+                "PUT",
+                "DELETE"
+            ],
+            "format": "string",
+            "global": true
+        }
+    ],
+    "apis": [
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the album.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get an existing 'album' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__album",
+                    "$ref": "env__album"
+                },
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the album.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "name",
+                            "description": "The name of the album.",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "released",
+                            "description": "The year of first release.",
+                            "type": "integer",
+                            "format": "int32",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "coverImg",
+                            "description": "Url of an image showing the albums cover",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "genre",
+                            "description": "The genre of the abum",
+                            "type": "string",
+                            "required": false,
+                            "enum": [
+                                "rock",
+                                "pop",
+                                "country"
+                            ],
+                            "format": "string",
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "inStock",
+                            "description": "Is the album in stock",
+                            "type": "boolean",
+                            "expectedInResponses": true,
+                            "required": false,
+                            "format": "boolean",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "price",
+                            "description": "The price of the album",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": false,
+                            "format": "float",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "PUT",
+                    "summary": "Update an 'album' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__album",
+                    "$ref": "env__album",
+                    "postDataModel": "album"
+                }
+            ],
+            "path": "/albums/{id}",
+            "description": "Returns the list of available albums",
+            "parentModel": "album",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "search",
+                            "description": "Filter the response using a search term",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "OK Computer",
+                            "format": "string"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get a list of albums",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "apenv__album",
+                    "$ref": "apenv__album",
+                    "isPaged": true,
+                    "defaultPageSize": 20,
+                    "maxPageSize": 100,
+                    "throttlingCost": 10
+                },
+                {
+                    "method": "POST",
+                    "type": "env__album",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "The name of the album.",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "artist",
+                            "description": "De-normalised details of the artist.",
+                            "type": "artist",
+                            "$ref": "artist",
+                            "required": false,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "released",
+                            "description": "The year of first release.",
+                            "type": "integer",
+                            "format": "int32",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "coverImg",
+                            "description": "Url of an image showing the albums cover",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "artistId",
+                            "description": "The id of the artist",
+                            "type": "integer",
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "genre",
+                            "description": "The genre of the abum",
+                            "type": "string",
+                            "required": false,
+                            "enum": [
+                                "rock",
+                                "pop",
+                                "country"
+                            ],
+                            "format": "string",
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "inStock",
+                            "description": "Is the album in stock",
+                            "type": "boolean",
+                            "expectedInResponses": true,
+                            "required": false,
+                            "format": "boolean",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "price",
+                            "description": "The price of the album",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": false,
+                            "format": "float",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create an album.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "album",
+                    "throttlingCost": 100,
+                    "$ref": "env__album"
+                }
+            ],
+            "path": "/albums",
+            "description": "Interact with lists of albums.",
+            "parentModel": "album",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the album.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get the list of 'songs' related to an 'album' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "aenv__song",
+                    "$ref": "aenv__song"
+                }
+            ],
+            "path": "/albums/{id}/songs",
+            "description": "Get the list of 'songs' objects related to a 'album' object.",
+            "parentModel": "album",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the song.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get an existing 'song' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__song",
+                    "$ref": "env__song"
+                },
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the song.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "name",
+                            "description": "The name of the song.",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "secondsDuration",
+                            "description": "The length in seconds of the song.",
+                            "type": "integer",
+                            "format": "int32",
+                            "required": false,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "PUT",
+                    "summary": "Update an existing 'song' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__song",
+                    "$ref": "env__song",
+                    "postDataModel": "song"
+                },
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the song.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "DELETE",
+                    "summary": "Delete an existing 'song' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__song",
+                    "$ref": "env__song"
+                }
+            ],
+            "path": "/songs/{id}",
+            "description": "Interact with individual 'song' objects",
+            "parentModel": "song",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get a list of songs",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "apenv__song",
+                    "$ref": "apenv__song",
+                    "isPaged": true,
+                    "defaultPageSize": 20,
+                    "maxPageSize": 100,
+                    "throttlingCost": 10
+                },
+                {
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "The name of the song.",
+                            "type": "string",
+                            "format": "string",
+                            "required": true,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "secondsDuration",
+                            "description": "The length in seconds of the song.",
+                            "type": "integer",
+                            "format": "int32",
+                            "required": false,
+                            "expectedInResponses": true,
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "POST",
+                    "summary": "Create a new 'song' object",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__song",
+                    "$ref": "env__song",
+                    "postDataModel": "song",
+                    "throttlingCost": 100
+                }
+            ],
+            "path": "/songs",
+            "description": "Interact with the list of songs.",
+            "parentModel": "song",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the song.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get the list of albums related to a 'song' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "aenv__album",
+                    "$ref": "aenv__album"
+                }
+            ],
+            "path": "/songs/{id}/albums",
+            "description": "Get the list of 'albums' objects related to a 'song' object.",
+            "parentModel": "song",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the artist.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get an existing 'artist' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "env__artist",
+                    "$ref": "env__artist"
+                }
+            ],
+            "path": "/artists/{id}",
+            "description": "Interact with an individual artist objects",
+            "parentModel": "artist",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get a list of artists",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "apenv__artist",
+                    "$ref": "apenv__artist",
+                    "isPaged": true,
+                    "throttlingCost": 10,
+                    "defaultPageSize": 20,
+                    "maxPageSize": 100
+                }
+            ],
+            "path": "/artists",
+            "description": "Interact with the list of artists.",
+            "parentModel": "artist",
+            "pathUsesChildId": false
+        },
+        {
+            "operations": [
+                {
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id for the artist.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "format",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "json",
+                                "xml"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "format": "int32",
+                            "global": true,
+                            "example": 1
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true,
+                            "example": "callback"
+                        },
+                        {
+                            "name": "method",
+                            "description": "ome browsers do not support PUT and DELETE requests, this optional parameter enables you to use a GET or POST request but ask the server to treat the request as a PUT or DELETE.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "POST",
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "method": "GET",
+                    "summary": "Get the list of 'albums' related to an 'artist' object.",
+                    "notes": "",
+                    "requiresAuth": true,
+                    "hidden": false,
+                    "disabled": false,
+                    "type": "aenv__album",
+                    "$ref": "aenv__album"
+                }
+            ],
+            "path": "/artists/{id}/albums",
+            "description": "Get the list of 'albums' objects related to an 'artist' object.",
+            "parentModel": "artist",
+            "pathUsesChildId": false
+        }
+    ],
+    "models": {
+        "album": {
+            "id": "album",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id for the album.",
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 123456789,
+                    "required": false,
+                    "isId": true,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false,
+                    "expectedInResponses": true
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the album.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "OK Computer",
+                    "required": true,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "artist": {
+                    "name": "artist",
+                    "description": "De-normalised details of the artist.",
+                    "type": "artist",
+                    "$ref": "artist",
+                    "required": false,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "released": {
+                    "name": "released",
+                    "description": "The year of first release.",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1997,
+                    "required": true,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "coverImg": {
+                    "name": "coverImg",
+                    "description": "Url of an image showing the albums cover",
+                    "type": "string",
+                    "format": "string",
+                    "example": "https://upload.wikimedia.org/wikipedia/en/a/a1/Radiohead.okcomputer.albumart.jpg",
+                    "required": true,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "artistId": {
+                    "name": "artistId",
+                    "description": "The id of the artist",
+                    "type": "integer",
+                    "required": true,
+                    "requiredPut": false,
+                    "example": 12345,
+                    "format": "int64",
+                    "usedInResponses": false,
+                    "usedInPuts": false,
+                    "usedInPosts": true
+                },
+                "genre": {
+                    "name": "genre",
+                    "description": "The genre of the abum",
+                    "type": "string",
+                    "required": false,
+                    "requiredPut": false,
+                    "enum": [
+                        "rock",
+                        "pop",
+                        "country"
+                    ],
+                    "format": "string",
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "inStock": {
+                    "name": "inStock",
+                    "description": "Is the album in stock",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": true,
+                    "format": "boolean"
+                },
+                "price": {
+                    "name": "price",
+                    "description": "The price of the album",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": 12.99,
+                    "format": "float"
+                }
+            },
+            "required": [
+                "name",
+                "released",
+                "coverImg",
+                "artistId"
+            ],
+            "name": "album"
+        },
+        "song": {
+            "id": "song",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id for the song.",
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 123456789,
+                    "required": false,
+                    "isId": true,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false,
+                    "expectedInResponses": true
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the song.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "Paranoid Android",
+                    "required": true,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "secondsDuration": {
+                    "name": "secondsDuration",
+                    "description": "The length in seconds of the song.",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 245,
+                    "required": false,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "name": "song"
+        },
+        "artist": {
+            "id": "artist",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id for the artist.",
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 123456789,
+                    "required": false,
+                    "isId": true,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false,
+                    "expectedInResponses": true
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the artist.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "Radiohead",
+                    "required": true,
+                    "requiredPut": true,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "expectedInResponses": true
+                },
+                "yearsActive": {
+                    "name": "yearsActive",
+                    "description": "A list of years during which the artist was actively performing.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "example": 1999,
+                    "required": false,
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "name": "artist"
+        },
+        "error": {
+            "id": "error",
+            "properties": {
+                "code": {
+                    "name": "code",
+                    "description": "The HTTP response code",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 404,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "purpose": "code",
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A short name for the error message",
+                    "type": "string",
+                    "format": "string",
+                    "example": "Not found",
+                    "required": false,
+                    "requiredPut": false,
+                    "purpose": "name",
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "message": {
+                    "name": "message",
+                    "description": "A human readable and client friendly error message",
+                    "type": "string",
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "The API method does not exist",
+                    "purpose": "message",
+                    "format": "string",
+                    "usedInResponses": true,
+                    "usedInPuts": true,
+                    "usedInPosts": true
+                }
+            },
+            "required": [],
+            "name": "error",
+            "isError": true
+        },
+        "paging": {
+            "id": "paging",
+            "properties": {
+                "next": {
+                    "name": "next",
+                    "description": "A link for the next page of data.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "https://api.example.com/resource?offset=20&limit=20",
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "prev": {
+                    "name": "prev",
+                    "description": "A link for the previous page of data.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "https://api.example.com/resource?offset=0&limit=20",
+                    "required": false,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "first": {
+                    "name": "first",
+                    "description": "A link for the first page of data.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "https://api.example.com/resource?offset=0&limit=20",
+                    "required": false,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "last": {
+                    "name": "last",
+                    "description": "A link for the last page of data.",
+                    "type": "string",
+                    "format": "string",
+                    "example": "https://api.example.com/resource?offset=180&limit=20",
+                    "required": false,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false
+                },
+                "total": {
+                    "name": "total",
+                    "description": "The total number of items available.",
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200,
+                    "required": false,
+                    "requiredPut": false,
+                    "usedInResponses": true,
+                    "usedInPuts": false,
+                    "usedInPosts": false,
+                    "expectedInResponses": true
+                }
+            },
+            "required": [],
+            "name": "paging"
+        },
+        "env__album": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "album",
+                    "$ref": "album"
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "apenv__album": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "array",
+                    "items": {
+                        "type": "album",
+                        "$ref": "album"
+                    }
+                },
+                "paging": {
+                    "description": "Information and links on how to navigate pages of this response",
+                    "$ref": "paging",
+                    "type": "paging",
+                    "name": "paging",
+                    "expectedInResponses": true,
+                    "pagedOnly": true
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "aenv__song": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "array",
+                    "items": {
+                        "type": "song",
+                        "$ref": "song"
+                    }
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "env__song": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "song",
+                    "$ref": "song"
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "apenv__song": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "array",
+                    "items": {
+                        "type": "song",
+                        "$ref": "song"
+                    }
+                },
+                "paging": {
+                    "description": "Information and links on how to navigate pages of this response",
+                    "$ref": "paging",
+                    "type": "paging",
+                    "name": "paging",
+                    "expectedInResponses": true,
+                    "pagedOnly": true
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "aenv__album": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "array",
+                    "items": {
+                        "type": "album",
+                        "$ref": "album"
+                    }
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "env__artist": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "artist",
+                    "$ref": "artist"
+                }
+            },
+            "envelope": true,
+            "required": []
+        },
+        "apenv__artist": {
+            "mainParam": "data",
+            "properties": {
+                "data": {
+                    "description": "The main response",
+                    "expectedInResponses": true,
+                    "main": true,
+                    "name": "data",
+                    "type": "array",
+                    "items": {
+                        "type": "artist",
+                        "$ref": "artist"
+                    }
+                },
+                "paging": {
+                    "description": "Information and links on how to navigate pages of this response",
+                    "$ref": "paging",
+                    "type": "paging",
+                    "name": "paging",
+                    "expectedInResponses": true,
+                    "pagedOnly": true
+                }
+            },
+            "envelope": true,
+            "required": []
+        }
+    },
+    "swaggerVersion": "1.2",
+    "produces": [
+        "application/json"
+    ],
+    "resourcePath": "",
+    "envelopeIsUsed": true,
+    "responseMessages": [
+        {
+            "code": 200,
+            "summary": "OK",
+            "reason": "Request completed successfully."
+        },
+        {
+            "code": 400,
+            "summary": "Bad Request",
+            "reason": "Something was wrong with the request, incorrect parameters.",
+            "responseModel": "error"
+        },
+        {
+            "code": 401,
+            "summary": "Unauthorized",
+            "reason": "Not authorised to access the requested data.",
+            "responseModel": "error"
+        },
+        {
+            "code": 403,
+            "summary": "Forbidden",
+            "reason": "Authentication failed.",
+            "responseModel": "error"
+        },
+        {
+            "code": 404,
+            "summary": "Not Found",
+            "reason": "The method doesn't exist.",
+            "responseModel": "error"
+        },
+        {
+            "code": 429,
+            "summary": "Rate Limited",
+            "reason": "You have exceeded your usage quota and your request has been rate limited.",
+            "responseModel": "error"
+        },
+        {
+            "code": 500,
+            "summary": "Internal Server Error",
+            "reason": "Something went wrong with the server.",
+            "responseModel": "error"
+        }
+    ],
+    "info": {
+        "title": "Example CDs API",
+        "description": "An example API showing various features of the API designer.\n\nTextarea fields (but no others) can be formatted using *markdown* to enhance your documentation.",
+        "termsOfServiceUrl": "",
+        "contact": "",
+        "license": "",
+        "licenseUrl": ""
+    },
+    "authorizations": {
+        "supports": {
+            "oauth2Implicit": true,
+            "oauth2AuthorizationCode": false
+        },
+        "oauth2": {
+            "type": "oauth2",
+            "scopes": [],
+            "grantTypes": {
+                "implicit": {
+                    "loginEndpoint": {
+                        "url": "http://www.example.com/oauth/dialog"
+                    },
+                    "tokenName": "authToken"
+                },
+                "authorization_code": {
+                    "tokenRequestEndpoint": {
+                        "url": "",
+                        "clientIdName": "client_id",
+                        "clientSecretName": "client_secret"
+                    },
+                    "tokenEndpoint": {
+                        "url": "",
+                        "tokenName": "access_code"
+                    }
+                }
+            }
+        }
+    },
+    "jsonp": {
+        "supported": true,
+        "callbackParameter": "jsonp",
+        "methodParameter": "method",
+        "always200": true,
+        "errorModel": "error"
+    },
+    "testSuites": [
+        {
+            "name": "Getters",
+            "tests": [
+                {
+                    "method": "POST",
+                    "path": "/albums",
+                    "responseCode": 200,
+                    "skip": true,
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                "id"
+                            ],
+                            "value": 123456789
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "name"
+                            ],
+                            "value": "OK Computer"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "artist",
+                                "id"
+                            ],
+                            "value": 123456789
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "released"
+                            ],
+                            "value": 1997
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "coverImg"
+                            ],
+                            "value": "https://upload.wikimedia.org/wikipedia/en/a/a1/Radiohead.okcomputer.albumart.jpg"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "genre"
+                            ],
+                            "value": "rock"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "inStock"
+                            ],
+                            "value": true
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "price"
+                            ],
+                            "value": 12.99
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": 1,
+                            "paramType": "header"
+                        },
+                        {
+                            "name": "jsonp",
+                            "value": "callback",
+                            "paramType": "query"
+                        }
+                    ],
+                    "postData": [
+                        {
+                            "path": [
+                                "name"
+                            ],
+                            "value": "OK Computer"
+                        },
+                        {
+                            "path": [
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radioheaddddd"
+                        },
+                        {
+                            "path": [
+                                "released"
+                            ],
+                            "value": 1997
+                        },
+                        {
+                            "path": [
+                                "coverImg"
+                            ],
+                            "value": "https://upload.wikimedia.org/wikipedia/en/a/a1/Radiohead.okcomputer.albumart.jpg"
+                        },
+                        {
+                            "path": [
+                                "genre"
+                            ],
+                            "value": "rock"
+                        },
+                        {
+                            "path": [
+                                "inStock"
+                            ],
+                            "value": true
+                        },
+                        {
+                            "path": [
+                                "price"
+                            ],
+                            "value": 12.99
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "path": "/albums",
+                    "responseCode": 200,
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Kid A"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "yearsActive"
+                            ],
+                            "value": [
+                                1999,
+                                2000
+                            ]
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "released"
+                            ],
+                            "value": 2000
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "coverImg"
+                            ],
+                            "value": "example/images/kid-a.jpg"
+                        },
+                        {
+                            "path": [
+                                "paging",
+                                "total"
+                            ],
+                            "value": 2
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "name": "search",
+                            "value": "Kid A",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "version",
+                            "value": 1,
+                            "paramType": "header"
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "path": "/albums/{id}",
+                    "responseCode": 200,
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "name"
+                            ],
+                            "value": "Kid A"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "artist",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "released"
+                            ],
+                            "value": 2000
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "coverImg"
+                            ],
+                            "value": "example/images/kid-a.jpg"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "genre"
+                            ],
+                            "value": "rock"
+                        }
+                    ],
+                    "parameters": [],
+                    "idTarget": "id"
+                },
+                {
+                    "path": "/albums/{id}/songs",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [
+                        {
+                            "name": "version",
+                            "value": 1,
+                            "paramType": "header"
+                        },
+                        {
+                            "name": "jsonp",
+                            "value": "callback",
+                            "paramType": "query"
+                        }
+                    ],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Everything In its Right Place"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "secondsDuration"
+                            ],
+                            "value": 250
+                        }
+                    ],
+                    "idTarget": "id"
+                },
+                {
+                    "path": "/artists",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "yearsActive"
+                            ],
+                            "value": [
+                                1999
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "path": "/artists/{id}",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "yearsActive"
+                            ],
+                            "value": [
+                                1999
+                            ]
+                        }
+                    ],
+                    "idTarget": "id"
+                },
+                {
+                    "path": "/artists/{id}/albums",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Kid A"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "released"
+                            ],
+                            "value": 2000
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "coverImg"
+                            ],
+                            "value": "example/images/kid-a.jpg"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "inStock"
+                            ],
+                            "value": true
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "price"
+                            ],
+                            "value": 12.99
+                        }
+                    ],
+                    "idTarget": "id"
+                },
+                {
+                    "path": "/songs",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Everything In its Right Place"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "secondsDuration"
+                            ],
+                            "value": 250
+                        }
+                    ]
+                },
+                {
+                    "path": "/songs/{id}",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "name"
+                            ],
+                            "value": "Everything In its Right Place"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                "secondsDuration"
+                            ],
+                            "value": 250
+                        }
+                    ],
+                    "idTarget": "id"
+                },
+                {
+                    "path": "/songs/{id}/albums",
+                    "method": "GET",
+                    "responseCode": 200,
+                    "idTarget": "id",
+                    "parameters": [],
+                    "expectations": [
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "name"
+                            ],
+                            "value": "Kid A"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "id"
+                            ],
+                            "value": 1
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "name"
+                            ],
+                            "value": "Radiohead"
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "artist",
+                                "yearsActive"
+                            ],
+                            "value": [
+                                1999
+                            ]
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "released"
+                            ],
+                            "value": 2000
+                        },
+                        {
+                            "path": [
+                                "data",
+                                0,
+                                "coverImg"
+                            ],
+                            "value": "example/images/kid-a.jpg"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

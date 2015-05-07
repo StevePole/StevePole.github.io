@@ -1,0 +1,127 @@
+<h3 class="page-header">Auth</h3>
+<div id="auth-section" class="row table-responsive">
+    <div class="col-md-6">
+        <p>oAuth2 is recommended for authentication, in this section you can
+            specify the information for 2 legged authentication.</p>
+    </div>
+    <div class="col-md-6 form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Supported types</label>
+            <div class="col-sm-8">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                            value="implicit"
+                            name="implicit"
+                            ng-model="vm.auths.supports.oauth2Implicit">
+                        oAuth2 implicit
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                            value="authorization_code"
+                            name="authorization_code"
+                            ng-model="vm.auths.supports.oauth2AuthorizationCode">
+                        oAuth2 authorization code
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="vm.auths.supports.oauth2Implicit">
+    <h4 class="page-header">oAuth2 Implicit</h4>
+    <div class="row  form-horizontal">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Login URL
+                </label>
+                <div class="col-sm-8">
+                    <input type="url"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.implicit.loginEndpoint.url"
+                        placeholder="https://www.example.com/oauth/dialog" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Login token name
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.implicit.tokenName"
+                        placeholder="Name of the token parameter" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="vm.auths.supports.oauth2AuthorizationCode">
+    <h4 class="page-header">oAuth2 Authorisation Code</h4>
+    <div class="row form-horizontal">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Token request URL
+                </label>
+                <div class="col-sm-8">
+                    <input type="url"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.authorization_code.tokenRequestEndpoint.url"
+                        placeholder="https://www.example.com/oauth/requestToken" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Client ID parameter
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.authorization_code.tokenRequestEndpoint.clientIdName"
+                        placeholder="Name of the client ID parameter" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Client secret parameter
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.authorization_code.tokenRequestEndpoint.clientSecretName"
+                        placeholder="Name of the client secret parameter" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Token URL
+                </label>
+                <div class="col-sm-8">
+                    <input type="url"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.authorization_code.tokenEndpoint.url"
+                        placeholder="https://www.example.com/oauth/token" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Token parameter
+                </label>
+                <div class="col-sm-8">
+                    <input type="text"
+                        class="form-control" required
+                        ng-model="vm.auths.oauth2.grantTypes.authorization_code.tokenEndpoint.tokenName"
+                        placeholder="Name of the token parameter" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

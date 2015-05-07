@@ -1,0 +1,25 @@
+
+<div class="hero-unit">
+    <h1>API Directory</h1>
+
+    <p>A list of the available APIs.</p>
+</div>
+
+<div id="published-section">
+    <h3 class="page-header">Published APIs</h3>
+    <div class="table-responsive" api-list="published" 
+        url-param="publishedParam" directory-table>
+    </div>
+</div>
+
+<div id="local-api-section" ng-if="local.length">
+    <h3 class="page-header">Local APIs</h3>
+    <div class="table-responsive" api-list="local" 
+        url-param="localParam" directory-table>
+    </div>
+</div>
+<!--
+<button class="btn btn-default" ng-click="addPublished(published)">Add Published</button>
+<button class="btn btn-default" ng-click="addPublished(local)">Add Local</button>
+-->
+<div id="errors" class="alert alert-danger" style="display: none;"></div>

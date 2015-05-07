@@ -1,0 +1,127 @@
+<h3 class="page-header">Throttling</h3>
+<div class="row">
+    <div class="col-md-6">
+        <p>It is strongly recommended to implement throttling on all APIs.
+            The recommended approach is to assign a 'cost' to each API operation,
+            and then to count how much is being 'spent' in a given length of time,
+            and to throttle responses if the spend exceeds a given 'budget' in
+            that 'budget period'.</p>
+
+        <p>It is good practice to have an overall budget for the entire system,
+            as well as budgets for connected applications, and budgets for
+            individual users.</p>
+
+        <p>In this fashion you can guarantee the entire system only attempts to
+            process known volumes, that connected applications do not exceed
+            their share of resources, and that no individual user consumes more
+            resources than is reasonable.</p>
+
+        <p>Default budgets should be supplied for client information, however
+            it is expected different priority applications/user will ultimately
+            be granted different budgets.</p>
+
+    </div>
+    <div class="col-md-6 form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Supports throttling?</label>
+            <div class="col-sm-8 checkbox">
+                <label>
+                    <input type="checkbox"
+                        ng-model="vm.throttling.supported" />
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Throttling levels</label>
+            <div class="col-sm-8">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="system"
+                            ng-model="vm.throttling.levels.system"
+                            ng-disabled="!vm.throttling.supported" />
+                        System wide
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="application"
+                            ng-model="vm.throttling.levels.application"
+                            ng-disabled="!vm.throttling.supported" />
+                        Client application
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="organisation"
+                            ng-model="vm.throttling.levels.organisation"
+                            ng-disabled="!vm.throttling.supported" />
+                        User organisation
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="user"
+                            ng-model="vm.throttling.levels.user"
+                            ng-disabled="!vm.throttling.supported" />
+                        Individual user
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Budget period length</label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control"
+                    ng-model="vm.throttling.budgetPeriodLength"
+                    ng-disabled="!vm.throttling.supported" />
+                <span class="help-block">Number of seconds</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Budget period type</label>
+            <div class="col-sm-8">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="budgetPeriodType"
+                            ng-model="vm.throttling.budgetPeriodType"
+                            ng-disabled="!vm.throttling.supported" />
+                        Rolling per second
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="budgetPeriodType"
+                            ng-model="vm.throttling.budgetPeriodType"
+                            ng-disabled="!vm.throttling.supported" />
+                        Rollover at end of period
+                    </label>
+                </div>
+            </div>
+        </div>
+        <h4 class="page-header">Default budget per...</h4>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Client application</label>
+            <div class="col-sm-8">
+                <input type="number" name="" class="form-control"
+                    ng-model="vm.throttling.defautltBudgetPerApplication"
+                    ng-disabled="!vm.throttling.supported || !vm.throttling.levels.application" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">User organisation</label>
+            <div class="col-sm-8">
+                <input type="number" name="" class="form-control"
+                    ng-model="vm.throttling.defautltBudgetPerOrganisation"
+                    ng-disabled="!vm.throttling.supported || !vm.throttling.levels.organisation" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">User</label>
+            <div class="col-sm-8">
+                <input type="number" name="" class="form-control"
+                    ng-model="vm.throttling.defautltBudgetPerUser"
+                    ng-disabled="!vm.throttling.supported || !vm.throttling.levels.user" />
+            </div>
+        </div>
+    </div>
+</div>

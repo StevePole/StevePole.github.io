@@ -1,0 +1,123 @@
+<div id="global-parameters">
+    <h3 class="page-header">Global Request Parameters</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <p>The global request parameters are parameters that can be
+                used on any request. Recommended uses for these parameters
+                include specifying response format, JSONP callbacks, and
+                specifying a version (where the API allows earlier versions
+                to be used).</p>
+
+            <p>Global parameters can either be query parameters or
+                headers.  We recommend that all global parameters are optional,
+                defaulting to reasonable values, e.g. JSON for response
+                format.</p>
+        </div>
+         <div class="col-md-6">
+            <p>Long array (or dictionary) type responses may provide paged
+                responses. You can mark parameters (using Paged Only?) so they're
+                only available on methods with paged responses.</p>
+
+            <p>We recommend <code>offset/limit</code> parameters for paging (as
+                opposed to <code>page/rows</code>) as it offers additional
+                flexibility.</p>
+        </div>
+    </div>
+    <div class="parameters table-responsive">
+        <table class="table">
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Enum / Example</th>
+                <th>Required?</th>
+                <th>Used In</th>
+                <th>Paged Only?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="no-parameters">
+                <td colspan="8">No parameters</td>
+            </tr>
+            <tr class="parameter"
+                ng-repeat="(idx, parameter) in vm.params">
+                <td>
+                    <a href="" class="close remove-row"
+                       ng-if="!vm.isPathParam(parameter)"
+                       ng-click="vm.remove(vm.params, idx)">&times;</a>
+                    <span ng-if="vm.isPathParam(parameter)">&nbsp;&nbsp;&nbsp;</span>
+                </td>
+                <td class="input-fixed-md">
+                    <input type="text" class="form-control parameter-name"
+                        ng-model="parameter.name"
+                        ng-disabled="vm.isPathParam(parameter)"
+                        ng-pattern="vm.validators.alphaNumericChars"
+                        placeholder="Param name" required />
+                </td>
+                <td class="parameter-description">
+                    <input type="text" class="form-control"
+                        ng-model="parameter.description"
+                        ng-disabled="vm.isPathParam(parameter)"
+                        placeholder="Description of the parameter"
+                        required />
+                </td>
+                <td class="input-fixed-md">
+                    <select class="form-control parameter-type"
+                        ng-model="parameter.displayType"
+                        ng-options="shortName for shortName in vm.displayTypesNoObject"
+                        ng-disabled="vm.isPathParam(parameter)">
+                    </select>
+                </td>
+                <td class="input-fixed-lg">
+                    <input type="text" class="form-control parameter-enum"
+                        placeholder="Comma separate values"
+                        ng-disabled="parameter.displayType != 'enum'"
+                        ng-model="parameter.enum"
+                        ng-if="parameter.displayType == 'enum'"
+                        ng-list />
+
+                    <input type="text" class="form-control"
+                        placeholder="Example value"
+                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'string' || parameter.displayType == 'date' || parameter.displayType == 'date-time')"
+                        ng-model="parameter.example" />
+
+                    <input type="number" step="1" class="form-control"
+                        placeholder="Example value"
+                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'int32' || parameter.displayType == 'int64')"
+                        ng-model="parameter.example" />
+
+                    <input type="number" class="form-control"
+                        placeholder="Example value"
+                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'double' || parameter.displayType == 'float')"
+                        ng-model="parameter.example" />
+
+                    <input type="checkbox"
+                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'boolean' || parameter.displayType == 'byte')"
+                        ng-model="parameter.example" />
+                </td>
+                <td>
+                    <input type="checkbox" class="parameter-required"
+                        ng-model="parameter.required"
+                        ng-disabled="vm.isPathParam(parameter)" />
+                </td>
+                <td class="input-fixed-md">
+                    <select class="form-control"
+                        ng-model="parameter.paramType"
+                        ng-options="paramType for paramType in vm.globalParamTypes">
+                    </select>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="parameter.pagedOnly" />
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default add-parameter"
+        ng-click="vm.addParameter(vm.params)">
+        <i class="glyphicon glyphicon-plus"></i>
+        Add Parameter
+    </button>
+</div>

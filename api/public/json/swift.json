@@ -1,0 +1,784 @@
+{
+    "basePath": "https://swift-tool.herokuapp.com/",
+    "apiVersion": 1,
+    "info": {
+        "title": "Swift Check API",
+        "description": "For looking up banks and associated swift codes.",
+        "termsOfServiceUrl": "",
+        "contact": "",
+        "license": "",
+        "licenseUrl": ""
+    },
+    "authorizations": {
+        "supports": {
+            "oauth2Implicit": false,
+            "oauth2AuthorizationCode": false
+        },
+        "oauth2": {
+            "type": "oauth2",
+            "scopes": [],
+            "grantTypes": {
+                "implicit": {
+                    "loginEndpoint": {
+                        "url": ""
+                    },
+                    "tokenName": "access_token"
+                },
+                "authorization_code": {
+                    "tokenRequestEndpoint": {
+                        "url": "",
+                        "clientIdName": "client_id",
+                        "clientSecretName": "client_secret"
+                    },
+                    "tokenEndpoint": {
+                        "url": "",
+                        "tokenName": "access_code"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": [
+        {
+            "name": "Version",
+            "description": "Optional value to reference earlier versions of the API.",
+            "type": "integer",
+            "paramType": "header",
+            "example": 0,
+            "format": "int32",
+            "global": true
+        },
+        {
+            "name": "offset",
+            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+            "type": "integer",
+            "format": "int64",
+            "paramType": "query",
+            "example": 0,
+            "pagedOnly": true,
+            "global": true
+        },
+        {
+            "name": "limit",
+            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+            "type": "integer",
+            "format": "int64",
+            "paramType": "query",
+            "example": 20,
+            "pagedOnly": true,
+            "global": true
+        }
+    ],
+    "responseMessages": [
+        {
+            "code": 200,
+            "summary": "OK",
+            "reason": "Request completed successfully."
+        },
+        {
+            "code": 400,
+            "summary": "Bad Request",
+            "reason": "Something was wrong with the request, incorrect parameters.",
+            "responseModel": "error"
+        },
+        {
+            "code": 401,
+            "summary": "Unauthorized",
+            "reason": "Not authorised to access the requested data.",
+            "responseModel": "error"
+        },
+        {
+            "code": 403,
+            "summary": "Forbidden",
+            "reason": "Authentication failed.",
+            "responseModel": "error"
+        },
+        {
+            "code": 404,
+            "summary": "Not Found",
+            "reason": "The requested resource does not exist",
+            "responseModel": "error"
+        },
+        {
+            "code": 408,
+            "summary": "Request Timeout",
+            "reason": "The operation timed out.",
+            "responseModel": "error"
+        },
+        {
+            "code": 429,
+            "summary": "Rate Limited",
+            "reason": "You have exceeded your usage quota and your request has been rate limited.",
+            "responseModel": "error"
+        },
+        {
+            "code": 500,
+            "summary": "Internal Server Error",
+            "reason": "Something went wrong with the server.",
+            "responseModel": "error"
+        }
+    ],
+    "envelope": {
+        "mainParam": "response",
+        "properties": {
+            "response": {
+                "description": "The main response",
+                "expectedInResponses": true,
+                "main": true,
+                "usedInResponses": true,
+                "usedInPuts": false,
+                "usedInPosts": false,
+                "name": "response"
+            },
+            "paging": {
+                "description": "Information and links on how to navigate pages of this response",
+                "$ref": "paging",
+                "type": "paging",
+                "pagedOnly": true,
+                "expectedInResponses": true,
+                "usedInResponses": true,
+                "usedInPuts": false,
+                "usedInPosts": false,
+                "name": "paging"
+            }
+        }
+    },
+    "apis": [
+        {
+            "path": "/countries",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Filter the list by name.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "u",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "offset",
+                            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 0,
+                            "pagedOnly": true,
+                            "global": true
+                        },
+                        {
+                            "name": "limit",
+                            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 20,
+                            "pagedOnly": true,
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the list of countries",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "isPaged": true,
+                    "defaultPageSize": 100,
+                    "maxPageSize": 100,
+                    "items": {
+                        "type": "country",
+                        "$ref": "country"
+                    }
+                }
+            ],
+            "parentModel": "country",
+            "description": "List countries"
+        },
+        {
+            "path": "/countries/{id}/banks",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the country.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "List the banks associated with a country.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "items": {
+                        "type": "bank",
+                        "$ref": "bank"
+                    }
+                }
+            ],
+            "parentModel": "country",
+            "description": "List the banks associated with a country."
+        },
+        {
+            "path": "/banks",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Filter the list by name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "natwest",
+                            "format": "string"
+                        },
+                        {
+                            "name": "swift",
+                            "description": "Filter the list by swift code",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "NAGBNAT",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "offset",
+                            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 0,
+                            "pagedOnly": true,
+                            "global": true
+                        },
+                        {
+                            "name": "limit",
+                            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 20,
+                            "pagedOnly": true,
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the list of banks",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "isPaged": true,
+                    "defaultPageSize": 100,
+                    "maxPageSize": 100,
+                    "items": {
+                        "type": "bank",
+                        "$ref": "bank"
+                    }
+                }
+            ],
+            "parentModel": "bank",
+            "description": "List banks"
+        },
+        {
+            "path": "/banks/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "bank",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the bank.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int32"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single bank by id",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "$ref": "bank"
+                }
+            ],
+            "parentModel": "bank",
+            "description": "Get a single bank by id."
+        },
+        {
+            "path": "/banks/{id}/branches",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the bank.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int32"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get branches associated with a bank.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "items": {
+                        "type": "branch",
+                        "$ref": "branch"
+                    }
+                }
+            ],
+            "parentModel": "bank",
+            "description": "The branches associated with a bank."
+        },
+        {
+            "path": "/branches",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "swift",
+                            "description": "Filter the list by swift code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "NAGBNAT345",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "offset",
+                            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 0,
+                            "pagedOnly": true,
+                            "global": true
+                        },
+                        {
+                            "name": "limit",
+                            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 20,
+                            "pagedOnly": true,
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the list of branches.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "isPaged": true,
+                    "defaultPageSize": 100,
+                    "maxPageSize": 100,
+                    "items": {
+                        "type": "branch",
+                        "$ref": "branch"
+                    }
+                }
+            ],
+            "parentModel": "branch",
+            "description": "List the branches."
+        }
+    ],
+    "models": {
+        "error": {
+            "id": "error",
+            "name": "error",
+            "isError": true,
+            "properties": {
+                "code": {
+                    "name": "code",
+                    "description": "The HTTP error code",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 404,
+                    "purpose": "code",
+                    "isId": true,
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A short name for the error message",
+                    "type": "string",
+                    "format": "string",
+                    "example": "Not found",
+                    "purpose": "name",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                },
+                "message": {
+                    "name": "message",
+                    "description": "A human readable and client friendly error message",
+                    "type": "string",
+                    "format": "string",
+                    "example": "The API method does not exist",
+                    "purpose": "message",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                }
+            },
+            "required": []
+        },
+        "bank": {
+            "name": "bank",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the bank.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": 12345,
+                    "format": "int32"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the bank.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Natwest",
+                    "format": "string"
+                },
+                "code": {
+                    "name": "code",
+                    "description": "2 digit country code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "GB",
+                    "format": "string"
+                },
+                "swift": {
+                    "name": "swift",
+                    "description": "The swift code for the bank",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "NAGBNAT",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "code",
+                "swift"
+            ]
+        },
+        "branch": {
+            "name": "branch",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the branch.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": 123456,
+                    "format": "int32"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the branch.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Natwest Islington",
+                    "format": "string"
+                },
+                "address1": {
+                    "name": "address1",
+                    "description": "The first line of the address.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "192 Upper Street",
+                    "format": "string"
+                },
+                "address2": {
+                    "name": "address2",
+                    "description": "The second line of the addres.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Islington",
+                    "format": "string"
+                },
+                "city": {
+                    "name": "city",
+                    "description": "The city of the branch.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "London",
+                    "format": "string"
+                },
+                "country": {
+                    "name": "country",
+                    "description": "The country of the branch.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "United Kingdom",
+                    "format": "string"
+                },
+                "swift": {
+                    "name": "swift",
+                    "description": "The swift code for the branch",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "NAGBNAT345",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "address1",
+                "address2",
+                "city",
+                "country",
+                "swift"
+            ]
+        },
+        "country": {
+            "name": "country",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "united-kingdom",
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "United Kingdom",
+                    "format": "string"
+                },
+                "code": {
+                    "name": "code",
+                    "description": "The 2 digit country code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "UK",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "code"
+            ]
+        }
+    },
+    "jsonp": {
+        "supported": false,
+        "callbackParameter": "jsonp",
+        "methodParameter": "method",
+        "always200": true,
+        "errorModel": "error"
+    },
+    "responseHeaders": [
+        {
+            "name": "Content-Type",
+            "description": "The media type of the body",
+            "example": "application/json",
+            "pageOnly": false
+        },
+        {
+            "name": "Content-Length",
+            "description": "How many bytes the content body contains",
+            "example": "8584",
+            "pageOnly": false
+        },
+        {
+            "name": "Content-Encoding",
+            "description": "What, if any, compression is being used.",
+            "example": "gzip",
+            "pageOnly": false
+        },
+        {
+            "name": "ETag",
+            "description": "A short string representation of the resource, useful for seeing if it has changed.",
+            "example": "18118-50c9c7c55a41d",
+            "pageOnly": false
+        },
+        {
+            "name": "Last-Modified",
+            "description": "When was the resource last modified",
+            "example": "Wed, 14 Jan 2015 13:12:03 GMT",
+            "pageOnly": false
+        },
+        {
+            "name": "Link",
+            "description": "Links to other pages of data in the collection, valid values are: first, prev, next, last",
+            "example": "<https://api.example.com/resources?offset=20&limit=20>; rel='next', <https://api.example.com/resources?offset=60&limit=20>; rel='last'",
+            "pageOnly": false,
+            "pagedOnly": true
+        },
+        {
+            "name": "X-Total-Count",
+            "description": "The number of items in the collection",
+            "example": "75",
+            "pageOnly": false,
+            "pagedOnly": true
+        }
+    ],
+    "envelopeIsUsed": false
+}

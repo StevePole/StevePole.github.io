@@ -1,0 +1,58 @@
+<h3 class="page-header">Request Format</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        
+Bad:
+<pre class="request">curl -X POST \
+-F 'a=b' \
+-F 'c[d][]=1' \
+https://api.example.com/example</pre>
+        
+        <p>Older web servers expect individual parameters to be supplied in 
+            POST/PUT data, with string encode JSON used for individual parameters,
+            as seen below.</p>
+Better:
+<pre class="request">curl -X POST \
+-F 'a=b' \
+-F 'c={"d":[1]}' \
+https://api.example.com/example</pre>
+        
+        
+        <p>Ideally you should allow users to simply post string encoded JSON as
+            follows.</p>
+Best:
+<pre class="request">curl -X POST \
+-D '{
+    "a": "b"
+    }
+    "c": {
+        "d": [1]
+    }
+}' \
+https://api.example.com/example</pre>
+        
+        
+        <label class='checkbox'>
+            <input type="checkbox" ng-model="json.supportsJsonPost" />
+            Supports JSON POST?
+        </label>
+    </div>
+    <div class="col-md-6">
+        <p>You may also choose to allow users to supply/request XML, it's not 
+            highly  recommended, XML contains a number ways to encode the same 
+            relationships e.g. attributes vs elements, various array 
+            definitions/structures, so the transition back to JSON can become 
+            indeterminate.</p>
+            
+        <label class='checkbox'>
+            <input type="checkbox" disabled checked />
+            Supports JSON?
+        </label>
+        <label class='checkbox'>
+            <input type="checkbox" ng-model="json.supportsXml" />
+            Supports XML?
+        </label>
+
+    </div>
+</div>

@@ -1,0 +1,353 @@
+<div class="api-content">
+    <div class="row">
+        <div class="col-md-6 form-horizontal">
+            <div class="form-group"
+                ng-if="vm.api.type == 1 || vm.api.type == 2 || vm.api.type == 3">
+                <label class="col-sm-4 control-label">
+                    {{vm.api.parent | capitalise}} model
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control"
+                        ng-model="vm.api.parentModel" required
+                        ng-options="model.name as model.name for model in vm.json.models | nonEnvelopeModels | orderBy:'name'"
+                        ng-change="vm.changeParentModel(vm.api)">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Description</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control api-description"
+                        ng-model="vm.api.description" required />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="operations">
+        <div class="">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="operation in vm.api.operations"
+                    ng-class="{active: $first}">
+                    <a href="#{{vm.api.path | stripSlashes}}{{operation.method}}"
+                        data-toggle="tab">
+                        {{operation.method}}
+                    </a>
+                </li>
+                <li class="pull-right">
+                    <a href="" class="nav-tab-label">
+/{{vm.api.parent}}<span ng-if="vm.api.pathUsesId">/{id}</span><span ng-if="vm.api.pathUsesChild">/{{vm.api.child}}</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div ng-repeat="operation in vm.api.operations"
+                     ng-class="{active: $first}"
+                     class="tab-pane operation"
+                     id="{{vm.api.path | stripSlashes}}{{operation.method}}">
+
+                    <div class="row">
+                        <div class="col-md-6 form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Summary</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control operation-summary"
+                                        ng-model="operation.summary"
+                                        placeholder="Summary of this operation"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Notes</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control operation-notes twoHigh"
+                                        ng-model="operation.notes"
+                                        placeholder="Additional notes for this operation (markdown compatible)"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Requires auth?</label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-requires-auth" value="1"
+                                            ng-model="operation.requiresAuth" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Disabled?</label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-disabled" value="1"
+                                            ng-model="operation.disabled" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Hidden?</label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-hidden" value="1"
+                                            ng-model="operation.hidden" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Throttling cost</label>
+                                <div class="col-sm-8">
+                                    <input type="number"
+                                        class="form-control" value="10"
+                                        ng-model="operation.throttlingCost" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-horizontal"
+                            ng-if="operation.method !== 'HEAD'">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">
+                                    Response type
+                                </label>
+                                <div class="col-sm-8">
+                                    <select class="form-control operation-type"
+                                        ng-model="operation.displayType"
+                                        ng-options="shortName for shortName in vm.displayTypes"
+                                        ng-disabled="(api.type == 1 || api.type == 2) && operation.method == 'GET'">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-hide="operation.displayType != 'enum'">
+                                <label class="col-sm-4 control-label">
+                                    Enum options
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="text"
+                                        class="form-control operation-enum"
+                                        placeholder="Comma separate values"
+                                        ng-model="operation.enum"
+                                        ng-list />
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-show="operation.displayType == 'string'">
+                                <label class="col-sm-4 control-label">
+                                    Example
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="text"
+                                        class="form-control"
+                                        placeholder="Example response"
+                                        ng-model="operation.example" />
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-hide="operation.displayType != 'object'">
+                                <label class="col-sm-4 control-label">
+                                    Response model
+                                </label>
+                                <div class="col-sm-8">
+                                    <div class="input-button-append">
+                                        <select class="form-control operation-model models"
+                                            ng-model="operation.displayModel"
+                                            ng-options="model.name as model.name for model in vm.json.models | nonEnvelopeModels | orderBy:'name'"
+                                            ng-disabled="(vm.api.type == 1 || vm.api.type == 2) && operation.method == 'GET'">
+                                        </select>
+                                        <button class="btn btn-default"
+                                            ng-click="vm.scrollTo('model-'+operation.displayModel)">
+                                            <i class="glyphicon glyphicon-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">
+                                    Response is array?
+                                </label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-array"
+                                            ng-disabled="operation.isDictionary"
+                                            ng-model="operation.isArray" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">
+                                    Response is dictionary?
+                                </label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-array"
+                                            ng-disabled="operation.isArray"
+                                            ng-model="operation.isDictionary" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-if="operation.isArray || operation.isDictionary">
+                                <label class="col-sm-4 control-label">
+                                    Response is paged?
+                                </label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-click="vm.isPagedToggle(operation)"
+                                            ng-model="operation.isPaged" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="operation.isPaged">
+                                <label class="col-sm-4 control-label">
+                                    Default page size
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control"
+                                        ng-model="operation.defaultPageSize" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="operation.isPaged">
+                                <label class="col-sm-4 control-label">
+                                    Max page size
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control"
+                                        ng-model="operation.maxPageSize" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">
+                                    Response envelope?
+                                </label>
+                                <div class="col-sm-8 checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                            class="operation-uses-envelope" value="1"
+                                            ng-model="operation.usesEnvelope" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group"
+                                ng-show="vm.supportsPostData(operation.method)">
+                                <label class="col-sm-4 control-label">
+                                    {{operation.method}} model
+                                </label>
+                                <div class="col-sm-8">
+                                    <div class="input-button-append">
+                                        <select class="form-control operation-post-data-model models"
+                                            ng-model="operation.postDataModel"
+                                            ng-options="model.name as model.name for model in vm.json.models | nonEnvelopeModels | orderBy:'name'"
+                                            ng-disabled="vm.api.type == 1 || vm.api.type == 2">
+                                            <option value="">-- None --</option>
+                                        </select>
+                                        <button class="btn btn-default"
+                                            ng-click="vm.scrollTo('model-'+operation.postDataModel)">
+                                            <i class="glyphicon glyphicon-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="page-header">Additional Query Parameters</h4>
+                    <div class="parameters table-responsive">
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Parameter Name</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                                <th>Enum / Example</th>
+                                <th>Array?</th>
+                                <th>Required?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="no-parameters">
+                                <td colspan="7">No parameters</td>
+                            </tr>
+                            <tr class="parameter"
+                                ng-repeat="(idx, parameter) in operation.parameters" >
+                                <td>
+                                    <a href="" class="close remove-row"
+                                       ng-click="vm.utility.remove(operation.parameters, idx)">&times;</a>
+                                </td>
+                                <td>
+                                    <input type="text"
+                                        class="form-control col-md-2 parameter-name"
+                                        ng-model="parameter.name"
+                                        ng-pattern="vm.validators.camelCaseNumericUnderscore"
+                                        placeholder="Parameter name"
+                                        required />
+                                </td>
+                                <td>
+                                    <input type="text"
+                                        class="form-control parameter-description"
+                                        ng-model="parameter.description"
+                                        placeholder="Description of the parameter"
+                                        required  />
+                                </td>
+                                <td class="input-fixed-md">
+                                    <select class="form-control"
+                                        ng-model="parameter.displayType"
+                                        ng-options="shortName for shortName in vm.displayTypesNoObject | noVoid">
+                                    </select>
+                                </td>
+                                <td class="input-fixed-lg">
+                                    <input type="text"
+                                        class="form-control"
+                                        placeholder="Comma separate values"
+                                        ng-disabled="parameter.displayType != 'enum'"
+                                        ng-if="parameter.displayType == 'enum'"
+                                        ng-model="parameter.enum"
+                                        ng-list />
+
+                                    <input type="text" class="form-control"
+                                        placeholder="Example value"
+                                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'string' || parameter.displayType == 'date' || parameter.displayType == 'date-time')"
+                                        ng-model="parameter.example" />
+
+                                    <input type="number" step="1" class="form-control"
+                                        placeholder="Example value"
+                                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'int32' || parameter.displayType == 'int64')"
+                                        ng-model="parameter.example" />
+
+                                    <input type="number" class="form-control"
+                                        placeholder="Example value"
+                                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'double' || parameter.displayType == 'float')"
+                                        ng-model="parameter.example" />
+
+                                    <input type="checkbox"
+                                        ng-if="parameter.displayType != 'enum' && (parameter.displayType == 'boolean' || parameter.displayType == 'byte')"
+                                        ng-model="parameter.example" />
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        class="parameter-array"
+                                        ng-model="parameter.isArray" />
+                                </td>
+                                <td>
+                                    <input type="checkbox"
+                                        class="parameter-required"
+                                        ng-model="parameter.required" />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-default add-parameter"
+                        ng-click="vm.addParameter(operation.parameters)">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Add Parameter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

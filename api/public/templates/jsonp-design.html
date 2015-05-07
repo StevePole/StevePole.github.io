@@ -1,0 +1,82 @@
+<h3 class="page-header">JSONP Requests</h3>
+<div class="row">
+    <div class="col-md-6">
+        <p>JSONP requests allow cross-browser client to server communication
+            between different domains.  To support JSONP your API will need to
+            wrap responses in a callback function.  It is customary to allow the
+            API consumer to specify the name for the callback function using a
+            callback name parameter.</p>
+
+        <p>Many APIs infer that they are in JSONP mode by the presence of the
+            callback parameter.</p>
+
+        <p>All JSONP requests are GETs so you should allow the user to specify
+            the method as a query parameter.</p>
+
+        <p>JSONP should always return HTTP code 200 SUCCESS as other response
+            codes will not trigger error handlers in the browser. In the case of
+            an error you should embed the actual HTTP code and any error message
+            within the response so the browser can respond appropriately.</p>
+
+        <p>If your response envelope contains error information you may wish to
+            return the default response, if not, select an error model to return</p>
+    </div>
+    <div class="col-md-6 form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Supports JSONP?</label>
+            <div class="col-sm-8 checkbox">
+                <label>
+                    <input type="checkbox"
+                        ng-model="vm.jsonp.supported" />
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Callback parameter</label>
+            <div class="col-sm-8">
+                <select class="form-control models"
+                    ng-model="vm.jsonp.callbackParameter"
+                    ng-options="parameter.name as parameter.name for parameter in vm.params | orderBy:'name'"
+                    ng-disabled="!vm.jsonp.supported">
+                    <option value="">-- None --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Method parameter</label>
+            <div class="col-sm-8">
+                <select class="form-control models"
+                    ng-model="vm.jsonp.methodParameter"
+                    ng-options="parameter.name as parameter.name for parameter in vm.params | orderBy:'name'"
+                    ng-disabled="!vm.jsonp.supported">
+                    <option value="">-- None --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Always returns 200?</label>
+            <div class="col-sm-8 checkbox">
+                <label>
+                    <input type="checkbox"
+                        ng-model="vm.jsonp.always200"
+                        ng-disabled="!vm.jsonp.supported" />
+                    <span class="radio-note">JSONP should always return HTTP 200</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">
+                Error response
+            </label>
+            <div class="col-sm-8">
+                <select class="form-control models"
+                    ng-model="vm.jsonp.errorModel"
+                    ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                    ng-disabled="!vm.jsonp.supported">
+                    <option value="">-- Default --</option>
+                    <option value="response">-- By response message --</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

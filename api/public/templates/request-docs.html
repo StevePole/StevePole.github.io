@@ -1,0 +1,62 @@
+<!--
+<ul class="breadcrumb" ng-if="path">
+    <li ng-repeat="pathModel in path track by $index"
+        ng-class="{active: $last}">
+        <a href="" ng-click="viewModelByDepth(json.models, $index)" ng-if="!$last">
+            {{pathModel | renameEnvelopes}}
+        </a>
+        <span ng-if="$last">{{pathModel | renameEnvelopes}}</span>
+    </li>
+</ul>
+-->
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Value</th>
+            <th>Type</th>
+            <th>Required?</th>
+            <th>Used in ...</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="no-parameters">
+            <td colspan="5">No parameters</td>
+        </tr>
+        <tr ng-repeat="parameter in operation.parameters"
+            ng-class="{disabled: parameter.disabled}"
+            ng-if="!parameter.global || parameter.pagedOnly">
+            <td><code>{{parameter.name}}</code></td>
+            <td style="white-space: nowrap;">
+                <span ng-if="!parameter.items">
+                    <span ng-if="!parameter.enum">{{parameter.type}}</span>
+                    <span ng-if="parameter.enum">enum</span>
+                    <span ng-if="parameter.format && parameter.format != parameter.type">
+                        ({{parameter.format}})
+                    </span>
+                </span>
+                <span ng-if="parameter.items.$ref">
+                    array({{parameter.items.$ref}})
+                </span>
+                <span ng-if="!parameter.items.$ref && parameter.items.type">
+                    array(<span ng-if="parameter.items.format">{{parameter.items.format}}</span><span
+                        ng-if="!parameter.items.format">{{parameter.items.type}}</span>)
+                </span>
+            </td>
+            <td>
+                <span ng-if="parameter.required || parameter.paramType == 'path'">
+                    yes
+                </span>
+            </td>
+            <td>{{parameter.paramType}}</td>
+            <td>
+                <div ng-bind-html="parameter.description"></div>
+                <div ng-if="parameter.enum" style="margin-top: 14px;">
+                    <p>Available enums: {{parameter.enum.join(', ')}}</p>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

@@ -1,0 +1,37 @@
+<table class="table ">
+    <thead>
+        <tr>
+            <th>API Name</th>
+            <th>Description</th>
+            <th>Contact Email</th>
+            <th>Actions</th>
+            <th>SDKs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="api in apis2 track by $index">
+            <td>
+                <a href="docs.html?{{urlParam}}={{api.link}}" ng-if="api.info.title">
+                    {{api.info.title}}
+                </a>
+                
+                <a href="docs.html?{{urlParam}}={{api.link}}" ng-if="!api.info.title && api.basePath">
+                    {{api.basePath}}{{api.resourcePath}}
+                </a>
+            </td>
+            <td>{{api.info.description}}</td>
+            <td>{{api.info.contact}}</td>
+            <td><a href="docs.html?{{urlParam}}={{api.link}}" target="_self">docs</a> - 
+                <a href="console.html?{{urlParam}}={{api.link}}" target="_self">console</a> - 
+                <a href="designer.html?{{urlParam}}={{api.link}}" target="_self">design</a> -
+                <a href="tests.html?{{urlParam}}={{api.link}}" target="_self">tests</a>
+            </td>
+            <td>
+                <a href="angular_sdk.html?{{urlParam}}={{api.link}}" target="_self">AngularJS</a><br />
+                <a href="jquery_sdk.html?{{urlParam}}={{api.link}}" target="_self">jQuery</a><br />
+                <a href="mock_jquery_sdk.html?{{urlParam}}={{api.link}}" target="_self">jQueryMock</a>
+                <!--<a href="mock_angular_sdk.html?{{urlParam}}={{api.link}}" target="_self">AngularJsMock</a>-->
+            </td>
+        </tr>
+    </tbody>
+</table>

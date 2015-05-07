@@ -1,0 +1,75 @@
+        <span ng-if="property.name">
+            <input type="checkbox" ng-model="property.expectedInResponses" />
+            {{property.name}}:
+        </span>
+        <span ng-if="property.type === 'array'">[</span>{
+        <div class="indent form-inline">
+            <div ng-repeat="modelProperty in model.properties" ng-cloak>
+                <span ng-if="!model">
+                    <input type="checkbox" ng-model="modelProperty.expectedInResponses" />
+                </span>
+                <span ng-if="!model" class="json-label">{{modelProperty.name}}:</span>
+                <span ng-if="!model">
+                    <span ng-if="modelProperty.type === 'array'">[</span>
+
+                    <input type="number" step="1" class="param-val form-control"
+                        placeholder="{{modelProperty.format}}"
+                        name="{{modelProperty.name}}"
+                        ng-if="modelProperty.type === 'integer' && !modelProperty.enum"
+                        ng-pattern="validators.numeric"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses">
+
+                    <input type="text" class="param-val form-control"
+                        placeholder="{{modelProperty.format}}"
+                        name="{{modelProperty.name}}"
+                        ng-if="modelProperty.type === 'number' && !modelProperty.enum"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses">
+
+                    <input type="text" class="param-val form-control"
+                        placeholder="{{modelProperty.format}}"
+                        name="{{modelProperty.name}}"
+                        ng-if="(modelProperty.type === 'string')  && !modelProperty.enum"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses">
+
+                    <input type="checkbox" class="param-val form-control"
+                        ng-if="(modelProperty.type === 'boolean') && !modelProperty.enum"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses" />
+
+                    <input type="text" class="param-val form-control"
+                        placeholder="Comma separate values"
+                        name="{{modelProperty.name}}"
+                        ng-if="modelProperty.type === 'array' && !modelProperty.enum"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses"
+                        ng-list />
+
+                    <select name="{{modelProperty.name}}" class="form-control"
+                        ng-if="modelProperty.enum"
+                        ng-options="enum as enum for (idx, enum) in modelProperty.enum"
+                        placeholder="Select {{modelProperty.name}}"
+                        ng-model="modelProperty.example"
+                        ng-disabled="!modelProperty.expectedInResponses">
+                        <option value="">-- Don't check value  --</option>
+                    </select>
+
+                    <span ng-if="modelProperty.type === 'array'">]</span>
+                </span>
+
+                <span
+                    ng-include="templates.model"
+                    ng-if="modelProperty.model"
+                    ng-init="property=modelProperty; model=modelProperty.model;"></span>
+                <!--
+                <model-values-form
+                    ng-if="modelProperty.model"
+                    property="modelProperty"
+                    model="modelProperty.model">
+                </model-values-form>
+                -->
+            </div>
+        </div>
+        }<span ng-if="property.type === 'array'">]</span>

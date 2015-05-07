@@ -1,0 +1,86 @@
+<div id="{{method.path}}"
+    ng-repeat="method in json.apis" class="method"
+    ng-class="{disabled: method.disabled}"
+    ng-hide="method.hidden">
+    <h3 class="page-header">
+        {{method.path}}
+        <span ng-show="method.disabled"> - DISABLED</span>
+    </h3>
+    <div class="space-div">{{method.description}}</div>
+
+    <ul class="nav nav-tabs">
+        <li ng-repeat="operation in method.operations"
+            ng-class="{active: $first}"
+            ng-hide="operation.hidden">
+            <a href="" data-target="#{{method.path | stripSlashes}}{{operation.method}}" data-toggle="tab">
+                {{operation.method}}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div ng-repeat="operation in method.operations"
+             ng-class="{disabled: operation.disabled, active: $first}"
+             id="{{method.path | stripSlashes}}{{operation.method}}"
+             class="{{operation.method}} tab-pane">
+            <span class="label pull-right" ng-class="{
+                'label-success': operation.throttlingCost < 10,
+                'label-warning': operation.throttlingCost < 50 && operation.throttlingCost >= 10,
+                'label-important': operation.throttlingCost >= 50}"
+                ng-if="operation.throttlingCost">
+                Throttling cost: {{operation.throttlingCost}}
+            </span>
+            <p class="space-div">{{operation.summary}}</p>
+            <div class="space-div well" ng-if="operation.notes">
+                <markdown ng-model="operation.notes"></markdown>
+            </div>
+
+            <h5>Request parameters:</h5>
+            <request-docs></request-docs>
+
+            <h5>Response properties:</h5>
+            <p>{{operation.responsePhrase}}</p>
+
+            <div class="alert alert-info" ng-if="operation.isPaged">
+                <h4>Paged Response</h4>
+                Responses for this methods are paged using the
+                optional paging parameters.
+
+                <span ng-if="operation.defaultPageSize">
+                    The default page size is {{operation.defaultPageSize}}.
+                </span>
+                <span ng-if="operation.maxPageSize">
+                    The maximum page size is {{operation.maxPageSize}}.
+                </span>
+            </div>
+
+            <div ng-init="model = json.models[operation.displayModel]; path = operation.responsePath;">
+                <response-docs></response-docs>
+            </div>
+
+            <h5>Example request:</h5>
+
+            <pre ng-if="!json.supportsJsonPost" class="request">curl -X {{operation.method}} \<span
+                ng-if="operation.requestJson"
+                ng-repeat="(paramName, paramValue) in operation.requestJson">
+-F '{{paramName}}={{paramValue | json}}' \</span>
+{{operation.requestUrl}}<span class="optional-param">{{operation.requestQuery}}</span></pre>
+
+            <pre ng-if="json.supportsJsonPost" class="request">curl -X {{operation.method}} \<span
+                ng-if="operation.requestJson">
+-H 'Content-Type: application/json'
+-d '{{operation.requestJson | json}}' \</span>
+{{operation.requestUrl}}</pre>
+
+            <h5>Example response headers:</h5>
+            <pre ng-if="json.responseHeaders.length"><span
+                ng-if="(!header.pagedOnly && !header.singleOnly) || (operation.isPaged && header.pagedOnly) || (!operation.isArray && header.singleOnly)"
+                ng-repeat="header in json.responseHeaders"><strong>{{header.name}}</strong>: {{header.example}}
+</span></pre>
+
+            <h5>Example response body:</h5>
+            <pre>{{operation.responseJson}}</pre>
+        </div>
+    </div>
+
+    <p>Jump to <a href="#method_overview">methods</a> - <a href="#top">top</a></p>
+</div>

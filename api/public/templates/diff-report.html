@@ -1,0 +1,111 @@
+<h3 ng-if="diff.changed >= 0">Changes since you last generated the form:</h3>
+<p ng-if="diff.changed == 0">None</p>
+
+<p ng-if="diff.meta">APIs</p>
+<ul ng-if="diff.meta">
+    <li class="text-error" ng-repeat="breaking in diff.meta.breaking">
+        {{breaking}}
+    </li>
+    <li class="text-error" ng-repeat="nonbreaking in diff.meta.nonbreaking">
+        {{nonbreaking}}
+    </li>
+</ul>
+    
+    
+<p ng-if="diff.apis.changed">APIs</p>
+<ul ng-if="diff.apis.changed">
+    <li class="text-error" ng-repeat="removed in diff.apis.removed">
+        {{removed}} was removed.
+    </li>
+    <li class="text-success" ng-repeat="added in diff.apis.added">
+        {{added}} was added.
+    </li>
+    <li ng-repeat="(path, api) in diff.apis.children" ng-if="api.changed">
+        In endpoint {{path}}
+        <ul>
+            <li class="text-error" ng-repeat="breaking in api.breaking">
+                {{breaking}}
+            </li>
+            <li class="text-success" ng-repeat="nonbreaking in api.nonbreaking">
+                {{nonbreaking}}
+            </li>
+            <li class="text-error"
+                ng-repeat="removed in api.children.removed">
+                Operation '{{removed}}' was removed.
+            </li>
+            <li class="text-success"
+                ng-repeat="added in api.children.added">
+                Operation '{{added}}' was added.
+            </li>
+            <li ng-repeat="(method, operation) in api.children.children" ng-if="operation.changed">
+                In operation '{{method}}'
+                <ul>
+                    <li class="text-error" ng-repeat="breaking in operation.breaking">
+                        {{breaking}}
+                    </li>
+                    <li class="text-success" ng-repeat="nonbreaking in operation.nonbreaking">
+                        {{nonbreaking}}
+                    </li>
+                    <li class="text-error" ng-repeat="removed in operation.children.removed">
+                        Parameter '{{removed}}' was removed.
+                    </li>
+                    <li class="text-success" ng-repeat="added in operation.children.added">
+                        Parameter '{{added}}' was added.
+                    </li>
+                    <li ng-repeat="(paramName, param) in operation.children.children" ng-if="param.changed">
+                        In parameter '{{paramName}}'
+                        <ul>
+                            <li class="text-error" ng-repeat="breaking in param.breaking">
+                                {{breaking}}
+                            </li>
+                            <li class="text-success" ng-repeat="nonbreaking in param.nonbreaking">
+                                {{nonbreaking}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<p ng-if="diff.models.changed">Models</p>
+<ul ng-if="diff.models.changed">
+    <li class="text-error" ng-repeat="removed in diff.models.removed">
+        Model '{{removed}}' was removed.
+    </li>
+    <li class="text-success" ng-repeat="added in diff.models.added">
+        Model '{{added}}' was added.
+    </li>
+    <li ng-repeat="(modelName, model) in diff.models.children" 
+        ng-if="model.changed || model.breaking || model.nonbreaking || model.children">
+        In model {{modelName}}
+        <ul>
+            <li class="text-error" ng-repeat="breaking in model.breaking">
+                {{breaking}}
+            </li>
+            <li class="text-success" ng-repeat="nonbreaking in model.nonbreaking">
+                {{nonbreaking}}
+            </li>
+            <li class="text-error"
+                ng-repeat="removed in model.children.removed">
+                Property '{{removed}}' was removed.
+            </li>
+            <li class="text-success"
+                ng-repeat="added in model.children.added">
+                Property '{{added}}' was added.
+            </li>
+            <li ng-repeat="(propertyName, property) in model.children.children" ng-if="property.changed">
+                In property '{{propertyName}}'
+                <ul>
+                    <li class="text-error" ng-repeat="breaking in property.breaking">
+                        {{breaking}}
+                    </li>
+                    <li class="text-success" ng-repeat="nonbreaking in property.nonbreaking">
+                        {{nonbreaking}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>

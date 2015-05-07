@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="apis-application">
+  <head>
+    <meta charset="utf-8">
+    <title>User Management - API Hub</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link type="text/css" rel="stylesheet"
+        href="components/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet"
+        href="components/bootstrap/dist/css/bootstrap-theme.min.css" />
+    
+    <style>
+
+	.disabled, .disabled code, .disabled a, .disabled pre {
+		color: #999;
+	}
+	.hidden {
+		display: none;
+	}
+	.request b {
+		color: #DD1144;
+		font-weight: normal;
+	}
+	
+    </style>
+	
+	<script src="components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="components/underscore/underscore-min.js" type="text/javascript"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="components/showdown/compressed/Showdown.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.js"></script>
+	
+    <script src="../js/app.js" type="text/javascript"></script>
+    <!--<script src="js/animations.js" type="text/javascript"></script>-->
+    
+    <script src="../js/utils.js" type="text/javascript"></script>
+    
+    <script src="js/controllers.min.js"></script>
+    <script src="js/services.min.js"></script>
+    <script src="js/filters.min.js"></script>
+    <script src="js/directives.min.js"></script>
+  </head>
+
+  <body ng-controller="PageCtrl" ng-init="page = 'users'">
+    <menu></menu>
+	
+    <div class="container" ng-controller="UsersCtrl">
+        <div ng-include src="templates.users"></div>
+    </div>
+	
+    <footer class="container"></footer>
+  </body>
+</html>

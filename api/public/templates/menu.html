@@ -1,0 +1,45 @@
+<div class="navbar navbar-default serif">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" 
+                    data-toggle="collapse" data-target="#menu-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">APIs</a>
+        </div>
+        <div class="collapse navbar-collapse" id="menu-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active: page === 'directory'}">
+                    <a href="directory.html" target="_self">API Directory</a>
+                </li>
+                <li ng-class="{active: page === 'docs'}" ng-if="page === 'docs'">
+                    <a href="docs.html" target="_self">API Docs</a>
+                </li>
+                <li ng-class="{active: page === 'console'}" ng-if="page === 'console'">
+                    <a href="console.html" target="_self">API Console</a>
+                </li>
+                <li ng-class="{active: page === 'design'}" ng-if="loggedIn">
+                    <a href="designer.html" target="_self">API Designer</a>
+                </li>
+                <li ng-class="{active: page === 'tests'}" ng-if="loggedIn">
+                    <a href="tests.html" target="_self">API Test Design</a>
+                </li>
+                <li ng-class="{active: page === 'users'}" ng-if="loggedIn" >
+                    <a href="directory.html" target="_self">Users</a>
+                </li>
+            </ul>
+
+            <!-- -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="" ng-click="openLogin()" ng-if="!loggedIn">Login</a>
+                    <a href="" ng-click="logout()" ng-if="loggedIn">Logout</a>
+                </li>
+            </ul>
+            <!-- -->
+        </div>
+    </div>
+</div>

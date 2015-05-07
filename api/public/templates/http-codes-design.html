@@ -1,0 +1,47 @@
+<h3 class="page-header">HTTP Response Codes</h3>
+<div id="response-message-section" class="table-responsive">
+    <table class="table" ng-cloak>
+    <thead>
+        <tr>
+            <th>&nbsp;&nbsp;&nbsp;</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Message</th>
+            <th>Response Model</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(idx, responseMessage) in vm.codes">
+            <td>
+                <a href="" class="close remove-row"
+                   ng-click="vm.remove(json.responseMessages, idx)"
+                   ng-if="responseMessage.code != 200">&times;</a>
+            </td>
+            <td class="input-fixed-md">
+                <input type="number" class="form-control"
+                    ng-model="responseMessage.code"
+                    ng-disabled="responseMessage.code == 200" />
+            </td>
+            <td class="input-fixed-lg">
+                <input type="text" class="form-control"
+                    ng-model="responseMessage.summary" />
+            </td>
+            <td>
+                <input type="text" class="form-control message"
+                    ng-model="responseMessage.reason" />
+            </td>
+            <td class="input-fixed-lg">
+                <select class="form-control models"
+                    ng-model="responseMessage.responseModel"
+                    ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                    ng-disabled="responseMessage.code == 200">
+                    <option value="">-- Default --</option>
+                </select>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+<button class="btn btn-default" ng-click="addResponseMessage(vm.codes)">
+    <i class="glyphicon glyphicon-plus"></i> Add Response
+</button>

@@ -1,0 +1,278 @@
+<div id="api-header" class="page-header">
+    <h2>API Endpoints</h2>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <p><strong>Think in terms of resources</strong> - In a RESTful API the
+            URI (Universal Resource Identifier) universally identifies the resource,
+            so it should be descriptive of the resource type at that location.
+            <code>GET /apples</code> should not return <code>oranges</code> regardless
+            of any additional parameters supplied.</p>
+        <p><strong>Specific resources should be identifiable by their URI</strong> -
+            <code>GET /apples/{id}</code> locates a specific apple.</p>
+        <p><strong>Avoid generic endpoints names</strong> - <code>GET /fruit?type=apples</code>
+            is an anti-pattern if the parameter fundamentally changes the returned
+            resource type.  Have multiple end points <code>GET /apples</code> and
+            <code>GET /oranges</code></p>
+
+        <p><strong>JSON body represents the state of the resource</strong> -
+            The resource model (the JSON) at a URI represents the state of the resource.
+            Meta data about the resource should not be in the model, move meta
+            data to headers e.g. paging information.</p>
+
+        <p><strong>HTTP verbs indicate how you want to interact with the resource(s)</strong> -
+            <code>GETs</code> are for retrieving objects, <code>POSTs</code> are
+            for creating, <code>PUTs</code> are for replacing, <code>PATCHs</code>
+            are for partial updates, and <code>DELETEs</code> are
+            for deleting. <code>HEAD</code> returns the same headers as a
+            <code>GET</code> but does not return a response body.</p>
+        <p><strong>Paths (URIs) identify resources so should be nouns</strong>
+            - the verb is the HTTP method, so don't <code>GET /getSongs</code>
+            just <code>GET /songs</code>, don't <code>POST /songs/create</code>,
+            just <code>POST</code> to the <code>/songs</code> collection.</p>
+
+        <p><strong>Use plural nouns for collections</strong> -
+            <code>GET /albums</code> returns a list of albums</p>
+        <p><strong>An id identifies a specific resource in a collection</strong> -
+            You should still use the plural <code>GET /albums/{id}</code> as the id
+            identifies the resource within the collection.</p>
+        <p><strong>Individual resources may have related 'child' collections</strong> -
+            <code>GET /albums/{id}/songs</code> returns a list of songs
+            related to an album.</p>
+        <p><strong>Resources may also have single 'parent' resources</strong> -
+            <code>GET /albums/{id}/artist</code> might return the single artist
+            who created an album.</p>
+    </div>
+    <div class="col-md-6">
+        <p><strong>Don't nest related resources</strong> - don't return the
+            <code>artist</code> nested as part of the <code>album</code> response
+            model, it is a separate resource identified by a separate URI.  Ask
+            yourself, if a consumer edits this nested record and issues an update,
+            do you update that artist for all albums using that record?</p>
+        <p><strong>If an API method has no associated resource then verb path
+            names may be ok</strong> - e.g.
+            <code>GET /convert?from=EUR&amp;to=USD&amp;amount=100</code></p>
+
+        <p><strong>APIs should be symmetric and idempotent</strong> - It should be
+            possible to use the JSON response of a <code>GET /resources/{id}</code>
+            as the request body for a  <code>PUT /resources/{id}</code> without
+            transformation and without causing any change in the state of the
+            resource.</p>
+        <p><strong>Return the created/edited resource</strong> - After a successful
+            <code>POST /resource</code> or <code>PUT/PATCH /resource/{id}</code> return
+            the full object (like a <code>GET /resource/{id}</code>) so the API consumer
+            can see how their request affected the object.</p>
+
+        <p><strong>Filter/search collections using query parameters</strong>
+            - e.g. <code>GET /songs?query=love</code> might
+            filter the songs collections to those with "love" in their name,
+            <code> GET /songs?page=2</code> may return the second page of a
+            paged collection.</p>
+        <p><strong>Create objects using the object root</strong> -
+            create a song using <code>POST /songs</code>, not with a
+            parent like <code>POST /album/{id}/songs</code>.  A song may have
+            multiple parents objects and there should be only one way to achieve
+            each goal e.g. should you post to <code>POST /artist/{id}/songs</code> or
+            <code>POST /album/{id}/songs</code>?</p>
+        <p><strong>Nest tightly coupled resources</strong> - If a resource never
+            exists outside the context of a parent (e.g. no GET /songs/{id} and
+            no /artists/{id}/songs) you could nest it (or it's collection) within
+            the parent model <code>album</code> model.</p>
+
+        <p><strong>Namespaces are for base paths</strong> If you feel two
+            similar resources are different enough to be namespaced e.g.
+            <code>/system/images/{id}</code> and <code>/users/images/{id}</code>
+            consider splitting these into a <code>/system</code> API and
+            a <code>/users</code> API with separate base paths.</p>
+
+        <a class="btn btn-default"
+            data-toggle="modal"
+            href="#new-method-modal"
+            id="new-method-button"
+            ng-click="vm.addApi()">
+            <i class="glyphicon glyphicon-plus"></i> Add API Endpoint
+        </a>
+
+    </div>
+</div>
+<div id="apis">
+    <div class="api"
+        ng-repeat="(idx, api) in vm.json.apis" ng-cloak>
+        <h4>
+            <span class="pull-right">
+                <a href=""
+                    ng-click="vm.utility.arrayUp(vm.json.apis, idx)"
+                    ng-if="idx > 0">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </a>
+                <a class="api-edit"
+                    data-toggle="modal"
+                    href="#new-method-modal"
+                    ng-click="vm.editApi(api, idx)">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a href="" class="api-delete"
+                   ng-click="vm.utility.remove(vm.json.apis, idx)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </span>
+            <a href="" class="api-toggle"
+                ng-click="visible = !visible"
+                ng-class="{rotate: visible}">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                /{{api.parent}}<span ng-if="api.pathUsesId">/{id}</span><span ng-if="api.pathUsesChild">/{{api.child}}</span>
+            </a>
+            <small>
+                <span ng-repeat="operation in api.operations">{{operation.method}}, </span>
+            </small>
+        </h4>
+        <api-design api="api" json="vm.json" ng-if="visible"></api-design>
+    </div>
+</div>
+
+
+<!--*******************************************************************
+****************************** API Modal ******************************
+********************************************************************-->
+<div class="modal fade" id="new-method-modal">
+    <div class="modal-dialog" ng-if="vm.api">
+        <form class="modal-content" name="apiForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Method</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Path type</label>
+                    <div class="col-sm-8">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="new-path-type" class="new-path-type"
+                                    value="1" ng-model="vm.api.type"
+                                    ng-change="vm.unsetIncorrectOperations(vm.api.type, vm.api)" />
+                                <strong>/parent</strong>
+                                <span class="radio-note">
+                                    - Get or delete all resources, create new resources,
+                                    perform operation with no associated resource.</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="new-path-type" class="new-path-type"
+                                    value="2" ng-model="vm.api.type"
+                                    ng-change="vm.unsetIncorrectOperations(vm.api.type, vm.api)" />
+                                <strong>/parent/{id}</strong>
+                                <span class="radio-note">
+                                    - Get, update or delete a specific resource.</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="new-path-type" class="new-path-type"
+                                    value="3" ng-model="vm.api.type"
+                                    ng-change="vm.unsetIncorrectOperations(vm.api.type, vm.api)" />
+                                <strong>/parent/{id}/child</strong>
+                                <span class="radio-note">
+                                    - Get or delete child resources of specific parent,
+                                    perform operation on a specific resource.</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="new-path-type" class="new-path-type"
+                                    value="4" ng-model="vm.api.type"
+                                    ng-change="vm.unsetIncorrectOperations(vm.api.type, vm.api)" />
+                                <strong>/parent/child</strong>
+                                <span class="radio-note">
+                                    - Perform an operation on all resources of parent type.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Parent</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control"
+                            name="new-path-parent" value="" placeholder="Enter a name..."
+                            ng-model="vm.api.parent" ng-pattern="vm.validators.alphaNumericChars"
+                            required >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Child</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control"
+                            name="new-path-child" value="" placeholder="Enter a name..."
+                            ng-model="vm.api.child" ng-disabled="vm.api.type <= 2"
+                            ng-pattern="vm.validators.alphaNumericChars">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Methods</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <label ng-class="{disabled: vm.api.type == 2}">
+                                <input type="checkbox" value="POST"
+                                    class="new-method-supported supported-post"
+                                    ng-model="vm.api.supports.POST"
+                                    ng-disabled="vm.api.type == 2"/> POST - create
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                    class="new-method-supported supported-get"
+                                    value="GET"
+                                    ng-model="vm.api.supports.GET" /> GET - read
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                    class="new-method-supported supported-put"
+                                    value="PUT"
+                                    ng-model="vm.api.supports.PUT" /> PUT - update (replace)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                    class="new-method-supported supported-patch"
+                                    value="PATCH"
+                                    ng-model="vm.api.supports.PATCH" /> PATCH - update (partial)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label ng-class="{disabled: vm.api.type == 4}">
+                                <input type="checkbox"
+                                    class="new-method-supported supported-delete"
+                                    value="DELETE"
+                                    ng-model="vm.api.supports.DELETE"
+                                    ng-disabled="vm.api.type == 4" /> DELETE - delete
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                    class="new-method-supported supported-head"
+                                    value="HEAD"
+                                    ng-model="vm.api.supports.HEAD" /> HEAD - read headers only
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-default" data-dismiss="modal"
+                    ng-click="vm.cancelApiUpdate()">Cancel</a>
+                <input type="submit"
+                    id="save-method-button"
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                    ng-click="vm.saveApiUpdate()"
+                    ng-disabled="!apiForm.$valid"
+                    value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

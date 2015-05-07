@@ -1,0 +1,65 @@
+<div>
+    <h3 class="page-header">Response Headers</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <p>Your API may return specific response headers, particularly to
+                provide meta data about resources.</p>
+        </div>
+         <div class="col-md-6">
+            <p>Headers are a good place to provide paging information for paged
+                collections.</p>
+        </div>
+    </div>
+    <div class="parameters table-responsive">
+        <table class="table  form-inline">
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Example</th>
+                <th title="Is this header only used on single resources, not on collections?">Single Only?</th>
+                <th title="Is this header only used for paged collections?">Paged Only?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="no-parameters">
+                <td colspan="6">No response headers</td>
+            </tr>
+            <tr class="parameter"
+                ng-repeat="(idx, header) in vm.headers">
+                <td>
+                    <a href="" class="close remove-row"
+                       ng-click="remove(vm.codes, idx)">&times;</a>
+                </td>
+                <td>
+                    <input type="text" class="form-control col-md-2"
+                        ng-model="header.name"
+                        ng-pattern="validators.alphaNumericChars"
+                        placeholder="Header name" required />
+                </td>
+                <td>
+                    <input type="text" class="form-control col-md-4 parameter-description"
+                        ng-model="header.description"
+                        placeholder="Description of the parameter"
+                        required />
+                </td>
+                <td>
+                    <input type="text" class="form-control col-md-4"
+                        ng-model="header.example"
+                        placeholder="Example header value" />
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="header.singleOnly" />
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="header.pagedOnly" />
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <button class="btn btn-default" ng-click="vm.addResponseHeader(vm.headers)">
+        <i class="glyphicon glyphicon-plus"></i> Add Response Header
+    </button>
+</div>
