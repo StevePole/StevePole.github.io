@@ -5004,8 +5004,8 @@ a.badge:focus {
 .jumbotron {
   padding: 30px 15px;
   margin-bottom: 30px;
-  color: #223049;
-  background-color: #d3d5d8;
+  color: #fff;
+  background-color: #223049;
 }
 .jumbotron h1,
 .jumbotron .h1 {
@@ -5017,7 +5017,7 @@ a.badge:focus {
   font-weight: 200;
 }
 .jumbotron > hr {
-  border-top-color: #b8bbc0;
+  border-top-color: #121926;
 }
 .container .jumbotron,
 .container-fluid .jumbotron {
