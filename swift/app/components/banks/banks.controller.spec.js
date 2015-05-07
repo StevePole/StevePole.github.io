@@ -27,11 +27,11 @@ describe('Controller: BanksController', function() {
     describe('search()', function() {
         it("should call the banks service and list the banks", function() {
             // spyOn replaces the method, callThrough returns the original response
-            spyOn(BanksService, 'getByCode').and.callThrough();
+            spyOn(BanksService, 'getByName').and.callThrough();
 
             controller.search();
 
-            expect(BanksService.getByCode).toHaveBeenCalled();
+            expect(BanksService.getByName).toHaveBeenCalled();
 
             // Force a digest cycle on the rootScope to resolve promises.
             $rootScope.$apply();

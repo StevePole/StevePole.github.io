@@ -1,5 +1,5 @@
 describe('Controller: BankController', function() {
-    var controller, $rootScope, BanksService;
+    var controller, $rootScope, BanksService, BankBranchesService;
 
     beforeEach(function() {
         // Load the necessary module
@@ -19,18 +19,25 @@ describe('Controller: BankController', function() {
 
         // underscores in service names are ignored, they let us use the
         // original name for local variables.
-        inject(function($controller, _BanksServiceMock_, _$rootScope_) {
+        inject(function(
+            $controller,
+            _BanksServiceMock_,
+            _BankBranchesServiceMock_,
+            _$rootScope_) {
+
             // Retain a reference to the rootScope so we can trigger a digest
             // cycle to resolve promises.
             $rootScope = _$rootScope_;
 
             // Retain a reference to the mock service so we can spy on it later
             BanksService = _BanksServiceMock_;
+            BankBranchesService = _BankBranchesServiceMock_;
 
             // Use the controller service to instantiate our controller
             // DI works as normal, but we must pass our mock service explicitly
             controller = $controller('BankController', {
-                BanksService: _BanksServiceMock_
+                BanksService: _BanksServiceMock_,
+                BankBranchesService: _BankBranchesServiceMock_
             });
         });
     });
@@ -39,11 +46,15 @@ describe('Controller: BankController', function() {
         it("should call the resource service and load a resource", function() {
             // spyOn replaces the method, callThrough returns the original response
             spyOn(BanksService, 'get').and.callThrough();
+            spyOn(BankBranchesService, 'getByBank').and.callThrough();
 
             controller.init();
 
             expect(BanksService.get).toHaveBeenCalled();
             expect(BanksService.get).toHaveBeenCalledWith(1);
+
+            expect(BankBranchesService.getByBank).toHaveBeenCalled();
+            expect(BankBranchesService.getByBank).toHaveBeenCalledWith(1);
 
             // Force a digest cycle on the rootScope to resolve promises.
             $rootScope.$apply();

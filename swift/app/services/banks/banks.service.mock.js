@@ -11,6 +11,7 @@
         var self = this;
         self.get = get;
         self.list = list;
+        self.getByName = getByName;
         self.getByCode = getByCode;
         self.getByCountry = getByCountry;
 
@@ -31,6 +32,10 @@
             var deferred = $q.defer();
             deferred.resolve(data);
             return deferred.promise;
+        }
+
+        function getByName() {
+            return list();
         }
 
         function getByCode() {

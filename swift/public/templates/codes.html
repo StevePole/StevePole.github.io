@@ -34,9 +34,9 @@
                             ng-if="vm.status === 2"></span>
                     </div>
 
-                    <p class="text-danger text-center" ng-if="vm.status === 2">
-                        The code you have provided is incorrect
-                    </p>
+                    <div class="alert alert-danger" ng-if="vm.status === 2">
+                            The code you have provided was not found.
+                    </div>
 
                     <input type="submit" value="Check Code"
                         class="btn btn-primary btn-lg btn-block"
@@ -46,12 +46,11 @@
             <br />
             <div class="row">
                 <div ng-class="{
-                    'col-sm-4 col-sm-offset-4': vm.banks.length === 1,
-                    'col-sm-6': vm.banks.length === 2,
-                    'col-sm-4': vm.banks.length > 2}"
-                    ng-repeat="bank in vm.banks">
+                    'col-sm-4 col-sm-offset-4': vm.branches.length === 1,
+                    'col-sm-6': vm.branches.length === 2,
+                    'col-sm-4': vm.branches.length > 2}">
                     <bank-address address="branch"
-                        ng-repeat="branch in bank.branches"></bank-address>
+                        ng-repeat="branch in vm.branches"></bank-address>
                 </div>
             </div>
         </div>

@@ -34,10 +34,14 @@
             </div>
 
             <br />
-
-            <p class="text-danger text-center" ng-if="vm.status === 2">
-                Sorry, no banks with that name were found
-            </p>
+            
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2" ng-if="vm.status === 2">
+                    <p class="alert alert-danger">
+                        Sorry, no banks with that name were found
+                    </p>
+                </div>
+            </div>
 
             <div class="row">
                 <div ng-class="{
@@ -45,8 +49,7 @@
                     'col-sm-6': vm.banks.length === 2,
                     'col-sm-4': vm.banks.length > 2}"
                     ng-repeat="bank in vm.banks">
-                    <bank-address address="branch"
-                        ng-repeat="branch in bank.branches"></bank-address>
+                    <bank-address address="bank"></bank-address>
                 </div>
             </div>
         </div>

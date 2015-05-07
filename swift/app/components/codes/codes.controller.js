@@ -5,39 +5,38 @@
         .module('swift-app.controllers')
         .controller('CodesController', CodesController);
 
-    CodesController.$inject = ['$rootScope', 'BanksService'];
+    CodesController.$inject = ['$rootScope', 'BankBranchesService'];
 
-    function CodesController($rootScope, BanksService) {
+    function CodesController($rootScope, BankBranchesService) {
         var vm = this;
         vm.init = init;
         vm.search = search;
         vm.clear = clear;
-        vm.banks = [];
+        vm.branches = [];
 
         vm.status = 0;  // 0 = Not checked, 1 = Valid, 2 = Invalid
         vm.code = "";
 
         function init() {
             $rootScope.active = "Codes";
-
         }
 
         function search() {
-            BanksService.getByCode(vm.code)
-                .then(function(banks) {
-                    if (banks.length) {
-                        vm.banks = banks;
+            BankBranchesService.getByCode(vm.code)
+                .then(function(branches) {
+                    if (branches.length) {
+                        vm.branches = branches;
                         vm.status = 1;
                     } else {
                         vm.status = 2;
                     }
-                    return banks;
+                    return branches;
                 });
         }
 
         function clear() {
             vm.status = 0;
-            vm.banks = [];
+            vm.branches = [];
         }
 
         init();

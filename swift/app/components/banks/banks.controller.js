@@ -22,13 +22,14 @@
         }
 
         function search() {
-            BanksService.getByCode(vm.query)
+            BanksService.getByName(vm.query)
                 .then(function(banks) {
                     if (banks.length) {
                         vm.banks = banks;
                         vm.status = 1;
                     } else {
                         vm.status = 2;
+                        vm.banks = [];
                     }
                     return banks;
                 });

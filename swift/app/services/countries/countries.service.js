@@ -12,7 +12,13 @@
         self.get = get;
         self.list = list;
 
+        var basePath = "https://swift-tool.herokuapp.com/";
+
         function get(id) {
+            return $http.get(basePath + "countries/" + id).then(function(response) {
+                return response.data;
+            });
+            /*
             return self.list().then(function(countries) {
                 var country = countries[0];
                 angular.forEach(countries, function(countryIter) {
@@ -22,9 +28,19 @@
                 });
                 return country;
             });
+            */
         }
 
         function list(search) {
+            var url = basePath + "countries";
+            if (search) {
+                url += "?name=" + search
+            }
+
+            return $http.get(url).then(function(response) {
+                return response.data;
+            });
+            /*
             return $http.get("json/countries.json").then(function(countries) {
                 if (search) {
                     var filtered = [];
@@ -37,6 +53,7 @@
                 }
                 return countries.data;
             });
+            */
         }
     }
 })();
