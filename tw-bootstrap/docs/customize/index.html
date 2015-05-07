@@ -54,7 +54,7 @@
     <a id="skippy" class="sr-only sr-only-focusable" href="#content"><div class="container"><span class="skiplink-text">Skip to main content</span></div></a>
 
     <!-- Docs master nav -->
-    <header class="navbar navbar-default navbar-static-top bs-docs-nav" id="top" role="banner">
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
@@ -499,7 +499,7 @@
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@brand-warning">@brand-warning</label>
-    <input id="input-@brand-warning" type="text" value="#FF9700" data-var="@brand-warning" class="form-control"/>
+    <input id="input-@brand-warning" type="text" value="#f0ad4e" data-var="@brand-warning" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@brand-danger">@brand-danger</label>
@@ -575,10 +575,27 @@
     <input id="input-@font-size-h1" type="text" value="floor((@font-size-base * 2.6))" data-var="@font-size-h1" class="form-control"/>
   </div>
   <div class="col-xs-4">
-    <label for="input-@font-size-h5">@font-size-h5</label>
-    <input id="input-@font-size-h5" type="text" value="18px" data-var="@font-size-h5" class="form-control"/>
+    <label for="input-@font-size-h2">@font-size-h2</label>
+    <input id="input-@font-size-h2" type="text" value="floor((@font-size-base * 2.15))" data-var="@font-size-h2" class="form-control"/>
   </div>
   <div class="clearfix"></div>
+  <div class="col-xs-4">
+    <label for="input-@font-size-h3">@font-size-h3</label>
+    <input id="input-@font-size-h3" type="text" value="ceil((@font-size-base * 1.7))" data-var="@font-size-h3" class="form-control"/>
+  </div>
+  <div class="col-xs-4">
+    <label for="input-@font-size-h4">@font-size-h4</label>
+    <input id="input-@font-size-h4" type="text" value="ceil((@font-size-base * 1.25))" data-var="@font-size-h4" class="form-control"/>
+  </div>
+  <div class="col-xs-4">
+    <label for="input-@font-size-h5">@font-size-h5</label>
+    <input id="input-@font-size-h5" type="text" value="@font-size-base" data-var="@font-size-h5" class="form-control"/>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-xs-4">
+    <label for="input-@font-size-h6">@font-size-h6</label>
+    <input id="input-@font-size-h6" type="text" value="ceil((@font-size-base * 0.85))" data-var="@font-size-h6" class="form-control"/>
+  </div>
   <div class="col-xs-4">
     <label for="input-@line-height-base">@line-height-base</label>
     <input id="input-@line-height-base" type="text" aria-describedby="help-block-@line-height-base" value="1.428571429" data-var="@line-height-base" class="form-control"/>
@@ -589,12 +606,12 @@
     <input id="input-@line-height-computed" type="text" aria-describedby="help-block-@line-height-computed" value="floor((@font-size-base * @line-height-base))" data-var="@line-height-computed" class="form-control"/>
     <p id="help-block-@line-height-computed" class="help-block">Computed &quot;line-height&quot; (<code>font-size</code> * <code>line-height</code>) for use with <code>margin</code>, <code>padding</code>, etc.</p>
   </div>
+  <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@headings-font-family">@headings-font-family</label>
-    <input id="input-@headings-font-family" type="text" aria-describedby="help-block-@headings-font-family" value="&quot;Avenir&quot;, Helvetica, Arial, sans-serif" data-var="@headings-font-family" class="form-control"/>
+    <input id="input-@headings-font-family" type="text" aria-describedby="help-block-@headings-font-family" value="&quot;Sharp Sans Frontieres&quot;, Helvetica, Arial, sans-serif" data-var="@headings-font-family" class="form-control"/>
     <p id="help-block-@headings-font-family" class="help-block">By default, this inherits from the <code>&lt;body&gt;</code>.</p>
   </div>
-  <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@headings-font-weight">@headings-font-weight</label>
     <input id="input-@headings-font-weight" type="text" value="800" data-var="@headings-font-weight" class="form-control"/>
@@ -603,6 +620,7 @@
     <label for="input-@headings-line-height">@headings-line-height</label>
     <input id="input-@headings-line-height" type="text" value="1.2" data-var="@headings-line-height" class="form-control"/>
   </div>
+  <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@headings-color">@headings-color</label>
     <input id="input-@headings-color" type="text" value="@brand-primary" data-var="@headings-color" class="form-control"/>
@@ -675,16 +693,16 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@border-radius-base">@border-radius-base</label>
-    <input id="input-@border-radius-base" type="text" value="3px" data-var="@border-radius-base" class="form-control"/>
+    <input id="input-@border-radius-base" type="text" value="4px" data-var="@border-radius-base" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@border-radius-large">@border-radius-large</label>
-    <input id="input-@border-radius-large" type="text" value="3px" data-var="@border-radius-large" class="form-control"/>
+    <input id="input-@border-radius-large" type="text" value="6px" data-var="@border-radius-large" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@border-radius-small">@border-radius-small</label>
-    <input id="input-@border-radius-small" type="text" value="2px" data-var="@border-radius-small" class="form-control"/>
+    <input id="input-@border-radius-small" type="text" value="3px" data-var="@border-radius-small" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@component-active-color">@component-active-color</label>
@@ -787,7 +805,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@btn-success-bg">@btn-success-bg</label>
-    <input id="input-@btn-success-bg" type="text" value="transparent" data-var="@btn-success-bg" class="form-control"/>
+    <input id="input-@btn-success-bg" type="text" value="#FFF" data-var="@btn-success-bg" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
@@ -813,7 +831,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@btn-warning-bg">@btn-warning-bg</label>
-    <input id="input-@btn-warning-bg" type="text" value="transparent" data-var="@btn-warning-bg" class="form-control"/>
+    <input id="input-@btn-warning-bg" type="text" value="#FFF" data-var="@btn-warning-bg" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
@@ -863,12 +881,12 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@input-border-radius">@input-border-radius</label>
-    <input id="input-@input-border-radius" type="text" aria-describedby="help-block-@input-border-radius" value="@border-radius-small" data-var="@input-border-radius" class="form-control"/>
+    <input id="input-@input-border-radius" type="text" aria-describedby="help-block-@input-border-radius" value="@border-radius-base" data-var="@input-border-radius" class="form-control"/>
     <p id="help-block-@input-border-radius" class="help-block">Default <code>.form-control</code> border radius</p>
   </div>
   <div class="col-xs-4">
     <label for="input-@input-border-radius-large">@input-border-radius-large</label>
-    <input id="input-@input-border-radius-large" type="text" aria-describedby="help-block-@input-border-radius-large" value="@border-radius-small" data-var="@input-border-radius-large" class="form-control"/>
+    <input id="input-@input-border-radius-large" type="text" aria-describedby="help-block-@input-border-radius-large" value="@border-radius-large" data-var="@input-border-radius-large" class="form-control"/>
     <p id="help-block-@input-border-radius-large" class="help-block">Large <code>.form-control</code> border radius</p>
   </div>
   <div class="clearfix"></div>
@@ -884,7 +902,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@input-color-placeholder">@input-color-placeholder</label>
-    <input id="input-@input-color-placeholder" type="text" aria-describedby="help-block-@input-color-placeholder" value="#829CA9" data-var="@input-color-placeholder" class="form-control"/>
+    <input id="input-@input-color-placeholder" type="text" aria-describedby="help-block-@input-color-placeholder" value="@gray-light" data-var="@input-color-placeholder" class="form-control"/>
     <p id="help-block-@input-color-placeholder" class="help-block">Placeholder text color</p>
   </div>
   <div class="clearfix"></div>
@@ -1169,7 +1187,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-default-bg">@navbar-default-bg</label>
-    <input id="input-@navbar-default-bg" type="text" value="@brand-primary" data-var="@navbar-default-bg" class="form-control"/>
+    <input id="input-@navbar-default-bg" type="text" value="#223049" data-var="@navbar-default-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-default-border">@navbar-default-border</label>
@@ -1177,12 +1195,25 @@
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
+    <label for="input-@navbar-default-link-color">@navbar-default-link-color</label>
+    <input id="input-@navbar-default-link-color" type="text" value="#fff" data-var="@navbar-default-link-color" class="form-control"/>
+  </div>
+  <div class="col-xs-4">
+    <label for="input-@navbar-default-link-hover-color">@navbar-default-link-hover-color</label>
+    <input id="input-@navbar-default-link-hover-color" type="text" value="#00B9FF" data-var="@navbar-default-link-hover-color" class="form-control"/>
+  </div>
+  <div class="col-xs-4">
     <label for="input-@navbar-default-link-hover-bg">@navbar-default-link-hover-bg</label>
     <input id="input-@navbar-default-link-hover-bg" type="text" value="#192439" data-var="@navbar-default-link-hover-bg" class="form-control"/>
   </div>
+  <div class="clearfix"></div>
+  <div class="col-xs-4">
+    <label for="input-@navbar-default-link-active-color">@navbar-default-link-active-color</label>
+    <input id="input-@navbar-default-link-active-color" type="text" value="#00B9FF" data-var="@navbar-default-link-active-color" class="form-control"/>
+  </div>
   <div class="col-xs-4">
     <label for="input-@navbar-default-link-active-bg">@navbar-default-link-active-bg</label>
-    <input id="input-@navbar-default-link-active-bg" type="text" value="@brand-primary" data-var="@navbar-default-link-active-bg" class="form-control"/>
+    <input id="input-@navbar-default-link-active-bg" type="text" value="#223049" data-var="@navbar-default-link-active-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-default-link-disabled-color">@navbar-default-link-disabled-color</label>
@@ -1221,24 +1252,24 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-color">@navbar-inverse-color</label>
-    <input id="input-@navbar-inverse-color" type="text" value="@brand-primary" data-var="@navbar-inverse-color" class="form-control"/>
+    <input id="input-@navbar-inverse-color" type="text" value="lighten(@gray-light, 15%)" data-var="@navbar-inverse-color" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-bg">@navbar-inverse-bg</label>
-    <input id="input-@navbar-inverse-bg" type="text" value="transparent" data-var="@navbar-inverse-bg" class="form-control"/>
+    <input id="input-@navbar-inverse-bg" type="text" value="#222" data-var="@navbar-inverse-bg" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-border">@navbar-inverse-border</label>
-    <input id="input-@navbar-inverse-border" type="text" value="transparent" data-var="@navbar-inverse-border" class="form-control"/>
+    <input id="input-@navbar-inverse-border" type="text" value="darken(@navbar-inverse-bg, 10%)" data-var="@navbar-inverse-border" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-link-color">@navbar-inverse-link-color</label>
-    <input id="input-@navbar-inverse-link-color" type="text" value="@link-color" data-var="@navbar-inverse-link-color" class="form-control"/>
+    <input id="input-@navbar-inverse-link-color" type="text" value="lighten(@gray-light, 15%)" data-var="@navbar-inverse-link-color" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-link-hover-color">@navbar-inverse-link-hover-color</label>
-    <input id="input-@navbar-inverse-link-hover-color" type="text" value="@link-hover-color" data-var="@navbar-inverse-link-hover-color" class="form-control"/>
+    <input id="input-@navbar-inverse-link-hover-color" type="text" value="#fff" data-var="@navbar-inverse-link-hover-color" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
@@ -1247,11 +1278,11 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-link-active-color">@navbar-inverse-link-active-color</label>
-    <input id="input-@navbar-inverse-link-active-color" type="text" value="@link-hover-color" data-var="@navbar-inverse-link-active-color" class="form-control"/>
+    <input id="input-@navbar-inverse-link-active-color" type="text" value="@navbar-inverse-link-hover-color" data-var="@navbar-inverse-link-active-color" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-link-active-bg">@navbar-inverse-link-active-bg</label>
-    <input id="input-@navbar-inverse-link-active-bg" type="text" value="@gray-base" data-var="@navbar-inverse-link-active-bg" class="form-control"/>
+    <input id="input-@navbar-inverse-link-active-bg" type="text" value="darken(@navbar-inverse-bg, 10%)" data-var="@navbar-inverse-link-active-bg" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
@@ -1277,16 +1308,16 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-toggle-hover-bg">@navbar-inverse-toggle-hover-bg</label>
-    <input id="input-@navbar-inverse-toggle-hover-bg" type="text" value="@gray-base" data-var="@navbar-inverse-toggle-hover-bg" class="form-control"/>
+    <input id="input-@navbar-inverse-toggle-hover-bg" type="text" value="#333" data-var="@navbar-inverse-toggle-hover-bg" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-toggle-icon-bar-bg">@navbar-inverse-toggle-icon-bar-bg</label>
-    <input id="input-@navbar-inverse-toggle-icon-bar-bg" type="text" value="@brand-primary" data-var="@navbar-inverse-toggle-icon-bar-bg" class="form-control"/>
+    <input id="input-@navbar-inverse-toggle-icon-bar-bg" type="text" value="#fff" data-var="@navbar-inverse-toggle-icon-bar-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@navbar-inverse-toggle-border-color">@navbar-inverse-toggle-border-color</label>
-    <input id="input-@navbar-inverse-toggle-border-color" type="text" value="@gray-base" data-var="@navbar-inverse-toggle-border-color" class="form-control"/>
+    <input id="input-@navbar-inverse-toggle-border-color" type="text" value="#333" data-var="@navbar-inverse-toggle-border-color" class="form-control"/>
   </div>
 </div>
 <h2 id="navs">Navs</h2>
@@ -1298,7 +1329,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@nav-link-hover-bg">@nav-link-hover-bg</label>
-    <input id="input-@nav-link-hover-bg" type="text" value="@gray-base" data-var="@nav-link-hover-bg" class="form-control"/>
+    <input id="input-@nav-link-hover-bg" type="text" value="@gray-lighter" data-var="@nav-link-hover-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@nav-disabled-link-color">@nav-disabled-link-color</label>
@@ -1318,7 +1349,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@nav-tabs-link-hover-border-color">@nav-tabs-link-hover-border-color</label>
-    <input id="input-@nav-tabs-link-hover-border-color" type="text" value="@gray-base" data-var="@nav-tabs-link-hover-border-color" class="form-control"/>
+    <input id="input-@nav-tabs-link-hover-border-color" type="text" value="@gray-lighter" data-var="@nav-tabs-link-hover-border-color" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@nav-tabs-active-link-hover-bg">@nav-tabs-active-link-hover-bg</label>
@@ -1736,11 +1767,11 @@
 <div class="row">
   <div class="col-xs-4">
     <label for="input-@alert-padding">@alert-padding</label>
-    <input id="input-@alert-padding" type="text" value="5px" data-var="@alert-padding" class="form-control"/>
+    <input id="input-@alert-padding" type="text" value="15px" data-var="@alert-padding" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-border-radius">@alert-border-radius</label>
-    <input id="input-@alert-border-radius" type="text" value="0" data-var="@alert-border-radius" class="form-control"/>
+    <input id="input-@alert-border-radius" type="text" value="@border-radius-base" data-var="@alert-border-radius" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-link-font-weight">@alert-link-font-weight</label>
@@ -1749,7 +1780,7 @@
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@alert-success-bg">@alert-success-bg</label>
-    <input id="input-@alert-success-bg" type="text" value="transparent" data-var="@alert-success-bg" class="form-control"/>
+    <input id="input-@alert-success-bg" type="text" value="@state-success-bg" data-var="@alert-success-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-success-text">@alert-success-text</label>
@@ -1757,12 +1788,12 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-success-border">@alert-success-border</label>
-    <input id="input-@alert-success-border" type="text" value="@state-success-text" data-var="@alert-success-border" class="form-control"/>
+    <input id="input-@alert-success-border" type="text" value="@state-success-border" data-var="@alert-success-border" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@alert-info-bg">@alert-info-bg</label>
-    <input id="input-@alert-info-bg" type="text" value="transparent" data-var="@alert-info-bg" class="form-control"/>
+    <input id="input-@alert-info-bg" type="text" value="@state-info-bg" data-var="@alert-info-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-info-text">@alert-info-text</label>
@@ -1770,12 +1801,12 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-info-border">@alert-info-border</label>
-    <input id="input-@alert-info-border" type="text" value="@state-info-text" data-var="@alert-info-border" class="form-control"/>
+    <input id="input-@alert-info-border" type="text" value="@state-info-border" data-var="@alert-info-border" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@alert-warning-bg">@alert-warning-bg</label>
-    <input id="input-@alert-warning-bg" type="text" value="transparent" data-var="@alert-warning-bg" class="form-control"/>
+    <input id="input-@alert-warning-bg" type="text" value="@state-warning-bg" data-var="@alert-warning-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-warning-text">@alert-warning-text</label>
@@ -1783,12 +1814,12 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-warning-border">@alert-warning-border</label>
-    <input id="input-@alert-warning-border" type="text" value="@state-warning-text" data-var="@alert-warning-border" class="form-control"/>
+    <input id="input-@alert-warning-border" type="text" value="@state-warning-border" data-var="@alert-warning-border" class="form-control"/>
   </div>
   <div class="clearfix"></div>
   <div class="col-xs-4">
     <label for="input-@alert-danger-bg">@alert-danger-bg</label>
-    <input id="input-@alert-danger-bg" type="text" value="transparent" data-var="@alert-danger-bg" class="form-control"/>
+    <input id="input-@alert-danger-bg" type="text" value="@state-danger-bg" data-var="@alert-danger-bg" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-danger-text">@alert-danger-text</label>
@@ -1796,7 +1827,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@alert-danger-border">@alert-danger-border</label>
-    <input id="input-@alert-danger-border" type="text" value="@state-danger-text" data-var="@alert-danger-border" class="form-control"/>
+    <input id="input-@alert-danger-border" type="text" value="@state-danger-border" data-var="@alert-danger-border" class="form-control"/>
   </div>
 </div>
 <h2 id="progress-bars">Progress bars</h2>
@@ -1885,7 +1916,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@list-group-active-text-color">@list-group-active-text-color</label>
-    <input id="input-@list-group-active-text-color" type="text" aria-describedby="help-block-@list-group-active-text-color" value="#FFF" data-var="@list-group-active-text-color" class="form-control"/>
+    <input id="input-@list-group-active-text-color" type="text" aria-describedby="help-block-@list-group-active-text-color" value="lighten(@list-group-active-bg, 40%)" data-var="@list-group-active-text-color" class="form-control"/>
     <p id="help-block-@list-group-active-text-color" class="help-block">Text color for content within active list items</p>
   </div>
   <div class="col-xs-4">
@@ -1939,7 +1970,7 @@
   </div>
   <div class="col-xs-4">
     <label for="input-@panel-border-radius">@panel-border-radius</label>
-    <input id="input-@panel-border-radius" type="text" value="@border-radius-small" data-var="@panel-border-radius" class="form-control"/>
+    <input id="input-@panel-border-radius" type="text" value="0px" data-var="@panel-border-radius" class="form-control"/>
   </div>
   <div class="col-xs-4">
     <label for="input-@panel-inner-border">@panel-inner-border</label>

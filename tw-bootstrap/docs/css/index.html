@@ -59,7 +59,7 @@
     <a id="skippy" class="sr-only sr-only-focusable" href="#content"><div class="container"><span class="skiplink-text">Skip to main content</span></div></a>
 
     <!-- Docs master nav -->
-    <header class="navbar navbar-default navbar-static-top bs-docs-nav" id="top" role="banner">
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
@@ -704,11 +704,11 @@
       <tbody>
         <tr>
           <td><h1>h1. Bootstrap heading</h1></td>
-          <td class="type-info">Bold Uppercase 36px</td>
+          <td class="type-info">Semibold 36px</td>
         </tr>
         <tr>
           <td><h2>h2. Bootstrap heading</h2></td>
-          <td class="type-info">Bold Uppercase 28px</td>
+          <td class="type-info">Semibold 30px</td>
         </tr>
         <tr>
           <td><h3>h3. Bootstrap heading</h3></td>
@@ -716,15 +716,15 @@
         </tr>
         <tr>
           <td><h4>h4. Bootstrap heading</h4></td>
-          <td class="type-info">Semibold 22px</td>
-        </tr>
-        <tr>
-          <td><h5>h5. Bootstrap heading</h5></td>
           <td class="type-info">Semibold 18px</td>
         </tr>
         <tr>
+          <td><h5>h5. Bootstrap heading</h5></td>
+          <td class="type-info">Semibold 14px</td>
+        </tr>
+        <tr>
           <td><h6>h6. Bootstrap heading</h6></td>
-          <td class="type-info">Semibold 16px</td>
+          <td class="type-info">Semibold 12px</td>
         </tr>
       </tbody>
     </table>
@@ -3235,11 +3235,11 @@ To edit settings, press <span class="nt">&lt;kbd&gt;&lt;kbd&gt;</span>ctrl<span 
       <div class="color-swatch gray-lighter"></div>
     </div>
   </div>
-<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@gray-darker</span><span class="nd">:</span>  <span class="nn">#384347</span><span class="p">;</span>
-<span class="k">@gray-dark</span><span class="nd">:</span>    <span class="nn">#495860</span><span class="p">;</span>
-<span class="k">@gray</span><span class="nd">:</span>         <span class="nn">#5D7079</span><span class="p">;</span>
-<span class="k">@gray-light</span><span class="nd">:</span>   <span class="nn">#819DA9</span><span class="p">;</span>
-<span class="k">@gray-lighter</span><span class="nd">:</span> <span class="nn">#D3D5D8</span><span class="p">;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@gray-darker</span><span class="nd">:</span>  <span class="nt">lighten</span><span class="o">(</span><span class="nn">#000</span><span class="o">,</span> <span class="nt">13</span><span class="nc">.5</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span> <span class="c1">// #222
+</span><span class="k">@gray-dark</span><span class="nd">:</span>    <span class="nt">lighten</span><span class="o">(</span><span class="nn">#000</span><span class="o">,</span> <span class="nt">20</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span>   <span class="c1">// #333
+</span><span class="k">@gray</span><span class="nd">:</span>         <span class="nt">lighten</span><span class="o">(</span><span class="nn">#000</span><span class="o">,</span> <span class="nt">33</span><span class="nc">.5</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span> <span class="c1">// #555
+</span><span class="k">@gray-light</span><span class="nd">:</span>   <span class="nt">lighten</span><span class="o">(</span><span class="nn">#000</span><span class="o">,</span> <span class="nt">46</span><span class="nc">.7</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span> <span class="c1">// #777
+</span><span class="k">@gray-lighter</span><span class="nd">:</span> <span class="nt">lighten</span><span class="o">(</span><span class="nn">#000</span><span class="o">,</span> <span class="nt">93</span><span class="nc">.5</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span> <span class="o">//</span> <span class="nn">#eee</span></code></pre></div>
 
   <div class="bs-example">
     <div class="color-swatches">
@@ -3250,11 +3250,11 @@ To edit settings, press <span class="nt">&lt;kbd&gt;&lt;kbd&gt;</span>ctrl<span 
       <div class="color-swatch brand-danger"></div>
     </div>
   </div>
-<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@brand-primary</span><span class="nd">:</span> <span class="nn">#223049</span>
-<span class="o">@</span><span class="nt">brand-success</span><span class="nd">:</span> <span class="nn">#4CBA38</span><span class="p">;</span>
-<span class="k">@brand-info</span><span class="nd">:</span>    <span class="nn">#01A4DF</span><span class="p">;</span>
-<span class="k">@brand-warning</span><span class="nd">:</span> <span class="nn">#FF9700</span><span class="p">;</span>
-<span class="k">@brand-danger</span><span class="nd">:</span>  <span class="nn">#F43820</span><span class="p">;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@brand-primary</span><span class="nd">:</span> <span class="nt">darken</span><span class="o">(</span><span class="nn">#428bca</span><span class="o">,</span> <span class="nt">6</span><span class="nc">.5</span><span class="nv">%</span><span class="o">)</span><span class="p">;</span> <span class="c1">// #337ab7
+</span><span class="k">@brand-success</span><span class="nd">:</span> <span class="nn">#5cb85c</span><span class="p">;</span>
+<span class="k">@brand-info</span><span class="nd">:</span>    <span class="nn">#5bc0de</span><span class="p">;</span>
+<span class="k">@brand-warning</span><span class="nd">:</span> <span class="nn">#f0ad4e</span><span class="p">;</span>
+<span class="k">@brand-danger</span><span class="nd">:</span>  <span class="nn">#d9534f</span><span class="p">;</span></code></pre></div>
 
   <p>Use any of these color variables as they are or reassign them to more meaningful variables for your project.</p>
 <div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="c1">// Use as-is

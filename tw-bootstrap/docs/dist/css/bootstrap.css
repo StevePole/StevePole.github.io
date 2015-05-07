@@ -4580,7 +4580,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #fff;
+  background-color: #192439;
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #fff;
@@ -6929,9 +6929,12 @@ footer {
 blockquote footer {
   background-color: transparent;
 }
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   footer {
     position: relative;
+  }
+  .navbar .navbar-brand {
+    margin-left: 15px !important;
   }
 }
 .well,
