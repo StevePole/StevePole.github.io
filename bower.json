@@ -1,0 +1,10 @@
+{
+  "name": "sp-github-pages",
+  "version": "1",
+  "componentsDirectory": "",
+  "directory" : "",
+  "dependencies": {
+    "apis": "git@github.com:StevePole/apis.git"
+  },
+  "private": true
+}
