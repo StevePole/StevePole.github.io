@@ -161,6 +161,15 @@
                             "format": "string"
                         },
                         {
+                            "name": "iso3166",
+                            "description": "Filter the list by iso3166 code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "GB",
+                            "format": "string"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -205,7 +214,8 @@
                 }
             ],
             "parentModel": "country",
-            "description": "List countries"
+            "description": "List countries",
+            "pathUsesChildId": false
         },
         {
             "path": "/countries/{id}/banks",
@@ -220,6 +230,15 @@
                             "required": true,
                             "type": "string",
                             "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Filter the list of banks based on name.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "nat",
                             "format": "string"
                         },
                         {
@@ -244,7 +263,8 @@
                 }
             ],
             "parentModel": "country",
-            "description": "List the banks associated with a country."
+            "description": "List the banks associated with a country.",
+            "pathUsesChildId": false
         },
         {
             "path": "/banks",
@@ -260,15 +280,6 @@
                             "type": "string",
                             "paramType": "query",
                             "example": "natwest",
-                            "format": "string"
-                        },
-                        {
-                            "name": "swift",
-                            "description": "Filter the list by swift code",
-                            "required": false,
-                            "type": "string",
-                            "paramType": "query",
-                            "example": "NAGBNAT",
                             "format": "string"
                         },
                         {
@@ -316,7 +327,8 @@
                 }
             ],
             "parentModel": "bank",
-            "description": "List banks"
+            "description": "List banks",
+            "pathUsesChildId": false
         },
         {
             "path": "/banks/{id}",
@@ -352,7 +364,8 @@
                 }
             ],
             "parentModel": "bank",
-            "description": "Get a single bank by id."
+            "description": "Get a single bank by id.",
+            "pathUsesChildId": false
         },
         {
             "path": "/banks/{id}/branches",
@@ -368,6 +381,15 @@
                             "type": "integer",
                             "paramType": "path",
                             "format": "int32"
+                        },
+                        {
+                            "name": "countryId",
+                            "description": "Filter the list by countryId.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "united-kingdom",
+                            "format": "string"
                         },
                         {
                             "name": "Version",
@@ -391,7 +413,8 @@
                 }
             ],
             "parentModel": "bank",
-            "description": "The branches associated with a bank."
+            "description": "The branches associated with a bank.",
+            "pathUsesChildId": false
         },
         {
             "path": "/branches",
@@ -454,7 +477,8 @@
                 }
             ],
             "parentModel": "branch",
-            "description": "List the branches."
+            "description": "List the branches.",
+            "pathUsesChildId": false
         }
     ],
     "models": {
@@ -536,22 +560,9 @@
                     "example": "Natwest",
                     "format": "string"
                 },
-                "code": {
-                    "name": "code",
-                    "description": "2 digit country code.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": "GB",
-                    "format": "string"
-                },
                 "swift": {
                     "name": "swift",
-                    "description": "The swift code for the bank",
+                    "description": "The swift code prefix for the bank",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -559,16 +570,16 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": "NAGBNAT",
+                    "example": "NATW",
                     "format": "string"
                 }
             },
             "required": [
                 "id",
                 "name",
-                "code",
                 "swift"
-            ]
+            ],
+            "id": "bank"
         },
         "branch": {
             "name": "branch",
@@ -664,6 +675,19 @@
                     "requiredPut": true,
                     "example": "NAGBNAT345",
                     "format": "string"
+                },
+                "bank": {
+                    "name": "bank",
+                    "description": "The name of the bank",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Natwest",
+                    "format": "string"
                 }
             },
             "required": [
@@ -673,8 +697,10 @@
                 "address2",
                 "city",
                 "country",
-                "swift"
-            ]
+                "swift",
+                "bank"
+            ],
+            "id": "branch"
         },
         "country": {
             "name": "country",
@@ -706,9 +732,9 @@
                     "example": "United Kingdom",
                     "format": "string"
                 },
-                "code": {
-                    "name": "code",
-                    "description": "The 2 digit country code.",
+                "iso3166": {
+                    "name": "iso3166",
+                    "description": "The iso3166 2 digit country code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -723,8 +749,9 @@
             "required": [
                 "id",
                 "name",
-                "code"
-            ]
+                "iso3166"
+            ],
+            "id": "country"
         }
     },
     "jsonp": {
