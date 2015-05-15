@@ -2989,7 +2989,7 @@
             "description": "Interact with a single member of the countries collection."
         },
         {
-            "path": "/payment-methods",
+            "path": "/pay-in-methods",
             "operations": [
                 {
                     "method": "GET",
@@ -3071,12 +3071,12 @@
                     "nickname": "",
                     "requiresAuth": true,
                     "items": {
-                        "type": "paymentMethod",
-                        "$ref": "paymentMethod"
+                        "type": "payInMethod",
+                        "$ref": "payInMethod"
                     }
                 }
             ],
-            "parentModel": "paymentMethod",
+            "parentModel": "payInMethod",
             "description": "Get the available payment methods"
         },
         {
@@ -4541,8 +4541,8 @@
                 "bankCode"
             ]
         },
-        "paymentMethod": {
-            "name": "paymentMethod",
+        "payInMethod": {
+            "name": "payInMethod",
             "properties": {
                 "type": {
                     "name": "type",
