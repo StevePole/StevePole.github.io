@@ -1102,8 +1102,8 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "user",
-                            "description": "The user who owns this account.",
+                            "name": "profile",
+                            "description": "The profile who owns this account.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -1307,8 +1307,8 @@
                             "format": "int64"
                         },
                         {
-                            "name": "user",
-                            "description": "The user who owns this account.",
+                            "name": "profile",
+                            "description": "The profile who owns this account.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -1443,8 +1443,8 @@
                             "format": "int64"
                         },
                         {
-                            "name": "user",
-                            "description": "The user who owns this account.",
+                            "name": "profile",
+                            "description": "The profile who owns this account.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -3926,9 +3926,9 @@
                     "example": 1234,
                     "format": "int64"
                 },
-                "user": {
-                    "name": "user",
-                    "description": "The user who owns this account.",
+                "profile": {
+                    "name": "profile",
+                    "description": "The profile who owns this account.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -3936,7 +3936,7 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": "/users/98765",
+                    "example": "/profiles/5678",
                     "format": "string"
                 },
                 "name": {
@@ -4026,7 +4026,7 @@
             },
             "required": [
                 "id",
-                "user",
+                "profile",
                 "name",
                 "currency",
                 "country",
@@ -4590,6 +4590,7 @@
                     "required": true,
                     "requiredPut": true,
                     "isId": true,
+                    "example": "5678",
                     "format": "string"
                 },
                 "firstName": {
