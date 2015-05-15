@@ -1134,6 +1134,15 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "country",
+                            "description": "2 digit iso3166 country code",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "type",
                             "description": "The type of account.",
                             "type": "string",
@@ -1330,6 +1339,15 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "country",
+                            "description": "2 digit iso3166 country code",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "type",
                             "description": "The type of account.",
                             "type": "string",
@@ -1453,6 +1471,15 @@
                                 "gbp",
                                 "inr"
                             ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "country",
+                            "description": "2 digit iso3166 country code",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
                             "format": "string",
                             "paramType": "body"
                         },
@@ -3942,6 +3969,19 @@
                     ],
                     "format": "string"
                 },
+                "country": {
+                    "name": "country",
+                    "description": "2 digit iso3166 country code",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "US",
+                    "format": "string"
+                },
                 "type": {
                     "name": "type",
                     "description": "The type of account.",
@@ -3989,6 +4029,7 @@
                 "user",
                 "name",
                 "currency",
+                "country",
                 "type",
                 "iban",
                 "swift"
