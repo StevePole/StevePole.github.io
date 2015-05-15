@@ -1,0 +1,3179 @@
+{
+    "basePath": "https://api.transferwise.com/",
+    "apiVersion": 1,
+    "info": {
+        "title": "Transferwise API",
+        "description": "Proposed Transferwise API",
+        "termsOfServiceUrl": "",
+        "contact": "",
+        "license": "",
+        "licenseUrl": ""
+    },
+    "authorizations": {
+        "supports": {
+            "oauth2Implicit": true,
+            "oauth2AuthorizationCode": false
+        },
+        "oauth2": {
+            "type": "oauth2",
+            "scopes": [],
+            "grantTypes": {
+                "implicit": {
+                    "loginEndpoint": {
+                        "url": "https://api.transferwise.com/"
+                    },
+                    "tokenName": "access_token"
+                },
+                "authorization_code": {
+                    "tokenRequestEndpoint": {
+                        "url": "",
+                        "clientIdName": "client_id",
+                        "clientSecretName": "client_secret"
+                    },
+                    "tokenEndpoint": {
+                        "url": "",
+                        "tokenName": "access_code"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": [
+        {
+            "name": "Version",
+            "description": "Optional value to reference earlier versions of the API.",
+            "type": "integer",
+            "paramType": "header",
+            "example": 0,
+            "format": "int32",
+            "global": true
+        },
+        {
+            "name": "Accept",
+            "description": "The response format, defaults to JSON.",
+            "type": "string",
+            "enum": [
+                "application/json",
+                "application/xml"
+            ],
+            "paramType": "header",
+            "format": "string",
+            "global": true
+        },
+        {
+            "name": "jsonp",
+            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+            "type": "string",
+            "paramType": "query",
+            "format": "string",
+            "global": true
+        },
+        {
+            "name": "method",
+            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+            "type": "string",
+            "enum": [
+                "PUT",
+                "PATCH",
+                "DELETE"
+            ],
+            "paramType": "query",
+            "format": "string",
+            "global": true
+        },
+        {
+            "name": "offset",
+            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+            "type": "integer",
+            "format": "int64",
+            "paramType": "query",
+            "example": 0,
+            "pagedOnly": true,
+            "global": true
+        },
+        {
+            "name": "limit",
+            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+            "type": "integer",
+            "format": "int64",
+            "paramType": "query",
+            "example": 20,
+            "pagedOnly": true,
+            "global": true
+        },
+        {
+            "name": "sort",
+            "description": "For paged requests, specifies whether to reverse the sort order, default is 'asc'.",
+            "type": "string",
+            "enum": [
+                "asc",
+                "desc"
+            ],
+            "paramType": "query",
+            "pagedOnly": true,
+            "format": "string",
+            "global": true
+        }
+    ],
+    "responseMessages": [
+        {
+            "code": 200,
+            "summary": "OK",
+            "reason": "Request completed successfully."
+        },
+        {
+            "code": 400,
+            "summary": "Bad Request",
+            "reason": "Something was wrong with the request, incorrect parameters.",
+            "responseModel": "error"
+        },
+        {
+            "code": 401,
+            "summary": "Unauthorized",
+            "reason": "Not authorised to access the requested data.",
+            "responseModel": "error"
+        },
+        {
+            "code": 403,
+            "summary": "Forbidden",
+            "reason": "Authentication failed.",
+            "responseModel": "error"
+        },
+        {
+            "code": 404,
+            "summary": "Not Found",
+            "reason": "The requested resource does not exist",
+            "responseModel": "error"
+        },
+        {
+            "code": 408,
+            "summary": "Request Timeout",
+            "reason": "The operation timed out.",
+            "responseModel": "error"
+        },
+        {
+            "code": 429,
+            "summary": "Rate Limited",
+            "reason": "You have exceeded your usage quota and your request has been rate limited.",
+            "responseModel": "error"
+        },
+        {
+            "code": 500,
+            "summary": "Internal Server Error",
+            "reason": "Something went wrong with the server.",
+            "responseModel": "error"
+        }
+    ],
+    "envelope": {
+        "mainParam": "response",
+        "properties": {
+            "response": {
+                "description": "The main response",
+                "expectedInResponses": true,
+                "main": true,
+                "usedInResponses": true,
+                "usedInPuts": false,
+                "usedInPosts": false,
+                "name": "response"
+            },
+            "paging": {
+                "description": "Information and links on how to navigate pages of this response",
+                "$ref": "paging",
+                "type": "paging",
+                "pagedOnly": true,
+                "expectedInResponses": true,
+                "usedInResponses": true,
+                "usedInPuts": false,
+                "usedInPosts": false,
+                "name": "paging"
+            }
+        }
+    },
+    "apis": [
+        {
+            "path": "/transfers",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "offset",
+                            "description": "For paged requests, specifies the offset from the first row in the collection to the first row returned, default 0.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 0,
+                            "pagedOnly": true,
+                            "global": true
+                        },
+                        {
+                            "name": "limit",
+                            "description": "For paged requests, specifies the max number of rows to return, default is 20.",
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "query",
+                            "example": 20,
+                            "pagedOnly": true,
+                            "global": true
+                        },
+                        {
+                            "name": "sort",
+                            "description": "For paged requests, specifies whether to reverse the sort order, default is 'asc'.",
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "paramType": "query",
+                            "pagedOnly": true,
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "List the tranfers visible to the current user.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "isPaged": true,
+                    "defaultPageSize": 100,
+                    "maxPageSize": 1000,
+                    "items": {
+                        "type": "transfer",
+                        "$ref": "transfer"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "transfer",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "receivingAccount",
+                            "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "quote",
+                            "description": "The id of the quote",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a transfer.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer",
+                    "$ref": "transfer"
+                }
+            ],
+            "parentModel": "transfer",
+            "description": "Interact with the transfers collection."
+        },
+        {
+            "path": "/transfers/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "transfer",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single transfer",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "transfer"
+                },
+                {
+                    "method": "PUT",
+                    "type": "transfer",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "receivingAccount",
+                            "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "quote",
+                            "description": "The id of the quote",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Replace a transfer",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer",
+                    "$ref": "transfer"
+                },
+                {
+                    "method": "PATCH",
+                    "type": "transfer",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "receivingAccount",
+                            "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "quote",
+                            "description": "The id of the quote",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update a transfer",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer",
+                    "$ref": "transfer"
+                },
+                {
+                    "method": "DELETE",
+                    "type": "void",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Delete a transfer",
+                    "notes": "Only possible for transfers in some states",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "format": "void"
+                }
+            ],
+            "parentModel": "transfer",
+            "description": "Interact with a single member of the transfers collection."
+        },
+        {
+            "path": "/users",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the users collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "user",
+                        "$ref": "user"
+                    }
+                }
+            ],
+            "parentModel": "user",
+            "description": "Interact with the users collection."
+        },
+        {
+            "path": "/users/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "user",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the user.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single user",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "user"
+                }
+            ],
+            "parentModel": "user",
+            "description": "Interact with a single member of the users collection."
+        },
+        {
+            "path": "/accounts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the accounts collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "account",
+                        "$ref": "account"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the account.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "name",
+                            "description": "The name of the account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "currency",
+                            "description": "The currency used by the account",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "usd",
+                                "gbp",
+                                "inr"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "type",
+                            "description": "The type of account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "transferwise",
+                                "swift",
+                                "iban"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "iban",
+                            "description": "Information for iban accounts, only present if type = iban.",
+                            "type": "iban",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "iban",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "swift",
+                            "description": "Information for iban accounts, only present if type = swift.",
+                            "type": "swift",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "swift",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create an account.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "account",
+                    "$ref": "account"
+                }
+            ],
+            "parentModel": "account",
+            "description": "Interact with the accounts collection."
+        },
+        {
+            "path": "/accounts/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the account.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single account.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "account"
+                },
+                {
+                    "method": "PUT",
+                    "type": "account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the account.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "name",
+                            "description": "The name of the account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "currency",
+                            "description": "The currency used by the account",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "usd",
+                                "gbp",
+                                "inr"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "type",
+                            "description": "The type of account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "transferwise",
+                                "swift",
+                                "iban"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "iban",
+                            "description": "Information for iban accounts, only present if type = iban.",
+                            "type": "iban",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "iban",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "swift",
+                            "description": "Information for iban accounts, only present if type = swift.",
+                            "type": "swift",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "swift",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Replace a single account.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "account",
+                    "$ref": "account"
+                },
+                {
+                    "method": "PATCH",
+                    "type": "account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the account.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "name",
+                            "description": "The name of the account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "currency",
+                            "description": "The currency used by the account",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "usd",
+                                "gbp",
+                                "inr"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "type",
+                            "description": "The type of account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "transferwise",
+                                "swift",
+                                "iban"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "iban",
+                            "description": "Information for iban accounts, only present if type = iban.",
+                            "type": "iban",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "iban",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "swift",
+                            "description": "Information for iban accounts, only present if type = swift.",
+                            "type": "swift",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "$ref": "swift",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update a single account.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "account",
+                    "$ref": "account"
+                },
+                {
+                    "method": "DELETE",
+                    "type": "account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the account.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Delete a single account",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "account"
+                }
+            ],
+            "parentModel": "account",
+            "description": "Interact with a single member of the accounts collection."
+        },
+        {
+            "path": "/payments",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the payments collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "payment",
+                        "$ref": "payment"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "payment",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a payment.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "payment",
+                    "$ref": "payment"
+                }
+            ],
+            "parentModel": "payment",
+            "description": "Interact with the payments collection."
+        },
+        {
+            "path": "/payments/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "payment",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single payment.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "payment"
+                },
+                {
+                    "method": "PUT",
+                    "type": "payment",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Replace a single payment.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "payment",
+                    "$ref": "payment"
+                },
+                {
+                    "method": "PATCH",
+                    "type": "payment",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update a single payment.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "payment",
+                    "$ref": "payment"
+                }
+            ],
+            "parentModel": "payment",
+            "description": "Interact with a single member of the payments collection."
+        },
+        {
+            "path": "/verifications",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the verifications collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "verification",
+                        "$ref": "verification"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "verification",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a verification.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "verification",
+                    "$ref": "verification"
+                }
+            ],
+            "parentModel": "verification",
+            "description": "Interact with the verifications collection."
+        },
+        {
+            "path": "/verifications/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "verification",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single verification.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "verification"
+                },
+                {
+                    "method": "PUT",
+                    "type": "verification",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update a single verification.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "verification",
+                    "$ref": "verification"
+                },
+                {
+                    "method": "PATCH",
+                    "type": "verification",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update a single verification.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "verification",
+                    "$ref": "verification"
+                }
+            ],
+            "parentModel": "verification",
+            "description": "Interact with a single member of the verifications collection."
+        },
+        {
+            "path": "/currencies",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the currencies collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "currency",
+                        "$ref": "currency"
+                    }
+                }
+            ],
+            "parentModel": "currency",
+            "description": "Interact with the currencies collection."
+        },
+        {
+            "path": "/currencies/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "currency",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single currency.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "currency"
+                }
+            ],
+            "parentModel": "currency",
+            "description": "Interact with a single member of the currencies collection."
+        },
+        {
+            "path": "/rates",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the rates collection",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "rate",
+                        "$ref": "rate"
+                    }
+                }
+            ],
+            "parentModel": "rate",
+            "description": "Interact with the rates collection."
+        },
+        {
+            "path": "/quotes",
+            "operations": [
+                {
+                    "method": "POST",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "source",
+                            "description": "The source currency",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "target",
+                            "description": "The target currency",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "amount",
+                            "description": "The amount to be transferred",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the quotes collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "quote",
+                    "items": {
+                        "type": "quote",
+                        "$ref": "quote"
+                    }
+                }
+            ],
+            "parentModel": "quote",
+            "description": "Interact with the quotes collection."
+        },
+        {
+            "path": "/quotes/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "quote",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single quote.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "quote"
+                }
+            ],
+            "parentModel": "quote",
+            "description": "Interact with a single member of the quotes collection."
+        },
+        {
+            "path": "/countries",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the countries collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "country",
+                        "$ref": "country"
+                    }
+                }
+            ],
+            "parentModel": "country",
+            "description": "Interact with the countries collection."
+        },
+        {
+            "path": "/countries/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "country",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the country.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get a single country.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "country"
+                }
+            ],
+            "parentModel": "country",
+            "description": "Interact with a single member of the countries collection."
+        }
+    ],
+    "models": {
+        "error": {
+            "id": "error",
+            "name": "error",
+            "isError": true,
+            "properties": {
+                "code": {
+                    "name": "code",
+                    "description": "The HTTP error code",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 404,
+                    "purpose": "code",
+                    "isId": true,
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A short name for the error message",
+                    "type": "string",
+                    "format": "string",
+                    "example": "Not found",
+                    "purpose": "name",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                },
+                "message": {
+                    "name": "message",
+                    "description": "A human readable and client friendly error message",
+                    "type": "string",
+                    "format": "string",
+                    "example": "The API method does not exist",
+                    "purpose": "message",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPuts": true,
+                    "usedInPosts": true,
+                    "required": false
+                }
+            },
+            "required": []
+        },
+        "transfer": {
+            "name": "transfer",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the transfer.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": 1234,
+                    "format": "int64"
+                },
+                "receivingAccount": {
+                    "name": "receivingAccount",
+                    "description": "The id of the receiving account.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/accounts/1234",
+                    "format": "string"
+                },
+                "quote": {
+                    "name": "quote",
+                    "description": "The id of the quote",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/quotes/1234",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "receivingAccount",
+                "quote"
+            ]
+        },
+        "user": {
+            "name": "user",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the user.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "int64"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the user.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "string"
+                },
+                "email": {
+                    "name": "email",
+                    "description": "The email of the user.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "email"
+            ]
+        },
+        "account": {
+            "name": "account",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the account.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": 1234,
+                    "format": "int64"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the account.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "My USD account.",
+                    "format": "string"
+                },
+                "currency": {
+                    "name": "currency",
+                    "description": "The currency used by the account",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "usd",
+                        "gbp",
+                        "inr"
+                    ],
+                    "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of account.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "transferwise",
+                        "swift",
+                        "iban"
+                    ],
+                    "format": "string"
+                },
+                "iban": {
+                    "name": "iban",
+                    "description": "Information for iban accounts, only present if type = iban.",
+                    "type": "iban",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "$ref": "iban"
+                },
+                "swift": {
+                    "name": "swift",
+                    "description": "Information for iban accounts, only present if type = swift.",
+                    "type": "swift",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "$ref": "swift"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "currency",
+                "type",
+                "iban",
+                "swift"
+            ]
+        },
+        "payment": {
+            "name": "payment",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "verification": {
+            "name": "verification",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id"
+            ]
+        },
+        "currency": {
+            "name": "currency",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "usd",
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "United States Dollar",
+                    "format": "string"
+                },
+                "prefix": {
+                    "name": "prefix",
+                    "description": "The prefix used when displaying the currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "$",
+                    "format": "string"
+                },
+                "postfix": {
+                    "name": "postfix",
+                    "description": "The postfix used when displaying the currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "USD",
+                    "format": "string"
+                },
+                "delimeter": {
+                    "name": "delimeter",
+                    "description": "The delimeter used when displaying the currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": ".",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "prefix",
+                "postfix",
+                "delimeter"
+            ]
+        },
+        "rate": {
+            "name": "rate",
+            "properties": {
+                "source": {
+                    "name": "source",
+                    "description": "The source currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "usd",
+                    "format": "string"
+                },
+                "target": {
+                    "name": "target",
+                    "description": "The target currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "gbp",
+                    "format": "string"
+                },
+                "rate": {
+                    "name": "rate",
+                    "description": "The exchange rate",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "1.412",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "source",
+                "target",
+                "rate"
+            ]
+        },
+        "quote": {
+            "name": "quote",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the quote.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "int64"
+                },
+                "source": {
+                    "name": "source",
+                    "description": "The source currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "usd",
+                    "format": "string"
+                },
+                "target": {
+                    "name": "target",
+                    "description": "The target currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "gbp",
+                    "format": "string"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "The amount to be transferred",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "double"
+                },
+                "rate": {
+                    "name": "rate",
+                    "description": "The rate.",
+                    "type": "rate",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "$ref": "rate"
+                },
+                "expires": {
+                    "name": "expires",
+                    "description": "The date and time that the quote expires.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "id",
+                "source",
+                "target",
+                "amount"
+            ]
+        },
+        "country": {
+            "name": "country",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "united-states",
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name of the country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "United States",
+                    "format": "string"
+                },
+                "iso3166": {
+                    "name": "iso3166",
+                    "description": "The iso3166 2 digit country code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "US",
+                    "format": "string"
+                },
+                "canSend": {
+                    "name": "canSend",
+                    "description": "Can we send from this country?",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                },
+                "canReceive": {
+                    "name": "canReceive",
+                    "description": "Can we receiv in this country?",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "iso3166",
+                "canSend",
+                "canReceive"
+            ]
+        },
+        "iban": {
+            "name": "iban",
+            "properties": {
+                "bankCode": {
+                    "name": "bankCode",
+                    "description": "The id of the bank.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "string"
+                }
+            },
+            "required": [
+                "bankCode"
+            ]
+        },
+        "swift": {
+            "name": "swift",
+            "properties": {
+                "bankCode": {
+                    "name": "bankCode",
+                    "description": "The id of the bank.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "NATWGB10XXX",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "bankCode"
+            ]
+        }
+    },
+    "jsonp": {
+        "supported": false,
+        "callbackParameter": "jsonp",
+        "methodParameter": "method",
+        "always200": true,
+        "errorModel": "error"
+    },
+    "responseHeaders": [
+        {
+            "name": "Content-Type",
+            "description": "The media type of the body",
+            "example": "application/json",
+            "pageOnly": false
+        },
+        {
+            "name": "Content-Length",
+            "description": "How many bytes the content body contains",
+            "example": "8584",
+            "pageOnly": false
+        },
+        {
+            "name": "Content-Encoding",
+            "description": "What, if any, compression is being used.",
+            "example": "gzip",
+            "pageOnly": false
+        },
+        {
+            "name": "ETag",
+            "description": "A short string representation of the resource, useful for seeing if it has changed.",
+            "example": "18118-50c9c7c55a41d",
+            "pageOnly": false
+        },
+        {
+            "name": "Last-Modified",
+            "description": "When was the resource last modified",
+            "example": "Wed, 14 Jan 2015 13:12:03 GMT",
+            "pageOnly": false
+        },
+        {
+            "name": "Link",
+            "description": "Links to other pages of data in the collection, valid values are: first, prev, next, last",
+            "example": "<https://api.example.com/resources?offset=20&limit=20>; rel='next', <https://api.example.com/resources?offset=60&limit=20>; rel='last'",
+            "pageOnly": false,
+            "pagedOnly": true
+        },
+        {
+            "name": "X-Total-Count",
+            "description": "The number of items in the collection",
+            "example": "75",
+            "pageOnly": false,
+            "pagedOnly": true
+        }
+    ],
+    "envelopeIsUsed": false
+}
