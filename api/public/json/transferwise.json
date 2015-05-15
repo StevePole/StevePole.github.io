@@ -302,7 +302,7 @@
                         },
                         {
                             "name": "user",
-                            "description": "",
+                            "description": "The user initiating the transfer.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -366,6 +366,20 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The pay in method",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
                             "paramType": "body"
                         },
                         {
@@ -502,7 +516,7 @@
                         },
                         {
                             "name": "user",
-                            "description": "",
+                            "description": "The user initiating the transfer.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -566,6 +580,20 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The pay in method",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
                             "paramType": "body"
                         },
                         {
@@ -633,7 +661,7 @@
                         },
                         {
                             "name": "user",
-                            "description": "",
+                            "description": "The user initiating the transfer.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -697,6 +725,20 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The pay in method",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
                             "paramType": "body"
                         },
                         {
@@ -956,6 +998,15 @@
                     "method": "GET",
                     "type": "array",
                     "parameters": [
+                        {
+                            "name": "currency",
+                            "description": "Filter the accounts list to those in a given currency.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "usd",
+                            "format": "string"
+                        },
                         {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
@@ -1514,6 +1565,15 @@
                             "type": "integer",
                             "paramType": "path",
                             "format": "int64"
+                        },
+                        {
+                            "name": "currency",
+                            "description": "Filter the list of accounts to those in a given currency.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "usd",
+                            "format": "string"
                         },
                         {
                             "name": "Version",
@@ -2361,6 +2421,24 @@
                     "type": "array",
                     "parameters": [
                         {
+                            "name": "source",
+                            "description": "Filter to rates for a given source currency.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "usd",
+                            "format": "string"
+                        },
+                        {
+                            "name": "target",
+                            "description": "Filter to rates for a given target currency.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "gbp",
+                            "format": "string"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -2756,6 +2834,97 @@
             ],
             "parentModel": "country",
             "description": "Interact with a single member of the countries collection."
+        },
+        {
+            "path": "/payment-methods",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "country",
+                            "description": "Filter the payment methods to a specific country",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "us",
+                            "format": "string"
+                        },
+                        {
+                            "name": "currency",
+                            "description": "Filter the payment methods to a specific currency",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "usd",
+                            "format": "string"
+                        },
+                        {
+                            "name": "amount",
+                            "description": "Filter the payment methods to those valid for specific amount.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "1000",
+                            "format": "date-time"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the available payment methods",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "paymentMethod",
+                        "$ref": "paymentMethod"
+                    }
+                }
+            ],
+            "parentModel": "paymentMethod",
+            "description": "Get the available payment methods"
         }
     ],
     "models": {
@@ -2826,7 +2995,7 @@
                 },
                 "user": {
                     "name": "user",
-                    "description": "",
+                    "description": "The user initiating the transfer.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -2918,6 +3087,23 @@
                     "requiredPut": true,
                     "example": 1,
                     "format": "double"
+                },
+                "payInMethod": {
+                    "name": "payInMethod",
+                    "description": "The pay in method",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "card",
+                        "ach",
+                        "transfer"
+                    ],
+                    "format": "string"
                 }
             },
             "required": [
@@ -2928,7 +3114,8 @@
                 "quote",
                 "status",
                 "reference",
-                "rate"
+                "rate",
+                "payInMethod"
             ]
         },
         "user": {
@@ -3567,6 +3754,113 @@
             },
             "required": [
                 "bankCode"
+            ]
+        },
+        "paymentMethod": {
+            "name": "paymentMethod",
+            "properties": {
+                "type": {
+                    "name": "type",
+                    "description": "The type of payment",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "card",
+                        "ach"
+                    ],
+                    "isId": true,
+                    "format": "string"
+                },
+                "currency": {
+                    "name": "currency",
+                    "description": "The currency",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "usd",
+                    "format": "string"
+                },
+                "country": {
+                    "name": "country",
+                    "description": "The iso3166 country code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "us",
+                    "format": "string"
+                },
+                "accountNumber": {
+                    "name": "accountNumber",
+                    "description": "The account number to pay into",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "string"
+                },
+                "sortCode": {
+                    "name": "sortCode",
+                    "description": "The sort code to pay into",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "string"
+                },
+                "max": {
+                    "name": "max",
+                    "description": "The max amount transferable using this method.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "10000",
+                    "format": "string"
+                },
+                "min": {
+                    "name": "min",
+                    "description": "The min amount transferable using this method.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "100",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "type",
+                "currency",
+                "country",
+                "accountNumber",
+                "sortCode",
+                "max",
+                "min"
             ]
         }
     },
