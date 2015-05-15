@@ -301,8 +301,26 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "user",
+                            "description": "",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "receivingAccount",
                             "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "refundAccount",
+                            "description": "The account in which to pay refunds.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -316,6 +334,38 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "status",
+                            "description": "The status of the transfer",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "payment_received",
+                                "paid_out",
+                                "complete"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "reference",
+                            "description": "?",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "rate",
+                            "description": "The rate at which the transfer occured.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
                             "paramType": "body"
                         },
                         {
@@ -451,8 +501,26 @@
                             "format": "int64"
                         },
                         {
+                            "name": "user",
+                            "description": "",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "receivingAccount",
                             "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "refundAccount",
+                            "description": "The account in which to pay refunds.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -466,6 +534,38 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "status",
+                            "description": "The status of the transfer",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "payment_received",
+                                "paid_out",
+                                "complete"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "reference",
+                            "description": "?",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "rate",
+                            "description": "The rate at which the transfer occured.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
                             "paramType": "body"
                         },
                         {
@@ -532,8 +632,26 @@
                             "format": "int64"
                         },
                         {
+                            "name": "user",
+                            "description": "",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "receivingAccount",
                             "description": "The id of the receiving account.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "refundAccount",
+                            "description": "The account in which to pay refunds.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -547,6 +665,38 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "status",
+                            "description": "The status of the transfer",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "payment_received",
+                                "paid_out",
+                                "complete"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "reference",
+                            "description": "?",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "rate",
+                            "description": "The rate at which the transfer occured.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
                             "paramType": "body"
                         },
                         {
@@ -1349,6 +1499,78 @@
             ],
             "parentModel": "account",
             "description": "Interact with a single member of the accounts collection."
+        },
+        {
+            "path": "/users/{id}/accounts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the user.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the accounts for a user.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "account",
+                        "$ref": "account"
+                    }
+                }
+            ],
+            "parentModel": "user",
+            "description": "Get the accounts for a user."
         },
         {
             "path": "/payments",
@@ -2231,12 +2453,48 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "amount",
+                            "name": "payIn",
                             "description": "The amount to be transferred",
                             "type": "number",
                             "expectedInResponses": true,
                             "required": true,
                             "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payOut",
+                            "description": "The amount that will be recieved",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "fee",
+                            "description": "The fee for the transfer.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "fixedRate",
+                            "description": "Is it a fixed rate?",
+                            "type": "boolean",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "boolean",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "fixedTarget",
+                            "description": "Is it a fixed target?",
+                            "type": "boolean",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "boolean",
                             "paramType": "body"
                         },
                         {
@@ -2566,6 +2824,19 @@
                     "example": 1234,
                     "format": "int64"
                 },
+                "user": {
+                    "name": "user",
+                    "description": "",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/users/98765",
+                    "format": "string"
+                },
                 "receivingAccount": {
                     "name": "receivingAccount",
                     "description": "The id of the receiving account.",
@@ -2577,6 +2848,19 @@
                     "required": true,
                     "requiredPut": true,
                     "example": "/accounts/1234",
+                    "format": "string"
+                },
+                "refundAccount": {
+                    "name": "refundAccount",
+                    "description": "The account in which to pay refunds.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/accounts/4321",
                     "format": "string"
                 },
                 "quote": {
@@ -2591,12 +2875,60 @@
                     "requiredPut": true,
                     "example": "/quotes/1234",
                     "format": "string"
+                },
+                "status": {
+                    "name": "status",
+                    "description": "The status of the transfer",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "payment_received",
+                        "paid_out",
+                        "complete"
+                    ],
+                    "format": "string"
+                },
+                "reference": {
+                    "name": "reference",
+                    "description": "?",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "PA1234",
+                    "format": "string"
+                },
+                "rate": {
+                    "name": "rate",
+                    "description": "The rate at which the transfer occured.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 1,
+                    "format": "double"
                 }
             },
             "required": [
                 "id",
+                "user",
                 "receivingAccount",
-                "quote"
+                "refundAccount",
+                "quote",
+                "status",
+                "reference",
+                "rate"
             ]
         },
         "user": {
@@ -2613,6 +2945,7 @@
                     "required": true,
                     "requiredPut": true,
                     "isId": true,
+                    "example": 98765,
                     "format": "int64"
                 },
                 "name": {
@@ -2625,6 +2958,7 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
+                    "example": "John Smith",
                     "format": "string"
                 },
                 "email": {
@@ -2637,13 +2971,70 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
+                    "example": "john.smith@gmail.com",
+                    "format": "string"
+                },
+                "address1": {
+                    "name": "address1",
+                    "description": "The first line of the users address.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "22 Accacia Avenue",
+                    "format": "string"
+                },
+                "address2": {
+                    "name": "address2",
+                    "description": "The second line of the users address.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Leyton",
+                    "format": "string"
+                },
+                "city": {
+                    "name": "city",
+                    "description": "The city",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "London",
+                    "format": "string"
+                },
+                "country": {
+                    "name": "country",
+                    "description": "The country",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "United Kingdom",
                     "format": "string"
                 }
             },
             "required": [
                 "id",
                 "name",
-                "email"
+                "email",
+                "address1",
+                "address2",
+                "city",
+                "country"
             ]
         },
         "account": {
@@ -2956,8 +3347,8 @@
                     "example": "gbp",
                     "format": "string"
                 },
-                "amount": {
-                    "name": "amount",
+                "payIn": {
+                    "name": "payIn",
                     "description": "The amount to be transferred",
                     "type": "number",
                     "usedInResponses": true,
@@ -2966,6 +3357,33 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
+                    "example": 1000,
+                    "format": "double"
+                },
+                "payOut": {
+                    "name": "payOut",
+                    "description": "The amount that will be recieved",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 632,
+                    "format": "double"
+                },
+                "fee": {
+                    "name": "fee",
+                    "description": "The fee for the transfer.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 1,
                     "format": "double"
                 },
                 "rate": {
@@ -2991,13 +3409,43 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
+                },
+                "fixedRate": {
+                    "name": "fixedRate",
+                    "description": "Is it a fixed rate?",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                },
+                "fixedTarget": {
+                    "name": "fixedTarget",
+                    "description": "Is it a fixed target?",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
                 }
             },
             "required": [
                 "id",
                 "source",
                 "target",
-                "amount"
+                "payIn",
+                "payOut",
+                "fee",
+                "fixedRate",
+                "fixedTarget"
             ]
         },
         "country": {
