@@ -59,21 +59,22 @@
             transformation and without causing any change in the state of the
             resource.</p>
         <p><strong>Return the created/edited resource</strong> - After a successful
-            <code>POST /resource</code> or <code>PUT/PATCH /resource/{id}</code> return
-            the full object (like a <code>GET /resource/{id}</code>) so the API consumer
+            <code>POST /resources</code> or <code>PUT/PATCH /resources/{id}</code> return
+            the full object (like a <code>GET /resources/{id}</code>) so the API consumer
             can see how their request affected the object.</p>
 
         <p><strong>Filter/search collections using query parameters</strong>
-            - e.g. <code>GET /songs?query=love</code> might
+            - e.g. <code>GET /songs?name=love</code> might
             filter the songs collections to those with "love" in their name,
-            <code> GET /songs?page=2</code> may return the second page of a
-            paged collection.</p>
+             name the parameter to be the same as the property you are
+            filtering on. If you're filtering the collection to those realted to
+            another entity, use the path e.g. <code>GET /albums/{id}/songs</code>.</p>
         <p><strong>Create objects using the object root</strong> -
             create a song using <code>POST /songs</code>, not with a
-            parent like <code>POST /album/{id}/songs</code>.  A song may have
+            parent like <code>POST /albums/{id}/songs</code>.  A song may have
             multiple parents objects and there should be only one way to achieve
-            each goal e.g. should you post to <code>POST /artist/{id}/songs</code> or
-            <code>POST /album/{id}/songs</code>?</p>
+            each goal e.g. should you post to <code>POST /artists/{id}/songs</code> or
+            <code>POST /albums/{id}/songs</code>?</p>
         <p><strong>Nest tightly coupled resources</strong> - If a resource never
             exists outside the context of a parent (e.g. no GET /songs/{id} and
             no /artists/{id}/songs) you could nest it (or it's collection) within

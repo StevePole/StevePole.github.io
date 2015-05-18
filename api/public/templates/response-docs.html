@@ -1,4 +1,7 @@
 
+
+<markdown class="space-div" ng-if="model.notes" ng-model="model.notes"></markdown>
+
 <ul class="breadcrumb" ng-if="path && model.properties.length">
     <li ng-repeat="pathModel in path track by $index"
         ng-class="{active: $last}">

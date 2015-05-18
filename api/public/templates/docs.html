@@ -1,252 +1,291 @@
 
-<div id="hero" class="hero-unit">
-    <h1>{{json.info.title}} <span ng-if="!json.info.title">API Documentation</span> (v{{json.apiVersion }})</h1>
-    <br />
-    <p>{{json.info.description}}</p>
-    <p ng-if="json.info.contact">Contact: {{json.info.contact}}</p>
+<div id="hero" class="jumbotron">
+    <div class="container">
+        <h1>{{json.info.title}} <span ng-if="!json.info.title">API Documentation</span> (v{{json.apiVersion }})</h1>
+        <br />
+        <p>{{json.info.description}}</p>
+        <p ng-if="json.info.contact">Contact: {{json.info.contact}}</p>
 
-    <p>Web service URL: <a href="{{json.basePath}}">{{json.basePath}}</a></p>
-    <p ng-if="json.console_url">
-        Test console URL: <a href="{{json.console_url}}">{{json.console_url}}</a>
-    </p>
+        <p>Web service URL: <a href="{{json.basePath}}">{{json.basePath}}</a></p>
+        <p ng-if="json.console_url">
+            Test console URL: <a href="{{json.console_url}}">{{json.console_url}}</a>
+        </p>
+    </div>
 </div>
+<div class="container">
+    <!--<div class="space-div" ng-if="json.info.description" ng-bind-html="json.info.description"></div>-->
+    <markdown class="space-div" ng-if="json.info.notes" ng-model="json.info.notes"> </markdown>
 
-<!--<div class="space-div" ng-if="json.info.description" ng-bind-html="json.info.description"></div>-->
-<markdown class="space-div" ng-if="json.info.notes" ng-model="json.info.notes"> </markdown>
-
-<div class="alert alert-danger" ng-if="errors">
-    <p ng-repeat="error in errors">{{error}}</p>
-</div>
-
-<p id="top">Jump to:</p>
-<ul>
-    <li><a href="#authentication">Authentication</a></li>
-    <li><a href="#requests">Requests</a></li>
-    <li><a href="#responses">Responses</a></li>
-    <li><a href="#method_overview">Method Overview</a></li>
-    <li><a href="#method_detail">Method Detail</a></li>
-</ul>
-
-<!-- Authentication -->
-<section id="authentication">
-    <div class="page-header">
-        <h2>Authentication</h2>
+    <div class="alert alert-danger" ng-if="errors">
+        <p ng-repeat="error in errors">{{error}}</p>
     </div>
 
-    <p>Authentication is performed via the oAuth2 standard, more
-        information can be found in the documentation for our
-        <a href="docs.html?json=auth.json" target="_self">authentication API</a>.
-    </p>
-</section>
-
-<!-- Requests -->
-<section id="requests">
-    <div class="page-header">
-        <h2>Requests</h2>
-    </div>
-
-    <p>The web service is stateless so each request should contain an
-        API key and should be signed with the secret key.</p>
-
-    <p>Requests can be either POST (Create), GET (Read), PUT (Update),
-        DELETE (Delete).</p>
-
+    <p id="top">Jump to:</p>
     <ul>
-        <li>GET requests return information about objects.  In some
-            cases a GET request may trigger an action on a resource</li>
-        <li>POST requests create new objects.</li>
-        <li>PUT requests update existing objects.</li>
-        <li>DELETE requests delete existing objects.</li>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#requests">Requests</a></li>
+        <li><a href="#responses">Responses</a></li>
+        <li><a href="#method_overview">Method Overview</a></li>
+        <li><a href="#method_detail">Method Detail</a></li>
     </ul>
-    <br />
-    <div id="global-parameters-section" ng-if="json.parameters" ng-cloak>
-        <h3 class="page-header">Global Parameters</h3>
+
+    <!-- Authentication -->
+    <section id="authentication">
+        <div class="page-header">
+            <h2>Authentication</h2>
+        </div>
+
+        <p>Authentication is performed via the oAuth2 standard, more
+            information can be found in the documentation for our
+            <a href="docs.html?json=auth.json" target="_self">authentication API</a>.
+        </p>
+    </section>
+
+    <!-- Requests -->
+    <section id="requests">
+        <div class="page-header">
+            <h2>Requests</h2>
+        </div>
+
+        <p>The web service is stateless so each request should contain an
+            API key and should be signed with the secret key.</p>
+
+        <p>Requests can be either POST (Create), GET (Read), PUT (Update),
+            DELETE (Delete).</p>
+
+        <ul>
+            <li>GET requests return information about objects.  In some
+                cases a GET request may trigger an action on a resource</li>
+            <li>POST requests create new objects.</li>
+            <li>PUT requests update existing objects.</li>
+            <li>DELETE requests delete existing objects.</li>
+        </ul>
+        <br />
+        <div id="global-parameters-section" ng-if="json.parameters" ng-cloak>
+            <h3 class="page-header">Global Parameters</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>These global request parameters are parameters that can be
+                    used on any request.</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Global parameters can either be query parameters or
+                    headers.</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Used in</th>
+                        <th>Required?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="parameter in json.parameters" ng-cloak ng-if="!parameter.pagedOnly">
+                        <td><code>{{parameter.name}}</code></td>
+                        <td>{{parameter.type}}
+                            <span ng-if="parameter.format">({{parameter.format}})</span>
+                        </td>
+                        <td ng-bind-html="parameter.description">
+                        </td>
+                        <td>{{parameter.paramType}}</td>
+                        <td><span ng-if="parameter.required">yes</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <h4 class="page-header">Paging Parameters</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>These parameters are only available on API methods with paged responses.</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Used in</th>
+                        <th>Required?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="parameter in json.parameters" ng-cloak ng-if="parameter.pagedOnly">
+                        <td><code>{{parameter.name}}</code></td>
+                        <td>{{parameter.type}}
+                            <span ng-if="parameter.format">({{parameter.format}})</span>
+                        </td>
+                        <td ng-bind-html="parameter.description">
+                        </td>
+                        <td>{{parameter.paramType}}</td>
+                        <td><span ng-if="parameter.required">yes</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <h3 class="page-header">JSONP Requests</h3>
         <div class="row">
             <div class="col-md-6">
-                <p>These global request parameters are parameters that can be
-                used on any request.</p>
+
+                <p ng-if="!json.jsonp.supported">JSONP requests are not supported by
+                    this API</p>
+                <div ng-if="json.jsonp.supported">
+                    <p>This API supports requests over JSONP.  To make the
+                    API respond in JSONP format you need to include the
+                    '{{json.jsonp.callbackParameter}}' parameter with the name
+                    of your callback e.g.
+                    <code>?{{json.jsonp.callbackParameter}}=yourcallback</code></p>
+
+                    <p ng-if="json.jsonp.methodParameter">All JSONP requests are
+                    GETs by their nature, to perform a POST, PUT or DELETE specify
+                    the method using the '{{json.jsonp.methodParameter}}'
+                    parameter e.g.
+                    <code>?{{json.jsonp.methodParameter}}=PUT</code>
+                </div>
             </div>
             <div class="col-md-6">
-                <p>Global parameters can either be query parameters or
-                headers.</p>
+                <div ng-if="json.jsonp.supported">
+                    <p ng-if="json.jsonp.always200">JSONP requests will always
+                    return with a <code>200 OK</code> HTTP response, even when
+                    an error occurred.</p>
+
+                    <p ng-if="json.jsonp.errorModel">In the case of an error
+                    the body of the response will be this APIs standard error
+                    model instead of the regular response.  You should always
+                    check for error information before attempting to process
+                    the standard response data.</p>
+                </div>
             </div>
         </div>
-        <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Used in</th>
-                    <th>Required?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="parameter in json.parameters" ng-cloak ng-if="!parameter.pagedOnly">
-                    <td><code>{{parameter.name}}</code></td>
-                    <td>{{parameter.type}}
-                        <span ng-if="parameter.format">({{parameter.format}})</span>
-                    </td>
-                    <td ng-bind-html="parameter.description">
-                    </td>
-                    <td>{{parameter.paramType}}</td>
-                    <td><span ng-if="parameter.required">yes</span></td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div ng-if="json.throttling.supported">
+            <h3 class="page-header">Throttling</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Requests to this API may be throttled.  By default
+                    each user is given a 'budget' of
+                    <strong>{{json.throttling.defautltBudgetPerUser}}</strong>
+                    points to 'spend' every
+                    <strong>{{json.throttling.budgetPeriodLength}}</strong>
+                    seconds.  The spend is recalculated on a rolling second by
+                    second basis.</p>
+
+                    <p>We reserve the right to alter the budgets
+                        allocated to any user or connected application.</p>
+                </div>
+                <div class="col-md-6">
+                    <p>We do not expect you to hit these limits and ask that
+                    you code appropriately to avoid hitting them, applications
+                    that consistently exceed their budget are likely to have
+                    their budgets restricted.</p>
+
+                    <p>The throttling costs for each operation are shown
+                    within the detailed docs for each method.</p>
+                </div>
+            </div>
         </div>
 
-        <h4 class="page-header">Paging Parameters</h4>
+        <h3 class="page-header">Batching</h3>
+        <p>Batching is not supported.</p>
+
+    </section>
+
+    <!-- Responses -->
+    <section id="responses">
+        <div class="page-header">
+            <h2>Responses</h2>
+        </div>
         <div class="row">
             <div class="col-md-6">
-                <p>These parameters are only available on API methods with paged responses.</p>
-            </div>
-        </div>
-        <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Parameter</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Used in</th>
-                    <th>Required?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="parameter in json.parameters" ng-cloak ng-if="parameter.pagedOnly">
-                    <td><code>{{parameter.name}}</code></td>
-                    <td>{{parameter.type}}
-                        <span ng-if="parameter.format">({{parameter.format}})</span>
-                    </td>
-                    <td ng-bind-html="parameter.description">
-                    </td>
-                    <td>{{parameter.paramType}}</td>
-                    <td><span ng-if="parameter.required">yes</span></td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-
-    <h3 class="page-header">JSONP Requests</h3>
-    <div class="row">
-        <div class="col-md-6">
-
-            <p ng-if="!json.jsonp.supported">JSONP requests are not supported by
-                this API</p>
-            <div ng-if="json.jsonp.supported">
-                <p>This API supports requests over JSONP.  To make the
-                API respond in JSONP format you need to include the
-                '{{json.jsonp.callbackParameter}}' parameter with the name
-                of your callback e.g.
-                <code>?{{json.jsonp.callbackParameter}}=yourcallback</code></p>
-
-                <p ng-if="json.jsonp.methodParameter">All JSONP requests are
-                GETs by their nature, to perform a POST, PUT or DELETE specify
-                the method using the '{{json.jsonp.methodParameter}}'
-                parameter e.g.
-                <code>?{{json.jsonp.methodParameter}}=PUT</code>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div ng-if="json.jsonp.supported">
-                <p ng-if="json.jsonp.always200">JSONP requests will always
-                return with a <code>200 OK</code> HTTP response, even when
-                an error occurred.</p>
-
-                <p ng-if="json.jsonp.errorModel">In the case of an error
-                the body of the response will be this APIs standard error
-                model instead of the regular response.  You should always
-                check for error information before attempting to process
-                the standard response data.</p>
-            </div>
-        </div>
-    </div>
-
-    <div ng-if="json.throttling.supported">
-        <h3 class="page-header">Throttling</h3>
-        <div class="row">
-            <div class="col-md-6">
-                <p>Requests to this API may be throttled.  By default
-                each user is given a 'budget' of
-                <strong>{{json.throttling.defautltBudgetPerUser}}</strong>
-                points to 'spend' every
-                <strong>{{json.throttling.budgetPeriodLength}}</strong>
-                seconds.  The spend is recalculated on a rolling second by
-                second basis.</p>
-
-                <p>We reserve the right to alter the budgets
-                    allocated to any user or connected application.</p>
+                <p>Every request will respond with both an HTTP header
+                    indicative of the response, and a body containing JSON
+                    for the result data or, in an error case, JSON describing
+                    the error.</p>
             </div>
             <div class="col-md-6">
-                <p>We do not expect you to hit these limits and ask that
-                you code appropriately to avoid hitting them, applications
-                that consistently exceed their budget are likely to have
-                their budgets restricted.</p>
-
-                <p>The throttling costs for each operation are shown
-                within the detailed docs for each method.</p>
+                <p>Where a parameter is optional it may or may not be in the
+                    response object, your code should check before accessing that
+                    parameter.  Additional parameters may be added without notice,
+                    your code should be flexible to this possibility.</p>
             </div>
         </div>
-    </div>
 
-    <h3 class="page-header">Batching</h3>
-    <p>Batching is not supported.</p>
-
-</section>
-
-<!-- Responses -->
-<section id="responses">
-    <div class="page-header">
-        <h2>Responses</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <p>Every request will respond with both an HTTP header
-                indicative of the response, and a body containing JSON
-                for the result data or, in an error case, JSON describing
-                the error.</p>
+        <div ng-if="responseMessages" ng-cloak>
+            <h3 class="page-header">Response Headers</h3>
+            <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Header</th>
+                        <th>Common reason(s)</th>
+                        <th>Response Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="responseMessage in responseMessages" ng-cloak>
+                        <td><code>{{responseMessage.code}} {{responseMessage.summary}}</code></td>
+                        <td>{{responseMessage.reason}}</td>
+                        <td>{{responseMessage.responseModel}}
+                            <span ng-if="!responseMessage.responseModel">
+                                As specified by endpoint</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
         </div>
-        <div class="col-md-6">
-            <p>Where a parameter is optional it may or may not be in the
-                response object, your code should check before accessing that
-                parameter.  Additional parameters may be added without notice,
-                your code should be flexible to this possibility.</p>
-        </div>
-    </div>
 
-    <div ng-if="responseMessages" ng-cloak>
-        <h3 class="page-header">Response Headers</h3>
-        <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Header</th>
-                    <th>Common reason(s)</th>
-                    <th>Response Model</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="responseMessage in responseMessages" ng-cloak>
-                    <td><code>{{responseMessage.code}} {{responseMessage.summary}}</code></td>
-                    <td>{{responseMessage.reason}}</td>
-                    <td>{{responseMessage.responseModel}}
-                        <span ng-if="!responseMessage.responseModel">
-                            As specified by endpoint</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div ng-cloak>
+            <h3 class="page-header">Error Model</h3>
+            <div class="table-responsive"
+                ng-repeat="model in json.models"
+                ng-if="model.isError">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="property in model.properties">
+                            <td><code>{{property.name}}</code></td>
+                            <td>{{property.type}}
+                                <span ng-if="property.format">({{property.format}})</span>
+                            </td>
+                            <td ng-bind-html="property.description"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div ng-cloak>
-        <h3 class="page-header">Error Model</h3>
-        <div class="table-responsive"
-            ng-repeat="model in json.models"
-            ng-if="model.isError">
+        <div id="envelope_section" ng-if="json.envelopeIsUsed" ng-cloak>
+            <h3 class="page-header">Response Envelope</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>The response envelope can nest the main response
+                    to an API call to provide additional content alongside
+                    your responses.</p>
+                </div>
+                <div class="col-md-6">
+                    <p>The response envelope properties can be 'optional'
+                    and may not be present in all API method responses, for
+                    example a paging property may only be available for
+                    array type responses.</p>
+                </div>
+            </div>
+            <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -256,7 +295,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="property in model.properties">
+                    <tr ng-repeat="property in json.envelope.properties" ng-cloak>
                         <td><code>{{property.name}}</code></td>
                         <td>{{property.type}}
                             <span ng-if="property.format">({{property.format}})</span>
@@ -265,84 +304,48 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div id="envelope_section" ng-if="json.envelopeIsUsed" ng-cloak>
-        <h3 class="page-header">Response Envelope</h3>
-        <div class="row">
-            <div class="col-md-6">
-                <p>The response envelope can nest the main response
-                to an API call to provide additional content alongside
-                your responses.</p>
-            </div>
-            <div class="col-md-6">
-                <p>The response envelope properties can be 'optional'
-                and may not be present in all API method responses, for
-                example a paging property may only be available for
-                array type responses.</p>
-            </div>
+    <!-- Method List -->
+    <section id="method_overview">
+        <div class="page-header">
+            <h2>API Endpoint Overview</h2>
         </div>
         <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered" ng-cloak>
             <thead>
                 <tr>
-                    <th>Property</th>
-                    <th>Type</th>
+                    <th>Method</th>
+                    <th>Supports</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="property in json.envelope.properties" ng-cloak>
-                    <td><code>{{property.name}}</code></td>
-                    <td>{{property.type}}
-                        <span ng-if="property.format">({{property.format}})</span>
+                <tr ng-repeat="api in json.apis" ng-cloak
+                    ng-class="{disabled: api.disabled, hidden: api.hidden}">
+                    <td>
+                        <code><a href="" ng-click="scrollTo(api.path)">{{api.path}}</a></code>
                     </td>
-                    <td ng-bind-html="property.description"></td>
+                    <td style="white-space: nowrap;">
+                        {{api.operationMethods.join(', ')}}
+                    </td>
+                    <!--<td ng-bind-html="api.description">-->
+                    <td>
+                        <markdown ng-model="api.description"></markdown>
+                    </td>
                 </tr>
             </tbody>
         </table>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Method List -->
-<section id="method_overview">
-    <div class="page-header">
-        <h2>API Endpoint Overview</h2>
-    </div>
-    <div class="table-responsive">
-    <table class="table table-bordered" ng-cloak>
-        <thead>
-            <tr>
-                <th>Method</th>
-                <th>Supports</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="api in json.apis" ng-cloak
-                ng-class="{disabled: api.disabled, hidden: api.hidden}">
-                <td>
-                    <code><a href="" ng-click="scrollTo(api.path)">{{api.path}}</a></code>
-                </td>
-                <td style="white-space: nowrap;">
-                    {{api.operationMethods.join(', ')}}
-                </td>
-                <!--<td ng-bind-html="api.description">-->
-                <td>
-                    <markdown ng-model="api.description"></markdown>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-</section>
-
-<!-- Method detail -->
-<section id="method_detail" ng-cloak>
-    <div class="page-header">
-        <h2>API Endpoint Detail</h2>
-    </div>
-    <api-docs></api-docs>
-</section>
+    <!-- Method detail -->
+    <section id="method_detail" ng-cloak>
+        <div class="page-header">
+            <h2>API Endpoint Detail</h2>
+        </div>
+        <api-docs></api-docs>
+    </section>
+</div>

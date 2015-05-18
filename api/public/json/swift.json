@@ -765,45 +765,38 @@
         {
             "name": "Content-Type",
             "description": "The media type of the body",
-            "example": "application/json",
-            "pageOnly": false
+            "example": "application/json"
         },
         {
             "name": "Content-Length",
             "description": "How many bytes the content body contains",
-            "example": "8584",
-            "pageOnly": false
+            "example": "8584"
         },
         {
             "name": "Content-Encoding",
             "description": "What, if any, compression is being used.",
-            "example": "gzip",
-            "pageOnly": false
+            "example": "gzip"
         },
         {
             "name": "ETag",
             "description": "A short string representation of the resource, useful for seeing if it has changed.",
-            "example": "18118-50c9c7c55a41d",
-            "pageOnly": false
+            "example": "18118-50c9c7c55a41d"
         },
         {
             "name": "Last-Modified",
             "description": "When was the resource last modified",
-            "example": "Wed, 14 Jan 2015 13:12:03 GMT",
-            "pageOnly": false
+            "example": "Wed, 14 Jan 2015 13:12:03 GMT"
         },
         {
             "name": "Link",
             "description": "Links to other pages of data in the collection, valid values are: first, prev, next, last",
             "example": "<https://api.example.com/resources?offset=20&limit=20>; rel='next', <https://api.example.com/resources?offset=60&limit=20>; rel='last'",
-            "pageOnly": false,
             "pagedOnly": true
         },
         {
             "name": "X-Total-Count",
             "description": "The number of items in the collection",
             "example": "75",
-            "pageOnly": false,
             "pagedOnly": true
         }
     ],

@@ -14,21 +14,16 @@
     <!-- Le styles -->
     <link type="text/css" rel="stylesheet"
         href="components/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet"
-        href="components/bootstrap/dist/css/bootstrap-theme.min.css" />
 
 	<link href="css/styles.css" rel="stylesheet">
 
 	<script src="components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="components/underscore/underscore-min.js" type="text/javascript"></script>
     <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--
-    <script src="components/angular/angular.min.js" type="text/javascript"></script>
-    <script src="components/angular-route/angular-route.min.js" type="text/javascript"></script>
-    -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.js"></script>
+
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-route/angular-route.js"></script>
+    <script src="components/angular-sanitize/angular-sanitize.js"></script>
 
     <script src="../js/app.js" type="text/javascript"></script>
 
@@ -42,8 +37,8 @@
   <body ng-controller="PageCtrl" ng-init="page = 'tests'">
     <menu></menu>
 
-    <div class="container" ng-controller="TestDesignController">
-		<div ng-include src="templates.tests"></div>
+    <div ng-controller="TestDesignController as vm">
+		<div ng-include src="vm.templates.tests"></div>
     </div>
 
     <footer class="container"></footer>

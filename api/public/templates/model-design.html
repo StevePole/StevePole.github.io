@@ -17,6 +17,19 @@
         </div>
     </div>
     -->
+    <div class="row">
+        <div class="col-md-12 form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control threeHigh"
+                        ng-model="vm.model.notes"
+                        placeholder="Additional notes for this model (markdown compatible)"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
     <div class="checkbox">
         <label>
             <input type="checkbox" ng-model="vm.model.onlyIdsForNestedPosts" />
@@ -24,6 +37,7 @@
             just the id?
         </label>
     </div>
+    -->
     <div class="properties table-responsive">
         <table class="table">
         <thead>
@@ -89,6 +103,13 @@
                         ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
                         ng-disabled="property.displayType != 'object'"
                         ng-if="property.displayType == 'object'">
+                    </select>
+
+                    <select class="form-control models"
+                        ng-model="property.idModel"
+                        ng-options="model.name as model.name for model in vm.models | nonEnvelopeModels | orderBy:'name'"
+                        ng-disabled="property.displayType != 'id'"
+                        ng-if="property.displayType == 'id'">
                     </select>
 
                     <input type="text" class="form-control"

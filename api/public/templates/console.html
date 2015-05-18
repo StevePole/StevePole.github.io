@@ -1,99 +1,101 @@
-<div class="page-header">
-    <h2>API Console <small>Make test requests to the API</small></h2>
-</div>
-<div class="row form-horizontal">
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Access token</label>
-        <div class="col-sm-8">
-            <input id="access-token" type="text" class="form-control" ng-model="accessToken">
-        </div>
+<div class="container">
+    <div class="page-header">
+        <h2>API Console <small>Make test requests to the API</small></h2>
     </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Request</label>
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-md-2">
-                    <select class="form-control"
-                        ng-model="method"
-                        ng-options="operation.method as operation.method for (method, operation) in api.operations"
-                        ng-change="changeMethod()">
-                    </select>
-                </div>
-                <div class="col-md-10">
-                    <select class="form-control"
-                        ng-model="path"
-                        ng-options="path as path for (path, apiIter) in json.apis"
-                        ng-change="changePath()">
-                    </select>
+    <div class="row form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Access token</label>
+            <div class="col-sm-8">
+                <input id="access-token" type="text" class="form-control" ng-model="accessToken">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Request</label>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-md-2">
+                        <select class="form-control"
+                            ng-model="method"
+                            ng-options="operation.method as operation.method for (method, operation) in api.operations"
+                            ng-change="changeMethod()">
+                        </select>
+                    </div>
+                    <div class="col-md-10">
+                        <select class="form-control"
+                            ng-model="path"
+                            ng-options="path as path for (path, apiIter) in json.apis"
+                            ng-change="changePath()">
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h3 class="page-header">Parameters</h3>
-        <form id="params" name="parameter-form" class="form-horizontal">
-            <div class="form-group param" 
-                ng-repeat="parameter in operation.parameters" 
-                ng-if="parameter.paramType != 'body'" ng-cloak>
-                <label class="col-sm-4 control-label">
-                    {{parameter.name}}
-                </label>
-                <div class="col-sm-8">
-                    <input type="number" step="1" class="form-control param-val" 
-                        placeholder="{{parameter.format}}"
-                        name="{{parameter.name}}" 
-                        ng-if="parameter.type == 'integer' && !parameter.enum"
-                        ng-required="parameter.required"
-                        ng-pattern="validators.numeric"
-                        ng-model="params[parameter.paramType][parameter.name]">
-
-                    <input type="text" class="form-control param-val" 
-                        placeholder="{{parameter.format}}"
-                        name="{{parameter.name}}" 
-                        ng-if="parameter.type == 'string' && !parameter.enum"
-                        ng-required="parameter.required"
-                        ng-model="params[parameter.paramType][parameter.name]">
-
-                    <select name="{{parameter.name}}" class="form-control"
-                            ng-if="parameter.enum"
-                            ng-options="enum as enum for (idx, enum) in parameter.enum"
-                            placeholder="Select {{parameter.name}}"
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="page-header">Parameters</h3>
+            <form id="params" name="parameter-form" class="form-horizontal">
+                <div class="form-group param"
+                    ng-repeat="parameter in operation.parameters"
+                    ng-if="parameter.paramType != 'body'" ng-cloak>
+                    <label class="col-sm-4 control-label">
+                        {{parameter.name}}
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="number" step="1" class="form-control param-val"
+                            placeholder="{{parameter.format}}"
+                            name="{{parameter.name}}"
+                            ng-if="parameter.type == 'integer' && !parameter.enum"
+                            ng-required="parameter.required"
+                            ng-pattern="validators.numeric"
                             ng-model="params[parameter.paramType][parameter.name]">
-                    </select>
+
+                        <input type="text" class="form-control param-val"
+                            placeholder="{{parameter.format}}"
+                            name="{{parameter.name}}"
+                            ng-if="parameter.type == 'string' && !parameter.enum"
+                            ng-required="parameter.required"
+                            ng-model="params[parameter.paramType][parameter.name]">
+
+                        <select name="{{parameter.name}}" class="form-control"
+                                ng-if="parameter.enum"
+                                ng-options="enum as enum for (idx, enum) in parameter.enum"
+                                placeholder="Select {{parameter.name}}"
+                                ng-model="params[parameter.paramType][parameter.name]">
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <div ng-if="operation.hasBody">
+                <h3>Request Body</h3>
+
+                <div class="well table-responsive">
+                    <span ng-include="templates.model"
+                        ng-if="operation.request.model"
+                        ng-init="property=operation; property.model=operation.request.model"></span>
                 </div>
             </div>
-        </form>
 
-        <div ng-if="operation.hasBody">
-            <h3>Request Body</h3>
-
-            <div class="well table-responsive">
-                <span ng-include="templates.model" 
-                    ng-if="operation.request.model" 
-                    ng-init="property=operation; property.model=operation.request.model"></span>
+            <div class="btn-toolbar">
+                <input type="button" id="make-request"
+                    class="btn btn-primary" value="Send Request"
+                    ng-click="makeRequest()" />
             </div>
         </div>
-
-        <div class="btn-toolbar">
-            <input type="button" id="make-request" 
-                class="btn btn-primary" value="Send Request"
-                ng-click="makeRequest()" />
+        <div class="col-md-6">
+            <h3 class="page-header">
+                Result <img src="images/ajax-loader.gif" ng-show="loading" />
+            </h3>
+            <pre id="api-response" class="pre-scrollable"></pre>
         </div>
     </div>
-    <div class="col-md-6">
-        <h3 class="page-header">
-            Result <img src="images/ajax-loader.gif" ng-show="loading" />
-        </h3>
-        <pre id="api-response" class="pre-scrollable"></pre>
-    </div>
-</div>
 
-<div id="errors" class="alert alert-danger" ng-show="errors.length" ng-cloak>
-    <p ng-repeat="error in errors">{{error}}</p>
-</div>
-<div id="success" class="alert alert-success" style="display: none;">
-    JSON validates successfully!
+    <div id="errors" class="alert alert-danger" ng-show="errors.length" ng-cloak>
+        <p ng-repeat="error in errors">{{error}}</p>
+    </div>
+    <div id="success" class="alert alert-success" style="display: none;">
+        JSON validates successfully!
+    </div>
 </div>

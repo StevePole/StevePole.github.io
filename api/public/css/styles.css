@@ -231,3 +231,7 @@ h5 {
   width: 180px;
   min-width: 180px;
 }
+.navbar {
+  border-radius: 0;
+  margin-bottom: 0;
+}

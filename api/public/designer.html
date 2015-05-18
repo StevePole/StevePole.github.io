@@ -18,7 +18,7 @@
         href="components/bootstrap/dist/css/bootstrap-theme.min.css" />
         -->
     <link type="text/css" rel="stylesheet"
-        href="../../tw-bootstrap/css/bootstrap.min.css" />
+        href="components/bootstrap/dist/css/bootstrap.min.css" />
 
 	<link href="css/styles.css" rel="stylesheet">
 
@@ -42,7 +42,7 @@
   <body ng-controller="PageCtrl" ng-init="page = 'design'">
     <menu></menu>
 
-    <div class="container" ng-controller="DesignerCtrl as vm">
+    <div ng-controller="DesignerCtrl as vm">
  		<div ng-include src="vm.templates.design"></div><!-- -->
         <!--<designer></designer>-->
     </div>

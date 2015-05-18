@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="sdkApp">
+<head>
+    <script src="components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    
+    <script src="promise-0.1.1.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.js"></script>
+	
+    <script src="cdsAngularSDK.js"></script>
+    <!--<script src="cdsSdkManual.js"></script>-->
+    <!--<script src="jquerySDK.js"></script>-->
+    <script src="cdsJquerySDK.js"></script>
+    <!--<script src="cdsJquerySDK_mock.js"></script>-->
+    
+    <link type="text/css" rel="stylesheet"
+        href="components/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet"
+        href="components/bootstrap/dist/css/bootstrap-theme.min.css" />
+    
+    <script>
+
+    angular.module('sdkApp', ['sdkService'])
+    .controller('AlbumCtrl', ['$scope', 'Albums', 'Songs',
+        function($scope, Albums, Songs) {
+            $scope.templates = {
+                footer: "partials/footer.html"
+            };
+            
+            $scope.loadFromAngularSdk = function() {
+                $scope.albums = Albums.getList();
+
+                $scope.album = Albums.get({id: 1}, function(album) {
+                    $scope.songs = Songs.getByAlbumsId({id: album.id});
+                });
+
+                $scope.removeSong = function(idx) {
+                    $scope.songs.splice(idx, 1);
+                };
+            };
+           
+            $scope.loadFromJquerySdk = function() {
+                jQuerySDK.Albums.getList().then(function(albums) {
+                    $scope.albums = albums;
+                });
+
+                jQuerySDK.Albums.get(1).then(function(album) {
+                    $scope.album = album;
+
+                    album.$getSongs().then(function(songs) {
+                        $scope.songs = songs;
+                        $scope.$apply(); // Force Angular repaint
+                    });
+                });
+            };
+            
+            $scope.loadFromJquerySdk();
+        }
+    ]);
+    </script>
+    <title>CDs API Angular Test</title>
+</head>
+<body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand experian" href="#">Albums</a>
+          <h1>Example</h1>
+        </div>
+      </div>
+    </div>
+	<div class="container" ng-controller="AlbumCtrl">
+        <h3 class="page-header">Albums</h3>
+        <ul>
+            <li ng-repeat="album in albums">
+                {{album.name}} <i>- {{album.artist.name}}</i>
+            </li>
+        </ul>
+        
+        <h3 class="page-header">{{album.artist.name}}: {{album.name}}</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <img class="cover-img" ng-src="{{album.coverImg}}" />
+            </div>
+            <div class="col-md-8">
+                <div class="input-append">
+                    <input type="text" ng-model="album.name">
+                    <button class="btn btn-success" ng-click="album.$update()">
+                        Update Album
+                    </button>
+                </div>
+                <p>First released: {{album.released}}</p>
+                <p>Songs:</p>
+                <ol>
+                    <li ng-repeat="(idx, song) in songs">
+                        <div class="input-append">
+                            <input type="text" ng-model="song.name">
+                            <button class="btn btn-success" ng-click="song.$update()">
+                                Update Song
+                            </button>
+                        </div>
+                        <a class="btn-link" href="#" ng-click="removeSong(idx)">Remove</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <input type="button" class="btn btn-default" ng-click="loadFromAngularSdk()" value="Load using Angular SDK" />
+        <input type="button" class="btn btn-default" ng-click="loadFromJquerySdk()" value="Load using jQuery SDK" />
+    </div>
+	
+    <footer class="container"></footer>
+</body>
+</html>
+
