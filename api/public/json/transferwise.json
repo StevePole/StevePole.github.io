@@ -291,17 +291,7 @@
                     "type": "transfer",
                     "parameters": [
                         {
-                            "name": "user",
-                            "description": "The user initiating the transfer.",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "id",
-                            "idModel": "user",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "profile",
+                            "name": "profileId",
                             "description": "The profile initiating the transfer.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -497,17 +487,7 @@
                             "format": "int64"
                         },
                         {
-                            "name": "user",
-                            "description": "The user initiating the transfer.",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "id",
-                            "idModel": "user",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "profile",
+                            "name": "profileId",
                             "description": "The profile initiating the transfer.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -633,17 +613,7 @@
                             "format": "int64"
                         },
                         {
-                            "name": "user",
-                            "description": "The user initiating the transfer.",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "id",
-                            "idModel": "user",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "profile",
+                            "name": "profileId",
                             "description": "The profile initiating the transfer.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -2043,6 +2013,35 @@
                     "type": "array",
                     "parameters": [
                         {
+                            "name": "quoteId",
+                            "description": "The quote the user generated.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "query",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "profileId",
+                            "description": "The profile you wish to use for the transfer.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "query",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The pay in method the user has chosen.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -2086,7 +2085,7 @@
                         }
                     ],
                     "responseMessages": [],
-                    "summary": "Get the verifications collection.",
+                    "summary": "Get the verifications required to use a quote to create a transfer..",
                     "notes": "",
                     "nickname": "",
                     "requiresAuth": true,
@@ -2094,37 +2093,40 @@
                         "type": "verification",
                         "$ref": "verification"
                     },
-                    "disabled": true
+                    "disabled": false
                 },
                 {
                     "method": "POST",
                     "type": "verification",
                     "parameters": [
                         {
-                            "name": "status",
-                            "description": "The status of the verifation",
+                            "name": "document",
+                            "description": "Multi-part form containing the document.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
-                            "enum": [
-                                "valid",
-                                "incomplete",
-                                "required"
-                            ],
                             "format": "string",
                             "paramType": "body"
                         },
                         {
-                            "name": "information",
-                            "description": "The information required by the verification, key value pairs.",
-                            "type": "array",
+                            "name": "profileId",
+                            "description": "The profile asscoiated with this document",
+                            "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "isDictionary": true,
-                            "items": {
-                                "type": "string",
-                                "format": "string"
-                            },
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "key",
+                            "description": "The key for this data, this key is used to update the associated profile.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "passport"
+                            ],
+                            "format": "string",
                             "paramType": "body"
                         },
                         {
@@ -2177,7 +2179,8 @@
                     "requiresAuth": true,
                     "postDataModel": "verification",
                     "$ref": "verification",
-                    "disabled": true
+                    "disabled": true,
+                    "hidden": true
                 }
             ],
             "parentModel": "verification",
@@ -2193,7 +2196,7 @@
                     "parameters": [
                         {
                             "name": "id",
-                            "description": "The id of the model.",
+                            "description": "The id of the document",
                             "required": true,
                             "type": "string",
                             "paramType": "path",
@@ -2248,7 +2251,8 @@
                     "nickname": "",
                     "requiresAuth": true,
                     "$ref": "verification",
-                    "disabled": true
+                    "disabled": true,
+                    "hidden": true
                 },
                 {
                     "method": "PUT",
@@ -2256,37 +2260,22 @@
                     "parameters": [
                         {
                             "name": "id",
-                            "description": "The id of the model.",
+                            "description": "The id of the document",
                             "required": true,
                             "type": "string",
                             "paramType": "path",
                             "format": "string"
                         },
                         {
-                            "name": "status",
-                            "description": "The status of the verifation",
+                            "name": "key",
+                            "description": "The key for this data, this key is used to update the associated profile.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
                             "enum": [
-                                "valid",
-                                "incomplete",
-                                "required"
+                                "passport"
                             ],
                             "format": "string",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "information",
-                            "description": "The information required by the verification, key value pairs.",
-                            "type": "array",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "isDictionary": true,
-                            "items": {
-                                "type": "string",
-                                "format": "string"
-                            },
                             "paramType": "body"
                         },
                         {
@@ -2339,7 +2328,8 @@
                     "requiresAuth": true,
                     "postDataModel": "verification",
                     "$ref": "verification",
-                    "disabled": true
+                    "disabled": true,
+                    "hidden": true
                 },
                 {
                     "method": "PATCH",
@@ -2347,37 +2337,22 @@
                     "parameters": [
                         {
                             "name": "id",
-                            "description": "The id of the model.",
+                            "description": "The id of the document",
                             "required": true,
                             "type": "string",
                             "paramType": "path",
                             "format": "string"
                         },
                         {
-                            "name": "status",
-                            "description": "The status of the verifation",
+                            "name": "key",
+                            "description": "The key for this data, this key is used to update the associated profile.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
                             "enum": [
-                                "valid",
-                                "incomplete",
-                                "required"
+                                "passport"
                             ],
                             "format": "string",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "information",
-                            "description": "The information required by the verification, key value pairs.",
-                            "type": "array",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "isDictionary": true,
-                            "items": {
-                                "type": "string",
-                                "format": "string"
-                            },
                             "paramType": "body"
                         },
                         {
@@ -2430,7 +2405,8 @@
                     "requiresAuth": true,
                     "postDataModel": "verification",
                     "$ref": "verification",
-                    "disabled": true
+                    "disabled": true,
+                    "hidden": true
                 }
             ],
             "parentModel": "verification",
@@ -2660,7 +2636,7 @@
             "operations": [
                 {
                     "method": "POST",
-                    "type": "array",
+                    "type": "quote",
                     "parameters": [
                         {
                             "name": "source",
@@ -2708,6 +2684,29 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "profileId",
+                            "description": "Optionally supply a profile id and the quote will pass back any missing verification details necessary for this transfer..",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The method that will be used to pay in the money.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -2751,15 +2750,12 @@
                         }
                     ],
                     "responseMessages": [],
-                    "summary": "Get the quotes collection.",
+                    "summary": "Create a quote.",
                     "notes": "",
                     "nickname": "",
                     "requiresAuth": true,
                     "postDataModel": "quote",
-                    "items": {
-                        "type": "quote",
-                        "$ref": "quote"
-                    }
+                    "$ref": "quote"
                 }
             ],
             "parentModel": "quote",
@@ -3225,6 +3221,19 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "type",
+                            "description": "The type of profile",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "personal",
+                                "business"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -3442,6 +3451,19 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "type",
+                            "description": "The type of profile",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "personal",
+                                "business"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -3586,6 +3608,19 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "type",
+                            "description": "The type of profile",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "personal",
+                                "business"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -3702,6 +3737,104 @@
             "parentModel": "profile",
             "description": "Interact with a single model.",
             "pathUsesChildId": false
+        },
+        {
+            "path": "/transfer-requirements",
+            "operations": [
+                {
+                    "method": "POST",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "quoteId",
+                            "description": "The quotefor which we need to check verification.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "profileId",
+                            "description": "The profile that will be used for the transfer.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "How will the user be paying in",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the requirements to create a transfer.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer-verification",
+                    "items": {
+                        "type": "profile-required",
+                        "$ref": "profile-required"
+                    }
+                }
+            ],
+            "description": "Get the requirements to create a transfer.",
+            "parentModel": "transfer-verification",
+            "pathUsesChildId": false
         }
     ],
     "models": {
@@ -3773,20 +3906,20 @@
                 },
                 "user": {
                     "name": "user",
-                    "description": "The user initiating the transfer.",
+                    "description": "The user who initiated the transfer.",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "example": "/users/98765",
                     "format": "id",
                     "idModel": "user"
                 },
-                "profile": {
-                    "name": "profile",
+                "profileId": {
+                    "name": "profileId",
                     "description": "The profile initiating the transfer.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -3903,8 +4036,7 @@
                 }
             },
             "required": [
-                "user",
-                "profile",
+                "profileId",
                 "receivingAccount",
                 "sendingAccount",
                 "quote",
@@ -4114,6 +4246,37 @@
                     "requiredPut": true,
                     "example": "United Kingdom",
                     "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of profile",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "personal",
+                        "business"
+                    ],
+                    "format": "string"
+                },
+                "verifications": {
+                    "name": "verifications",
+                    "description": "The list of verification data associated with this profile.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "items": {
+                        "type": "verification",
+                        "$ref": "verification"
+                    }
                 }
             },
             "required": [
@@ -4125,7 +4288,8 @@
                 "address1",
                 "address2",
                 "city",
-                "country"
+                "country",
+                "type"
             ],
             "id": "profile",
             "isEnvelope": false,
@@ -4286,7 +4450,7 @@
             "properties": {
                 "id": {
                     "name": "id",
-                    "description": "The id of the model.",
+                    "description": "The id of the document",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -4295,11 +4459,81 @@
                     "required": false,
                     "requiredPut": false,
                     "isId": true,
-                    "format": "string"
+                    "format": "string",
+                    "example": "8fRE892"
                 },
                 "status": {
                     "name": "status",
                     "description": "The status of the verifation",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "enum": [
+                        "valid",
+                        "incomplete",
+                        "required"
+                    ],
+                    "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of data required",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "enum": [
+                        "document"
+                    ],
+                    "format": "string"
+                },
+                "link": {
+                    "name": "link",
+                    "description": "A link to the document(?).",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "https://tranferwise.com/documents/8fRE892",
+                    "format": "string"
+                },
+                "document": {
+                    "name": "document",
+                    "description": "Multi-part form containing the document.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": true,
+                    "requiredPut": false,
+                    "format": "string"
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "description": "The profile asscoiated with this document",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": true,
+                    "requiredPut": false,
+                    "format": "int64"
+                },
+                "key": {
+                    "name": "key",
+                    "description": "The key for this data, this key is used to update the associated profile.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -4308,36 +4542,177 @@
                     "required": true,
                     "requiredPut": true,
                     "enum": [
-                        "valid",
-                        "incomplete",
-                        "required"
+                        "passport"
+                    ],
+                    "format": "string"
+                }
+            },
+            "required": [
+                "document",
+                "profileId",
+                "key"
+            ],
+            "id": "verification",
+            "isEnvelope": false,
+            "notes": "A verification is a document required to verify information about the user.  We will often need additional data about a user to be able to create or complete transfers.  Documents may require manual checking, the status property will indicate where we are in this process.\n\nREQUIRES FURTHER CONSIDERATION."
+        },
+        "verification-required": {
+            "name": "verification-required",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The key for this data, this key is used to update the associated profile.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "example": "passport",
+                    "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of data required",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "enum": [
+                        "document"
                     ],
                     "format": "string"
                 },
-                "information": {
-                    "name": "information",
-                    "description": "The information required by the verification, key value pairs.",
-                    "type": "array",
+                "name": {
+                    "name": "name",
+                    "description": "A localised name for the required document.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "Passport",
+                    "format": "string"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A localised description of this verification.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "string"
+                },
+                "reason": {
+                    "name": "reason",
+                    "description": "A localised reason for why we need the user to upload this information.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "string"
+                }
+            },
+            "required": []
+        },
+        "profile-required": {
+            "name": "profile-required",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The key for this data, this key is used to update the associated profile.",
+                    "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "isDictionary": true,
-                    "items": {
-                        "type": "string",
-                        "format": "string"
-                    }
+                    "isId": true,
+                    "example": "firstName",
+                    "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of data required",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "text",
+                        "number",
+                        "date",
+                        "document"
+                    ],
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A localise name for this property",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "First Name",
+                    "format": "string"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A localised description of the property",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Your first name",
+                    "format": "string"
+                },
+                "regex": {
+                    "name": "regex",
+                    "description": "A regular expression that the value must satisfy.  Only for text and number types.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/^[a-z]*$/",
+                    "format": "string"
                 }
             },
             "required": [
-                "status",
-                "information"
+                "key",
+                "type",
+                "name",
+                "description",
+                "regex"
             ],
-            "id": "verification",
-            "isEnvelope": false,
-            "notes": "A verification resource contains information about users verification status.  Users may have several verification records.  A verification may have an incomplete status indicating further information is required from the user.\n\nREQUIRES FURTHER CONSIDERATION."
+            "notes": "Required verifications are pieces of information that we need added to the users profile to be able to create a transfer using their chosen quote (route, amount, payment method).  This may be additional information like a users address, or it may be a document that we need to prove the users identity.\n\nREQUIRES FURTHER CONSIDERATION.",
+            "id": "profile-required",
+            "isEnvelope": false
         },
         "currency": {
             "name": "currency",
@@ -4605,6 +4980,77 @@
                     "requiredPut": true,
                     "example": true,
                     "format": "boolean"
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "description": "Optionally supply a profile id and the quote will pass back any missing verification details necessary for this transfer..",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "int64"
+                },
+                "verificationRequired": {
+                    "name": "verificationRequired",
+                    "description": "The list of missing verifications required for this transfer.  Only returned if a profileId is supplied.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "items": {
+                        "type": "verification",
+                        "$ref": "verification"
+                    }
+                },
+                "payInMethod": {
+                    "name": "payInMethod",
+                    "description": "The method that will be used to pay in the money.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "card",
+                        "ach",
+                        "transfer"
+                    ],
+                    "format": "string"
+                },
+                "created": {
+                    "name": "created",
+                    "description": "When was the quote created?",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time"
+                },
+                "profileRequired": {
+                    "name": "profileRequired",
+                    "description": "Any additional profile information we will require to complete a transfer.  Only returned if a profileId is returned.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "items": {
+                        "type": "profile-required",
+                        "$ref": "profile-required"
+                    }
                 }
             },
             "required": [
@@ -4612,7 +5058,9 @@
                 "target",
                 "payIn",
                 "payOut",
-                "fixedTarget"
+                "fixedTarget",
+                "profileId",
+                "payInMethod"
             ],
             "id": "quote",
             "isEnvelope": false,
@@ -4742,6 +5190,72 @@
             "isEnvelope": false,
             "notes": "Specific information relating to SWIFT based accounts."
         },
+        "transfer-verification": {
+            "name": "transfer-verification",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": false,
+                    "expectedInResponses": false,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "format": "string"
+                },
+                "quoteId": {
+                    "name": "quoteId",
+                    "description": "The quotefor which we need to check verification.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "int64"
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "description": "The profile that will be used for the transfer.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "int64"
+                },
+                "payInMethod": {
+                    "name": "payInMethod",
+                    "description": "How will the user be paying in",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "card",
+                        "ach",
+                        "transfer"
+                    ],
+                    "format": "string"
+                }
+            },
+            "required": [
+                "quoteId",
+                "profileId",
+                "payInMethod"
+            ],
+            "id": "transfer-verification",
+            "isEnvelope": false
+        },
         "payInMethod": {
             "name": "payInMethod",
             "properties": {
@@ -4757,7 +5271,8 @@
                     "requiredPut": true,
                     "enum": [
                         "card",
-                        "ach"
+                        "ach",
+                        "transfer"
                     ],
                     "isId": true,
                     "format": "string"
