@@ -866,8 +866,8 @@
                     "type": "user",
                     "parameters": [
                         {
-                            "name": "pref",
-                            "description": "The personal reference for the user.",
+                            "name": "id",
+                            "description": "The id of the user.",
                             "required": true,
                             "type": "integer",
                             "paramType": "path",
@@ -1542,8 +1542,8 @@
                     "type": "array",
                     "parameters": [
                         {
-                            "name": "pref",
-                            "description": "The personal reference for the user.",
+                            "name": "id",
+                            "description": "The id of the user.",
                             "required": true,
                             "type": "integer",
                             "paramType": "path",
@@ -1624,8 +1624,8 @@
                     "type": "array",
                     "parameters": [
                         {
-                            "name": "pref",
-                            "description": "The personal reference for the user.",
+                            "name": "id",
+                            "description": "The id of the user.",
                             "required": true,
                             "type": "integer",
                             "paramType": "path",
@@ -2684,26 +2684,12 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "profileId",
-                            "description": "Optionally supply a profile id and the quote will pass back any missing verification details necessary for this transfer..",
+                            "name": "companyId",
+                            "description": "Optionally supply a company id if this quote is for a company.",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
                             "format": "int64",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "payInMethod",
-                            "description": "The method that will be used to pay in the money.",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "enum": [
-                                "card",
-                                "ach",
-                                "transfer"
-                            ],
-                            "format": "string",
                             "paramType": "body"
                         },
                         {
@@ -3066,12 +3052,12 @@
                     "nickname": "",
                     "requiresAuth": true,
                     "items": {
-                        "type": "payInMethod",
-                        "$ref": "payInMethod"
+                        "type": "pay-in-method",
+                        "$ref": "pay-in-method"
                     }
                 }
             ],
-            "parentModel": "payInMethod",
+            "parentModel": "pay-in-method",
             "description": "Get the available payment methods",
             "pathUsesChildId": false
         },
@@ -3133,7 +3119,9 @@
                     "items": {
                         "type": "profile",
                         "$ref": "profile"
-                    }
+                    },
+                    "disabled": true,
+                    "hidden": true
                 },
                 {
                     "method": "POST",
@@ -3731,7 +3719,9 @@
                     "notes": "",
                     "nickname": "",
                     "requiresAuth": true,
-                    "$ref": "profile"
+                    "$ref": "profile",
+                    "hidden": true,
+                    "disabled": true
                 }
             ],
             "parentModel": "profile",
@@ -3739,7 +3729,7 @@
             "pathUsesChildId": false
         },
         {
-            "path": "/transfer-requirements",
+            "path": "/profile-requirements",
             "operations": [
                 {
                     "method": "POST",
@@ -3835,6 +3825,733 @@
             "description": "Get the requirements to create a transfer.",
             "parentModel": "transfer-verification",
             "pathUsesChildId": false
+        },
+        {
+            "path": "/verification-requirements",
+            "operations": [
+                {
+                    "method": "POST",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "quoteId",
+                            "description": "The quotefor which we need to check verification.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "profileId",
+                            "description": "The profile that will be used for the transfer.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "How will the user be paying in",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the verification requirements needed to create a transfer.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer-verification",
+                    "items": {
+                        "type": "verification-required",
+                        "$ref": "verification-required"
+                    }
+                }
+            ],
+            "description": "Get the verification requirements needed to create a transfer.",
+            "parentModel": "transfer-verification",
+            "pathUsesChildId": false
+        },
+        {
+            "path": "/transfer-requirements",
+            "operations": [
+                {
+                    "method": "POST",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "quoteId",
+                            "description": "The quotefor which we need to check verification.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "profileId",
+                            "description": "The profile that will be used for the transfer.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "How will the user be paying in",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "card",
+                                "ach",
+                                "transfer"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the requirements to create a transfer.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer-verification",
+                    "items": {
+                        "type": "user-required",
+                        "$ref": "user-required"
+                    }
+                }
+            ],
+            "description": "Get the requirements to create a transfer.",
+            "parentModel": "transfer-verification",
+            "pathUsesChildId": false
+        },
+        {
+            "path": "/roles",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "role",
+                        "$ref": "role"
+                    }
+                },
+                {
+                    "method": "PUT",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "userId",
+                            "description": "Associated user",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "companyId",
+                            "description": "Associated company",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "role",
+                            "description": "Role assigned to user in a company",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "admin",
+                                "regular"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Replace the collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "role",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "string",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "userId",
+                            "description": "Associated user",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "companyId",
+                            "description": "Associated company",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "role",
+                            "description": "Role assigned to user in a company",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "admin",
+                                "regular"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a new entry in the collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "role",
+                    "format": "string"
+                },
+                {
+                    "method": "PATCH",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the model.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "userId",
+                            "description": "Associated user",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "companyId",
+                            "description": "Associated company",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "role",
+                            "description": "Role assigned to user in a company",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "admin",
+                                "regular"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Update the collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "role",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            ],
+            "description": "Interact with the list of resources.",
+            "parentModel": "role",
+            "pathUsesChildId": false
+        },
+        {
+            "path": "/quotes/{id}/pay-in-methods",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the child collection related to a parent resource.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "pay-in-method",
+                        "$ref": "pay-in-method"
+                    }
+                }
+            ],
+            "description": "Get the available pay in methods for a quote.",
+            "parentModel": "quote"
+        },
+        {
+            "path": "/routes",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "sourceCountry",
+                            "description": "Filter the collection to a specific source country, using the iso3166 2-digit country code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "US",
+                            "format": "string"
+                        },
+                        {
+                            "name": "sourceCurrency",
+                            "description": "Filter the collection to a specific source currency, using the 3 digit currency code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "usd",
+                            "format": "string"
+                        },
+                        {
+                            "name": "targetCountry",
+                            "description": "Filter the collection to a specific target country, using the iso3166 2-digit country code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "GB",
+                            "format": "string"
+                        },
+                        {
+                            "name": "targetCurrency",
+                            "description": "Filter the collection to a specific target currency, using the 3 digit currency code.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "example": "gbp",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the available routes.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "route",
+                        "$ref": "route"
+                    }
+                }
+            ],
+            "description": "Interact with the list of resources.",
+            "parentModel": "route"
         }
     ],
     "models": {
@@ -4050,9 +4767,9 @@
         "user": {
             "name": "user",
             "properties": {
-                "pref": {
-                    "name": "pref",
-                    "description": "The personal reference for the user.",
+                "id": {
+                    "name": "id",
+                    "description": "The id of the user.",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -4102,16 +4819,34 @@
                     "requiredPut": true,
                     "example": true,
                     "format": "boolean"
+                },
+                "profile": {
+                    "name": "profile",
+                    "description": "Profile information for the user",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isDictionary": true,
+                    "example": "John Smith",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
                 }
             },
             "required": [
                 "name",
                 "email",
-                "active"
+                "active",
+                "profile"
             ],
             "id": "user",
             "isEnvelope": false,
-            "notes": "The user account resource can be the owner of several profiles, the user contains information on how a user logs into TransferWise."
+            "notes": "The user account.  User have a profile which may contain various information depending on the country and payment methods the user uses."
         },
         "profile": {
             "name": "profile",
@@ -4611,6 +5346,7 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
+                    "example": "Your passport",
                     "format": "string"
                 },
                 "reason": {
@@ -4623,10 +5359,43 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
+                    "example": "We need a copy of your passport to verify your identity.",
                     "format": "string"
+                },
+                "alternatives": {
+                    "name": "alternatives",
+                    "description": "An alternative key in the verification requirements",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "ssn",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "requiredBeforeCreation": {
+                    "name": "requiredBeforeCreation",
+                    "description": "Is this information required before we create a transfer",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": true,
+                    "format": "boolean"
                 }
             },
-            "required": []
+            "required": [],
+            "notes": "To ensure compliance with all local regulations we often need to ask our users to provide verification documents and information, verification-required resources explain the documents we require to be able to create a transfer.",
+            "id": "verification-required",
+            "isEnvelope": false
         },
         "profile-required": {
             "name": "profile-required",
@@ -4701,6 +5470,19 @@
                     "requiredPut": true,
                     "example": "/^[a-z]*$/",
                     "format": "string"
+                },
+                "validationDescription": {
+                    "name": "validationDescription",
+                    "description": "A localised human readable description of the validation.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Lowercase letters",
+                    "format": "string"
                 }
             },
             "required": [
@@ -4708,7 +5490,8 @@
                 "type",
                 "name",
                 "description",
-                "regex"
+                "regex",
+                "validationDescription"
             ],
             "notes": "Required verifications are pieces of information that we need added to the users profile to be able to create a transfer using their chosen quote (route, amount, payment method).  This may be additional information like a users address, or it may be a document that we need to prove the users identity.\n\nREQUIRES FURTHER CONSIDERATION.",
             "id": "profile-required",
@@ -4918,19 +5701,6 @@
                     "example": 632,
                     "format": "double"
                 },
-                "fee": {
-                    "name": "fee",
-                    "description": "The fee for the transfer.",
-                    "type": "number",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": 1,
-                    "format": "double"
-                },
                 "rate": {
                     "name": "rate",
                     "description": "The rate.",
@@ -4981,9 +5751,9 @@
                     "example": true,
                     "format": "boolean"
                 },
-                "profileId": {
-                    "name": "profileId",
-                    "description": "Optionally supply a profile id and the quote will pass back any missing verification details necessary for this transfer..",
+                "companyId": {
+                    "name": "companyId",
+                    "description": "Optionally supply a company id if this quote is for a company.",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5008,22 +5778,25 @@
                         "$ref": "verification"
                     }
                 },
-                "payInMethod": {
-                    "name": "payInMethod",
-                    "description": "The method that will be used to pay in the money.",
-                    "type": "string",
+                "payInMethods": {
+                    "name": "payInMethods",
+                    "description": "The available pay in methods.",
+                    "type": "array",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "enum": [
                         "card",
                         "ach",
                         "transfer"
                     ],
-                    "format": "string"
+                    "items": {
+                        "type": "pay-in-method",
+                        "$ref": "pay-in-method"
+                    }
                 },
                 "created": {
                     "name": "created",
@@ -5059,12 +5832,11 @@
                 "payIn",
                 "payOut",
                 "fixedTarget",
-                "profileId",
-                "payInMethod"
+                "companyId"
             ],
             "id": "quote",
             "isEnvelope": false,
-            "notes": "Quotes contain the rates and fees that we are our offering to the customer for a specific transfer, depending on route, amount or other factors we may be to offer a fixed rate or a variable rate with limits that will cause the transfer to be cancelled and money returned.  \n\nA quote is required to create a transfer.  Quotes will also contain an expiry time after which it will no longer be possible to use that quote when creating a transfer.  Depending on situation the API client may elect to handle quote expiry transparently, generating a new quote if required without user input."
+            "notes": "Quotes contain the rates and fees that we are our offering to the customer for a specific transfer, depending on route, amount or other factors we may be to offer a fixed rate or a variable rate with limits that will cause the transfer to be cancelled and money returned.  \n\nA quote is required to create a transfer.  Quotes may also contain an expiry time after which it will no longer be possible to use that quote when creating a transfer, or a set of rate bounds, if the rate moves outside of the bounds the quote would also become invalid.  Depending on situation the API client may elect to handle quote expiry transparently, generating a new quote if required without user input."
         },
         "country": {
             "name": "country",
@@ -5256,8 +6028,8 @@
             "id": "transfer-verification",
             "isEnvelope": false
         },
-        "payInMethod": {
-            "name": "payInMethod",
+        "pay-in-method": {
+            "name": "pay-in-method",
             "properties": {
                 "type": {
                     "name": "type",
@@ -5352,6 +6124,18 @@
                     "requiredPut": true,
                     "example": "100",
                     "format": "string"
+                },
+                "fees": {
+                    "name": "fees",
+                    "description": "A list of fees associated with this transfer type.",
+                    "type": "fee",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "$ref": "fee"
                 }
             },
             "required": [
@@ -5361,11 +6145,355 @@
                 "accountNumber",
                 "sortCode",
                 "max",
-                "min"
+                "min",
+                "fees"
             ],
             "id": "payInMethod",
             "isEnvelope": false,
             "notes": "The method of payment being used to transfer funds."
+        },
+        "company": {
+            "name": "company",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "example": "5678",
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "The name",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "TransferWise",
+                    "format": "string"
+                },
+                "": {
+                    "name": "",
+                    "description": "",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isDictionary": true,
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                ""
+            ],
+            "id": "company",
+            "isEnvelope": false,
+            "notes": "Profiles are specific representations of users, a single user may have multiple profiles, for example a business and a personal profile."
+        },
+        "role": {
+            "name": "role",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "345",
+                    "format": "string"
+                },
+                "userId": {
+                    "name": "userId",
+                    "description": "Associated user",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 3456,
+                    "format": "int64"
+                },
+                "companyId": {
+                    "name": "companyId",
+                    "description": "Associated company",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 3456,
+                    "format": "int64"
+                },
+                "role": {
+                    "name": "role",
+                    "description": "Role assigned to user in a company",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "admin",
+                        "regular"
+                    ],
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "userId",
+                "companyId",
+                "role"
+            ],
+            "id": "role",
+            "isEnvelope": false
+        },
+        "user-required": {
+            "name": "user-required",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The key for this data, this key is used to update the associated profile.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "firstName",
+                    "format": "string"
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of data required",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "text",
+                        "number",
+                        "date",
+                        "document"
+                    ],
+                    "format": "string"
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A localise name for this property",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "First Name",
+                    "format": "string"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A localised description of the property",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Your first name",
+                    "format": "string"
+                },
+                "regex": {
+                    "name": "regex",
+                    "description": "A regular expression that the value must satisfy.  Only for text and number types.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "/^[a-z]*$/",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "key",
+                "type",
+                "name",
+                "description",
+                "regex"
+            ],
+            "notes": "Required verifications are pieces of information that we need added to the users profile to be able to create a transfer using their chosen quote (route, amount, payment method).  This may be additional information like a users address, or it may be a document that we need to prove the users identity.\n\nREQUIRES FURTHER CONSIDERATION.",
+            "id": "user-required",
+            "isEnvelope": false
+        },
+        "fee": {
+            "name": "fee",
+            "properties": {
+                "type": {
+                    "name": "type",
+                    "description": "The type of the fee.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "transferwsise",
+                        "visa"
+                    ],
+                    "isId": true,
+                    "format": "string"
+                },
+                "rate": {
+                    "name": "rate",
+                    "description": "Used where the fee is a percentage. 1% = 0.01",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 0.05,
+                    "format": "double"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "The specific amount, either the fixed amount or result of applying the percentage to the overall amount.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 5,
+                    "format": "double"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A localised human readable reason why the fee will be applied.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "TransferWise's fee for processing this transfer.",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "type",
+                "rate",
+                "amount",
+                "description"
+            ],
+            "notes": "Information about a fee that may be applied during a transfer.  Fee may include the percentage charged by TransferWise, or a fee charged by a card processor, or other fees specific to that transfer type."
+        },
+        "route": {
+            "name": "route",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the route.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "US-GB",
+                    "format": "string"
+                },
+                "sourceCountry": {
+                    "name": "sourceCountry",
+                    "description": "The iso3166 2 digit code for the source country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "US",
+                    "format": "string"
+                },
+                "targetCountry": {
+                    "name": "targetCountry",
+                    "description": "The iso3166 2 digit code for the target country.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "GB",
+                    "format": "string"
+                },
+                "default": {
+                    "name": "default",
+                    "description": "Is this the default route for the current user.",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                }
+            },
+            "required": [
+                "id",
+                "sourceCountry",
+                "targetCountry",
+                "default"
+            ],
+            "notes": "Routes are specific country/currency corridors for which we can perform transfers.  Routes are not always available in both directions."
         }
     },
     "jsonp": {
