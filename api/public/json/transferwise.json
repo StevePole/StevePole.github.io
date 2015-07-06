@@ -4632,16 +4632,6 @@
                     "type": "string",
                     "parameters": [
                         {
-                            "name": "id",
-                            "description": "The id of the transfer request.",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "isId": true,
-                            "format": "string",
-                            "paramType": "body"
-                        },
-                        {
                             "name": "userId",
                             "description": "The user requesting the payment",
                             "type": "integer",
@@ -4680,37 +4670,6 @@
                         {
                             "name": "message",
                             "description": "A message for the person who is being asked to pay.",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "string",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "status",
-                            "description": "What is the status of the transfer?",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "enum": [
-                                "unpaid",
-                                "paid"
-                            ],
-                            "format": "string",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "recievedAmount",
-                            "description": "How much money has the requestor received.",
-                            "type": "number",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "double",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "link",
-                            "description": "A link that could be shared with the paying user.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -6727,10 +6686,10 @@
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "isId": true,
                     "example": "SE34TGSA",
                     "format": "string"
@@ -6804,10 +6763,10 @@
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "enum": [
                         "unpaid",
                         "paid"
@@ -6820,10 +6779,10 @@
                     "type": "number",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "example": 0,
                     "format": "double"
                 },
@@ -6833,24 +6792,20 @@
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
                     "example": "https://pay.transferwise.com/SE34TGSA",
                     "format": "string"
                 }
             },
             "required": [
-                "id",
                 "userId",
                 "accountId",
                 "requestAmount",
                 "email",
-                "message",
-                "status",
-                "recievedAmount",
-                "link"
+                "message"
             ],
             "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer."
         }
