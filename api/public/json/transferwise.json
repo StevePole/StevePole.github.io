@@ -1602,91 +1602,19 @@
                         }
                     ],
                     "responseMessages": [],
-                    "summary": "Get the accounts for a user.",
+                    "summary": "Get the accounts for a user who is not the currently authenticated user.",
                     "notes": "",
                     "nickname": "",
                     "requiresAuth": true,
                     "items": {
                         "type": "account",
                         "$ref": "account"
-                    }
+                    },
+                    "disabled": true
                 }
             ],
             "parentModel": "user",
-            "description": "Get the accounts for a user.",
-            "pathUsesChildId": false
-        },
-        {
-            "path": "/users/{id}/profiles",
-            "operations": [
-                {
-                    "method": "GET",
-                    "type": "array",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "description": "The id of the user.",
-                            "required": true,
-                            "type": "integer",
-                            "paramType": "path",
-                            "format": "int64"
-                        },
-                        {
-                            "name": "Version",
-                            "description": "Optional value to reference earlier versions of the API.",
-                            "type": "integer",
-                            "paramType": "header",
-                            "example": 0,
-                            "format": "int32",
-                            "global": true
-                        },
-                        {
-                            "name": "Accept",
-                            "description": "The response format, defaults to JSON.",
-                            "type": "string",
-                            "enum": [
-                                "application/json",
-                                "application/xml"
-                            ],
-                            "paramType": "header",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "jsonp",
-                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
-                            "type": "string",
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "method",
-                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
-                            "type": "string",
-                            "enum": [
-                                "PUT",
-                                "PATCH",
-                                "DELETE"
-                            ],
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        }
-                    ],
-                    "responseMessages": [],
-                    "summary": "Get the profiles for a user.",
-                    "notes": "",
-                    "nickname": "",
-                    "requiresAuth": true,
-                    "items": {
-                        "type": "user",
-                        "$ref": "user"
-                    }
-                }
-            ],
-            "parentModel": "user",
-            "description": "Get the profiles for a user.",
+            "description": "Get the accounts for a user who is not the currently authenticated user.",
             "pathUsesChildId": false
         },
         {
@@ -4677,6 +4605,14 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "dueDate",
+                            "description": "The date on which the payment is due.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "format": "date",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -4979,9 +4915,9 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "example": "john.smith@gmail.com",
                     "format": "string"
                 },
@@ -4993,34 +4929,45 @@
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "required": false,
+                    "requiredPut": false,
                     "example": true,
                     "format": "boolean"
                 },
                 "profile": {
                     "name": "profile",
-                    "description": "Profile information for the user",
+                    "description": "Profile information for the user.",
                     "type": "array",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "required": false,
+                    "requiredPut": false,
                     "isDictionary": true,
                     "example": "John Smith",
                     "items": {
                         "type": "string",
                         "format": "string"
                     }
+                },
+                "defaultCountry": {
+                    "name": "defaultCountry",
+                    "description": "The default country for this user.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "string"
                 }
             },
             "required": [
                 "name",
                 "email",
-                "active",
-                "profile"
+                "defaultCountry"
             ],
             "id": "user",
             "isEnvelope": false,
@@ -6701,9 +6648,9 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "format": "int64"
                 },
                 "accountId": {
@@ -6713,9 +6660,9 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "format": "int64"
                 },
                 "requestAmount": {
@@ -6798,6 +6745,18 @@
                     "requiredPut": false,
                     "example": "https://pay.transferwise.com/SE34TGSA",
                     "format": "string"
+                },
+                "dueDate": {
+                    "name": "dueDate",
+                    "description": "The date on which the payment is due.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date"
                 }
             },
             "required": [
