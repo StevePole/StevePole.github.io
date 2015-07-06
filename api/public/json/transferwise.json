@@ -4451,7 +4451,8 @@
                 }
             ],
             "description": "Get the available pay in methods for a quote.",
-            "parentModel": "quote"
+            "parentModel": "quote",
+            "pathUsesChildId": false
         },
         {
             "path": "/routes",
@@ -4551,7 +4552,225 @@
                 }
             ],
             "description": "Interact with the list of resources.",
-            "parentModel": "route"
+            "parentModel": "route",
+            "pathUsesChildId": false
+        },
+        {
+            "path": "/transfer-requests",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "status",
+                            "description": "Filter the list of transfer requests by status",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "unpaid",
+                                "paid"
+                            ],
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the list of transfer requests made by this user.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "transfer-request",
+                        "$ref": "transfer-request"
+                    }
+                },
+                {
+                    "method": "POST",
+                    "type": "string",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the transfer request.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isId": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "userId",
+                            "description": "The user requesting the payment",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "accountId",
+                            "description": "The account into which the user would like the money paid.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "int64",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "requestAmount",
+                            "description": "The amount the user is requesting.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "email",
+                            "description": "The email address of the person who should pay the money.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "message",
+                            "description": "A message for the person who is being asked to pay.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "status",
+                            "description": "What is the status of the transfer?",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "unpaid",
+                                "paid"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "recievedAmount",
+                            "description": "How much money has the requestor received.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "link",
+                            "description": "A link that could be shared with the paying user.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a new transfer request.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "transfer-request",
+                    "format": "string"
+                }
+            ],
+            "description": "Create transfer requests and list requests for the current user.",
+            "parentModel": "transfer-request"
         }
     ],
     "models": {
@@ -6148,7 +6367,7 @@
                 "min",
                 "fees"
             ],
-            "id": "payInMethod",
+            "id": "pay-in-method",
             "isEnvelope": false,
             "notes": "The method of payment being used to transfer funds."
         },
@@ -6428,7 +6647,9 @@
                 "amount",
                 "description"
             ],
-            "notes": "Information about a fee that may be applied during a transfer.  Fee may include the percentage charged by TransferWise, or a fee charged by a card processor, or other fees specific to that transfer type."
+            "notes": "Information about a fee that may be applied during a transfer.  Fee may include the percentage charged by TransferWise, or a fee charged by a card processor, or other fees specific to that transfer type.",
+            "id": "fee",
+            "isEnvelope": false
         },
         "route": {
             "name": "route",
@@ -6493,7 +6714,145 @@
                 "targetCountry",
                 "default"
             ],
-            "notes": "Routes are specific country/currency corridors for which we can perform transfers.  Routes are not always available in both directions."
+            "notes": "Routes are specific country/currency corridors for which we can perform transfers.  Routes are not always available in both directions.",
+            "id": "route",
+            "isEnvelope": false
+        },
+        "transfer-request": {
+            "name": "transfer-request",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the transfer request.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "SE34TGSA",
+                    "format": "string"
+                },
+                "userId": {
+                    "name": "userId",
+                    "description": "The user requesting the payment",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "int64"
+                },
+                "accountId": {
+                    "name": "accountId",
+                    "description": "The account into which the user would like the money paid.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "format": "int64"
+                },
+                "requestAmount": {
+                    "name": "requestAmount",
+                    "description": "The amount the user is requesting.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 500.5,
+                    "format": "double"
+                },
+                "email": {
+                    "name": "email",
+                    "description": "The email address of the person who should pay the money.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "example@example.com",
+                    "format": "string"
+                },
+                "message": {
+                    "name": "message",
+                    "description": "A message for the person who is being asked to pay.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "Please can you pay me the £500 you owe me?",
+                    "format": "string"
+                },
+                "status": {
+                    "name": "status",
+                    "description": "What is the status of the transfer?",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "unpaid",
+                        "paid"
+                    ],
+                    "format": "string"
+                },
+                "recievedAmount": {
+                    "name": "recievedAmount",
+                    "description": "How much money has the requestor received.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 0,
+                    "format": "double"
+                },
+                "link": {
+                    "name": "link",
+                    "description": "A link that could be shared with the paying user.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "https://pay.transferwise.com/SE34TGSA",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "id",
+                "userId",
+                "accountId",
+                "requestAmount",
+                "email",
+                "message",
+                "status",
+                "recievedAmount",
+                "link"
+            ],
+            "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer."
         }
     },
     "jsonp": {
