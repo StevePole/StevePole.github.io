@@ -2747,6 +2747,247 @@
             "pathUsesChildId": false
         },
         {
+            "path": "/quotes/{id}/pay-in-methods",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the child collection related to a parent resource.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "pay-in-method",
+                        "$ref": "pay-in-method"
+                    }
+                }
+            ],
+            "description": "Get the available pay in methods for a quote.",
+            "parentModel": "quote",
+            "pathUsesChildId": false
+        },
+        {
+            "path": "/quotes/{id}/profile-requirements",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "Which pay in method does the user wish to use?  This may alter the profile requirements.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "transfer",
+                                "card"
+                            ],
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the profile requirements for a quote.",
+                    "notes": "The users profile section must be update with the returned keys before a transfer can be created.\n\nFor example, if the profile-requirements end point asks for the key \"firstName\", you need to update the user profile with that key and the user supplied value, e.g.\n\nPUT /users/{id} { profile: { firstName: \"John\"}}",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "profile-required-group",
+                        "$ref": "profile-required-group"
+                    }
+                }
+            ],
+            "description": "Get the profile requirements for a quote.",
+            "parentModel": "quote"
+        },
+        {
+            "path": "/quotes/{id}/verification-requirements",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "The id of the quote.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path",
+                            "format": "int64"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "Which pay in method does the user wish to use?  This may alter the profile requirements.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "transfer",
+                                "card"
+                            ],
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the verification requirements for a quote.",
+                    "notes": "The users must upload documents with the returned keys before a transfer can be created.\n\nFor example, if the verification-requirements end point asks for the key \"passport\", user must upload an image of their passport, you should use the key passport during upload to the documents end point.\n\nPOST /documents { key: \"passport\"}",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "verification-required-group",
+                        "$ref": "verification-required-group"
+                    }
+                }
+            ],
+            "description": "Get the verification requirements for a quote.",
+            "parentModel": "quote"
+        },
+        {
             "path": "/countries",
             "operations": [
                 {
@@ -2982,7 +3223,9 @@
                     "items": {
                         "type": "pay-in-method",
                         "$ref": "pay-in-method"
-                    }
+                    },
+                    "hidden": true,
+                    "disabled": true
                 }
             ],
             "parentModel": "pay-in-method",
@@ -3740,14 +3983,16 @@
                     ],
                     "responseMessages": [],
                     "summary": "Get the requirements to create a transfer.",
-                    "notes": "",
+                    "notes": "The users profile section must be update with the returned keys before a transfer can be created.\n\nFor example, if the profile-requirements end point asks for the key \"firstName\", you need to update the user profile with that key and the user supplied value, e.g.\n\nPUT /users/{id} { profile: { firstName: \"John\"}}",
                     "nickname": "",
                     "requiresAuth": true,
                     "postDataModel": "transfer-verification",
                     "items": {
                         "type": "profile-required",
                         "$ref": "profile-required"
-                    }
+                    },
+                    "hidden": true,
+                    "disabled": true
                 }
             ],
             "description": "Get the requirements to create a transfer.",
@@ -3845,108 +4090,12 @@
                     "items": {
                         "type": "verification-required",
                         "$ref": "verification-required"
-                    }
+                    },
+                    "disabled": true,
+                    "hidden": true
                 }
             ],
             "description": "Get the verification requirements needed to create a transfer.",
-            "parentModel": "transfer-verification",
-            "pathUsesChildId": false
-        },
-        {
-            "path": "/transfer-requirements",
-            "operations": [
-                {
-                    "method": "POST",
-                    "type": "array",
-                    "parameters": [
-                        {
-                            "name": "quoteId",
-                            "description": "The quotefor which we need to check verification.",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "int64",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "profileId",
-                            "description": "The profile that will be used for the transfer.",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "int64",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "payInMethod",
-                            "description": "How will the user be paying in",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "enum": [
-                                "card",
-                                "ach",
-                                "transfer"
-                            ],
-                            "format": "string",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "Version",
-                            "description": "Optional value to reference earlier versions of the API.",
-                            "type": "integer",
-                            "paramType": "header",
-                            "example": 0,
-                            "format": "int32",
-                            "global": true
-                        },
-                        {
-                            "name": "Accept",
-                            "description": "The response format, defaults to JSON.",
-                            "type": "string",
-                            "enum": [
-                                "application/json",
-                                "application/xml"
-                            ],
-                            "paramType": "header",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "jsonp",
-                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
-                            "type": "string",
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "method",
-                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
-                            "type": "string",
-                            "enum": [
-                                "PUT",
-                                "PATCH",
-                                "DELETE"
-                            ],
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        }
-                    ],
-                    "responseMessages": [],
-                    "summary": "Get the requirements to create a transfer.",
-                    "notes": "",
-                    "nickname": "",
-                    "requiresAuth": true,
-                    "postDataModel": "transfer-verification",
-                    "items": {
-                        "type": "user-required",
-                        "$ref": "user-required"
-                    }
-                }
-            ],
-            "description": "Get the requirements to create a transfer.",
             "parentModel": "transfer-verification",
             "pathUsesChildId": false
         },
@@ -4310,79 +4459,6 @@
             "pathUsesChildId": false
         },
         {
-            "path": "/quotes/{id}/pay-in-methods",
-            "operations": [
-                {
-                    "method": "GET",
-                    "type": "array",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "description": "The id of the quote.",
-                            "required": true,
-                            "type": "integer",
-                            "paramType": "path",
-                            "format": "int64"
-                        },
-                        {
-                            "name": "Version",
-                            "description": "Optional value to reference earlier versions of the API.",
-                            "type": "integer",
-                            "paramType": "header",
-                            "example": 0,
-                            "format": "int32",
-                            "global": true
-                        },
-                        {
-                            "name": "Accept",
-                            "description": "The response format, defaults to JSON.",
-                            "type": "string",
-                            "enum": [
-                                "application/json",
-                                "application/xml"
-                            ],
-                            "paramType": "header",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "jsonp",
-                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
-                            "type": "string",
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        },
-                        {
-                            "name": "method",
-                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
-                            "type": "string",
-                            "enum": [
-                                "PUT",
-                                "PATCH",
-                                "DELETE"
-                            ],
-                            "paramType": "query",
-                            "format": "string",
-                            "global": true
-                        }
-                    ],
-                    "responseMessages": [],
-                    "summary": "Get the child collection related to a parent resource.",
-                    "notes": "",
-                    "nickname": "",
-                    "requiresAuth": true,
-                    "items": {
-                        "type": "pay-in-method",
-                        "$ref": "pay-in-method"
-                    }
-                }
-            ],
-            "description": "Get the available pay in methods for a quote.",
-            "parentModel": "quote",
-            "pathUsesChildId": false
-        },
-        {
             "path": "/routes",
             "operations": [
                 {
@@ -4609,7 +4685,7 @@
                             "description": "The date on which the payment is due.",
                             "type": "string",
                             "expectedInResponses": true,
-                            "format": "date",
+                            "format": "date-time",
                             "paramType": "body"
                         },
                         {
@@ -5489,7 +5565,7 @@
                 },
                 "alternatives": {
                     "name": "alternatives",
-                    "description": "An alternative key in the verification requirements",
+                    "description": "An alternative key in this group that can be supplied instead of this key.",
                     "type": "array",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5521,6 +5597,70 @@
             "notes": "To ensure compliance with all local regulations we often need to ask our users to provide verification documents and information, verification-required resources explain the documents we require to be able to create a transfer.",
             "id": "verification-required",
             "isEnvelope": false
+        },
+        "verification-required-group": {
+            "name": "verification-required-group",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The key for this group of fields",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "example": "passport",
+                    "format": "string"
+                },
+                "group": {
+                    "name": "group",
+                    "description": "The fields in this group",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "items": {
+                        "type": "verification-required",
+                        "$ref": "verification-required"
+                    }
+                },
+                "alternatives": {
+                    "name": "alternatives",
+                    "description": "The keys of alternative groups that could be completed instead of this group.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "ssn",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A localised name for the group of fields",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "Your passport details",
+                    "format": "string"
+                }
+            },
+            "required": []
         },
         "profile-required": {
             "name": "profile-required",
@@ -5621,6 +5761,71 @@
             "notes": "Required verifications are pieces of information that we need added to the users profile to be able to create a transfer using their chosen quote (route, amount, payment method).  This may be additional information like a users address, or it may be a document that we need to prove the users identity.\n\nREQUIRES FURTHER CONSIDERATION.",
             "id": "profile-required",
             "isEnvelope": false
+        },
+        "profile-required-group": {
+            "name": "profile-required-group",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The key for this group of fields",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "example": "address",
+                    "format": "string"
+                },
+                "group": {
+                    "name": "group",
+                    "description": "The fields in this group",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "items": {
+                        "type": "profile-required",
+                        "$ref": "profile-required"
+                    }
+                },
+                "alternatives": {
+                    "name": "alternatives",
+                    "description": "The keys of alternative groups that could be completed instead of this group.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "ssn",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "name": {
+                    "name": "name",
+                    "description": "A localised name for the group of fields",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "Address details",
+                    "format": "string"
+                }
+            },
+            "required": [],
+            "notes": "A group of fields which must be added to the users profile.  Groups can have alternatives where one group OR the other may be supplied."
         },
         "currency": {
             "name": "currency",
@@ -6253,14 +6458,17 @@
                 "fees": {
                     "name": "fees",
                     "description": "A list of fees associated with this transfer type.",
-                    "type": "fee",
+                    "type": "array",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "$ref": "fee"
+                    "items": {
+                        "type": "fee",
+                        "$ref": "fee"
+                    }
                 }
             },
             "required": [
@@ -6501,7 +6709,7 @@
                     "required": true,
                     "requiredPut": true,
                     "enum": [
-                        "transferwsise",
+                        "transferwise",
                         "visa"
                     ],
                     "isId": true,
@@ -6612,13 +6820,41 @@
                     "requiredPut": true,
                     "example": true,
                     "format": "boolean"
+                },
+                "typicalFeePercentage": {
+                    "name": "typicalFeePercentage",
+                    "description": "The typical fee charges on this route.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 0.005,
+                    "format": "double"
+                },
+                "typicalDuration": {
+                    "name": "typicalDuration",
+                    "description": "The typical duration of a transfer in hours",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 4,
+                    "format": "int32"
                 }
             },
             "required": [
                 "id",
                 "sourceCountry",
                 "targetCountry",
-                "default"
+                "default",
+                "typicalFeePercentage",
+                "typicalDuration"
             ],
             "notes": "Routes are specific country/currency corridors for which we can perform transfers.  Routes are not always available in both directions.",
             "id": "route",
@@ -6756,7 +6992,19 @@
                     "usedInPuts": true,
                     "required": false,
                     "requiredPut": false,
-                    "format": "date"
+                    "format": "date-time"
+                },
+                "createdDate": {
+                    "name": "createdDate",
+                    "description": "The date on which this transfer request was created.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time"
                 }
             },
             "required": [
