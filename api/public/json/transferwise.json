@@ -6093,41 +6093,6 @@
                     "requiredPut": true,
                     "format": "int64"
                 },
-                "verificationRequired": {
-                    "name": "verificationRequired",
-                    "description": "The list of missing verifications required for this transfer.  Only returned if a profileId is supplied.",
-                    "type": "array",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "items": {
-                        "type": "verification",
-                        "$ref": "verification"
-                    }
-                },
-                "payInMethods": {
-                    "name": "payInMethods",
-                    "description": "The available pay in methods.",
-                    "type": "array",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "enum": [
-                        "card",
-                        "ach",
-                        "transfer"
-                    ],
-                    "items": {
-                        "type": "pay-in-method",
-                        "$ref": "pay-in-method"
-                    }
-                },
                 "created": {
                     "name": "created",
                     "description": "When was the quote created?",
@@ -6139,21 +6104,6 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
-                },
-                "profileRequired": {
-                    "name": "profileRequired",
-                    "description": "Any additional profile information we will require to complete a transfer.  Only returned if a profileId is returned.",
-                    "type": "array",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "items": {
-                        "type": "profile-required",
-                        "$ref": "profile-required"
-                    }
                 }
             },
             "required": [
