@@ -7,7 +7,8 @@
         "termsOfServiceUrl": "",
         "contact": "",
         "license": "",
-        "licenseUrl": ""
+        "licenseUrl": "",
+        "notes": "###Using the TransferWise API\nThere are several key resource when using the TransferWise API.  The starting point in creating a transfer is generating a **quote**, a quote is a persistent object that represents TransferWise's offer to the customer.  \n\nDepending on currency route and the amount to be transferred we may be able to offer either a fixed rate quote or a variable rate quote.  Quotes will have some kind of expiry criteria indicating the conditions under which they are valid.  \n\nA quote also allows you to query the available **pay-in-methods** (e.g. card, bank transfer etc) with their associated fees, and the information we will need the user to provide, either by updating their **user** record or by submitting verification **documents**. \n\nYou can use a quote to create a **transfer**, a transfer indicates the customer wishes to accept the quote and will pay in the required amount of money. At this stage no money has been paid, but as we are able to receive **payments** these will become visible against that transfer."
     },
     "authorizations": {
         "supports": {
@@ -1213,7 +1214,7 @@
                         },
                         {
                             "name": "currency",
-                            "description": "The currency used by the account",
+                            "description": "The currency used by the account, , iso4217 3-digit currency code.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -1227,7 +1228,7 @@
                         },
                         {
                             "name": "country",
-                            "description": "2 digit iso3166 country code",
+                            "description": "2 digit iso3166 country code.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -2589,7 +2590,7 @@
                     "parameters": [
                         {
                             "name": "source",
-                            "description": "The source currency.",
+                            "description": "The source currency, iso4217 3-digit currency code.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -2598,7 +2599,7 @@
                         },
                         {
                             "name": "target",
-                            "description": "The target currency.",
+                            "description": "The target currency, iso4217 3-digit currency code.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -3841,15 +3842,6 @@
                     "type": "string",
                     "parameters": [
                         {
-                            "name": "userId",
-                            "description": "The user requesting the payment",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "int64",
-                            "paramType": "body"
-                        },
-                        {
                             "name": "accountId",
                             "description": "The account into which the user would like the money paid.",
                             "type": "integer",
@@ -5043,7 +5035,7 @@
                 },
                 "currency": {
                     "name": "currency",
-                    "description": "The currency used by the account",
+                    "description": "The currency used by the account, , iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5060,7 +5052,7 @@
                 },
                 "country": {
                     "name": "country",
-                    "description": "2 digit iso3166 country code",
+                    "description": "2 digit iso3166 country code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5218,7 +5210,7 @@
                 },
                 "currency": {
                     "name": "currency",
-                    "description": "The currency use for this payment, 3 digit currency code.",
+                    "description": "The currency use for this payment, iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5801,7 +5793,7 @@
             "properties": {
                 "code": {
                     "name": "code",
-                    "description": "The 3-digit currency code.",
+                    "description": "The iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5950,7 +5942,7 @@
                 },
                 "source": {
                     "name": "source",
-                    "description": "The source currency.",
+                    "description": "The source currency, iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5963,7 +5955,7 @@
                 },
                 "target": {
                     "name": "target",
-                    "description": "The target currency.",
+                    "description": "The target currency, iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6173,7 +6165,7 @@
                 },
                 "canReceive": {
                     "name": "canReceive",
-                    "description": "Can we receiv in this country?",
+                    "description": "Can we receive in this country?",
                     "type": "boolean",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6183,9 +6175,41 @@
                     "requiredPut": false,
                     "example": true,
                     "format": "boolean"
+                },
+                "payInCurrencies": {
+                    "name": "payInCurrencies",
+                    "description": "The currencies in which we can accept pay ins in this country.  List of iso4217 3-digit currency codes.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "usd",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "payOutCurrencies": {
+                    "name": "payOutCurrencies",
+                    "description": "The currencies in which we can pay out in this country.  List of iso4217 3-digit currency codes.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "usd",
+                    "format": "string"
                 }
             },
-            "required": [],
+            "required": [
+                "payInCurrencies",
+                "payOutCurrencies"
+            ],
             "id": "country",
             "isEnvelope": false,
             "notes": "A country resource contains meta data about countries.  The country object also describes if we are able to send and/or receive transfers originating in that country."
@@ -6830,9 +6854,9 @@
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": true,
+                    "usedInPosts": false,
                     "usedInPuts": false,
-                    "required": true,
+                    "required": false,
                     "requiredPut": false,
                     "format": "int64"
                 },
@@ -6941,8 +6965,8 @@
                     "requiredPut": false,
                     "format": "date-time"
                 },
-                "createdDate": {
-                    "name": "createdDate",
+                "createdTime": {
+                    "name": "createdTime",
                     "description": "The date on which this transfer request was created.",
                     "type": "string",
                     "usedInResponses": true,
@@ -6955,7 +6979,6 @@
                 }
             },
             "required": [
-                "userId",
                 "accountId",
                 "requestAmount",
                 "email",
