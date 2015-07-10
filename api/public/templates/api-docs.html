@@ -53,9 +53,10 @@
                 </span>
             </div>
 
-            <div ng-init="model = json.models[operation.displayModel]; path = operation.responsePath;">
-                <response-docs models="json.models" model="model" path="path"></response-docs>
-            </div>
+            <response-docs
+                models="json.models"
+                model="json.models[operation.displayModel]"
+                path="operation.responsePath"></response-docs>
 
             <h5>Example request:</h5>
 

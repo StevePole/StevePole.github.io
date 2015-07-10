@@ -1,6 +1,5 @@
 
 
-<markdown class="space-div" ng-if="vm.model.notes" ng-model="vm.model.notes"></markdown>
 
 <ul class="breadcrumb" ng-if="vm.path && vm.model.properties.length">
     <li ng-repeat="pathModel in vm.path track by $index"
@@ -11,6 +10,9 @@
         <span ng-if="$last">{{pathModel | renameEnvelopes}}</span>
     </li>
 </ul>
+
+<h5 ng-if="vm.model.notes">{{vm.model.name}}</h5>
+<markdown class="space-div" ng-if="vm.model.notes" ng-model="vm.model.notes"></markdown>
 
 <div class="table-responsive">
 <table class="table table-bordered"
