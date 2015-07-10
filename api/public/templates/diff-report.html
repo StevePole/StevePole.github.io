@@ -1,23 +1,23 @@
-<h3 ng-if="diff.changed >= 0">Changes since you last generated the form:</h3>
-<p ng-if="diff.changed == 0">None</p>
+<h3 ng-if="vm.diff.changed >= 0">Changes since you last generated the form:</h3>
+<p ng-if="vm.diff.changed == 0">None</p>
 
-<p ng-if="diff.meta">APIs</p>
-<ul ng-if="diff.meta">
-    <li class="text-error" ng-repeat="breaking in diff.meta.breaking">
+<p ng-if="vm.diff.meta">API Meta Data</p>
+<ul ng-if="vm.diff.meta">
+    <li class="text-error" ng-repeat="breaking in vm.diff.meta.breaking">
         {{breaking}}
     </li>
-    <li class="text-error" ng-repeat="nonbreaking in diff.meta.nonbreaking">
+    <li class="text-error" ng-repeat="nonbreaking in vm.diff.meta.nonbreaking">
         {{nonbreaking}}
     </li>
 </ul>
-    
-    
-<p ng-if="diff.apis.changed">APIs</p>
-<ul ng-if="diff.apis.changed">
-    <li class="text-error" ng-repeat="removed in diff.apis.removed">
+
+
+<p ng-if="vm.diff.apis.changed">APIs</p>
+<ul ng-if="vm.diff.apis.changed">
+    <li class="text-error" ng-repeat="removed in vm.diff.apis.removed">
         {{removed}} was removed.
     </li>
-    <li class="text-success" ng-repeat="added in diff.apis.added">
+    <li class="text-success" ng-repeat="added in vm.diff.apis.added">
         {{added}} was added.
     </li>
     <li ng-repeat="(path, api) in diff.apis.children" ng-if="api.changed">
@@ -77,7 +77,7 @@
     <li class="text-success" ng-repeat="added in diff.models.added">
         Model '{{added}}' was added.
     </li>
-    <li ng-repeat="(modelName, model) in diff.models.children" 
+    <li ng-repeat="(modelName, model) in diff.models.children"
         ng-if="model.changed || model.breaking || model.nonbreaking || model.children">
         In model {{modelName}}
         <ul>

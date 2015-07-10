@@ -1,11 +1,11 @@
 
 
-<markdown class="space-div" ng-if="model.notes" ng-model="model.notes"></markdown>
+<markdown class="space-div" ng-if="vm.model.notes" ng-model="vm.model.notes"></markdown>
 
-<ul class="breadcrumb" ng-if="path && model.properties.length">
-    <li ng-repeat="pathModel in path track by $index"
+<ul class="breadcrumb" ng-if="vm.path && vm.model.properties.length">
+    <li ng-repeat="pathModel in vm.path track by $index"
         ng-class="{active: $last}">
-        <a href="" ng-click="viewModelByDepth(json.models, $index)" ng-if="!$last">
+        <a href="" ng-click="vm.viewModelByDepth(vm.models, $index)" ng-if="!$last">
             {{pathModel | renameEnvelopes}}
         </a>
         <span ng-if="$last">{{pathModel | renameEnvelopes}}</span>
@@ -14,10 +14,10 @@
 
 <div class="table-responsive">
 <table class="table table-bordered"
-    ng-if="model.properties.length">
+    ng-if="vm.model.properties.length">
     <thead>
         <tr>
-            <th>{{model.id | renameEnvelopes}}</th>
+            <th>{{vm.model.id | renameEnvelopes}}</th>
             <th>Type</th>
             <th>Description</th>
         </tr>
@@ -26,7 +26,7 @@
         <tr class="no-parameters">
             <td colspan="3">No parameters</td>
         </tr>
-        <tr ng-repeat="property in model.properties"
+        <tr ng-repeat="property in vm.model.properties"
             ng-if="property.usedInResponses">
             <td><code>{{property.name}}</code></td>
             <td style="white-space: nowrap;">
@@ -36,13 +36,13 @@
                     <span ng-if="property.format && property.format != property.type">({{property.format}})</span>
                 </span>
                 <span ng-if="property.$ref">
-                    <a href="" ng-click="viewModelDetails(json.models, property.$ref)">
+                    <a href="" ng-click="vm.viewModelDetails(vm.models, property.$ref)">
                         {{property.$ref}}
                     </a>
                 </span>
                 <span ng-if="property.items.$ref">
                     array(<a href=""
-                        ng-click="viewModelDetails(json.models, property.items.$ref)">{{property.items.$ref}}</a>)
+                        ng-click="vm.viewModelDetails(vm.models, property.items.$ref)">{{property.items.$ref}}</a>)
                 </span>
                 <span ng-if="!property.items.$ref && property.items.type">
                     array(<span ng-if="property.items.format">{{property.items.format}}</span><span ng-if="!property.items.format">{{property.items.type}}</span>)

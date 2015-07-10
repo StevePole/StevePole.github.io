@@ -54,7 +54,7 @@
             </div>
 
             <div ng-init="model = json.models[operation.displayModel]; path = operation.responsePath;">
-                <response-docs></response-docs>
+                <response-docs models="json.models" model="model" path="path"></response-docs>
             </div>
 
             <h5>Example request:</h5>
