@@ -3071,10 +3071,67 @@
                     "requiresAuth": true,
                     "postDataModel": "quote",
                     "$ref": "quote"
+                },
+                {
+                    "method": "GET",
+                    "type": "array",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the list of available quotes.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "items": {
+                        "type": "quote",
+                        "$ref": "quote"
+                    }
                 }
             ],
             "parentModel": "quote",
-            "description": "Interact with the quotes collection.",
+            "description": "Create a quote, or list the available quotes.",
             "pathUsesChildId": false
         },
         {
@@ -3144,7 +3201,7 @@
                 }
             ],
             "parentModel": "quote",
-            "description": "Interact with a single member of the quotes collection.",
+            "description": "Get a single quote.",
             "pathUsesChildId": false
         },
         {
@@ -4396,6 +4453,67 @@
             "description": "Interact with the list of resources.",
             "parentModel": "role",
             "pathUsesChildId": false
+        },
+        {
+            "path": "/me",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "user",
+                    "parameters": [
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "This endpoint provides information about the current user.",
+                    "notes": "If the user is not logged in this endpoint may still be used but will provide only very minimal information, like a default country/currency.",
+                    "nickname": "",
+                    "requiresAuth": false,
+                    "$ref": "user"
+                }
+            ],
+            "description": "This endpoint provides information about the current user.",
+            "parentModel": "user"
         }
     ],
     "models": {
@@ -5783,9 +5901,9 @@
         "country": {
             "name": "country",
             "properties": {
-                "id": {
-                    "name": "id",
-                    "description": "The id of the country.",
+                "code": {
+                    "name": "code",
+                    "description": "The iso3166 2 digit country code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5794,7 +5912,7 @@
                     "required": false,
                     "requiredPut": false,
                     "isId": true,
-                    "example": "united-states",
+                    "example": "US",
                     "format": "string"
                 },
                 "name": {
@@ -5810,9 +5928,9 @@
                     "example": "United States",
                     "format": "string"
                 },
-                "iso3166": {
-                    "name": "iso3166",
-                    "description": "The iso3166 2 digit country code.",
+                "slug": {
+                    "name": "slug",
+                    "description": "A human readable identifier for the country",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5820,7 +5938,7 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
-                    "example": "US",
+                    "example": "united-states",
                     "format": "string"
                 },
                 "canSend": {
@@ -5983,7 +6101,7 @@
                 "sourceCountry": {
                     "name": "sourceCountry",
                     "description": "The iso3166 2 digit code for the source country.",
-                    "type": "string",
+                    "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
@@ -5991,12 +6109,13 @@
                     "required": true,
                     "requiredPut": true,
                     "example": "US",
-                    "format": "string"
+                    "format": "id",
+                    "idModel": "country"
                 },
                 "targetCountry": {
                     "name": "targetCountry",
                     "description": "The iso3166 2 digit code for the target country.",
-                    "type": "string",
+                    "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
@@ -6004,7 +6123,8 @@
                     "required": true,
                     "requiredPut": true,
                     "example": "GB",
-                    "format": "string"
+                    "format": "id",
+                    "idModel": "country"
                 },
                 "default": {
                     "name": "default",
