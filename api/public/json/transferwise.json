@@ -306,7 +306,6 @@
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "id",
                             "idModel": "account",
                             "paramType": "body"
@@ -397,7 +396,7 @@
                 }
             ],
             "parentModel": "transfer",
-            "description": "Interact with the transfers collection.",
+            "description": "Create a transfer, or get the list of transfers for the current user..",
             "pathUsesChildId": false
         },
         {
@@ -492,7 +491,6 @@
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "id",
                             "idModel": "account",
                             "paramType": "body"
@@ -608,7 +606,6 @@
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "id",
                             "idModel": "account",
                             "paramType": "body"
@@ -1071,7 +1068,8 @@
                     "items": {
                         "type": "user",
                         "$ref": "user"
-                    }
+                    },
+                    "disabled": true
                 }
             ],
             "parentModel": "user",
@@ -1141,7 +1139,8 @@
                     "notes": "",
                     "nickname": "",
                     "requiresAuth": true,
-                    "$ref": "user"
+                    "$ref": "user",
+                    "disabled": true
                 }
             ],
             "parentModel": "user",
@@ -1238,6 +1237,15 @@
                     "method": "GET",
                     "type": "array",
                     "parameters": [
+                        {
+                            "name": "required",
+                            "description": "Return only the required fields.",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "example": false,
+                            "format": "boolean"
+                        },
                         {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
@@ -1504,7 +1512,7 @@
                 }
             ],
             "parentModel": "account",
-            "description": "Interact with the accounts collection.",
+            "description": "Create an account, or list the available accounts for this user.",
             "pathUsesChildId": false
         },
         {
@@ -1821,6 +1829,14 @@
                             "format": "string"
                         },
                         {
+                            "name": "required",
+                            "description": "Return only the required fields.",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "format": "boolean"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -1995,7 +2011,7 @@
                 }
             ],
             "parentModel": "payment",
-            "description": "Interact with the payments collection.",
+            "description": "Create a payment record, or list the available payments for this user.",
             "pathUsesChildId": false
         },
         {
@@ -2689,7 +2705,7 @@
                 }
             ],
             "parentModel": "country",
-            "description": "Interact with the countries collection.",
+            "description": "Get the list of countries.",
             "pathUsesChildId": false
         },
         {
@@ -2763,7 +2779,7 @@
                 }
             ],
             "parentModel": "currency",
-            "description": "Interact with the currencies collection.",
+            "description": "Get the list of currencies.",
             "pathUsesChildId": false
         },
         {
@@ -2863,7 +2879,7 @@
                     }
                 }
             ],
-            "description": "Interact with the list of resources.",
+            "description": "Get the list of country/currency routes.",
             "parentModel": "route",
             "pathUsesChildId": false
         },
@@ -2891,6 +2907,14 @@
                             "paramType": "query",
                             "example": "gbp",
                             "format": "string"
+                        },
+                        {
+                            "name": "date",
+                            "description": "Get the rates on a specific dates, defaults to now.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "date"
                         },
                         {
                             "name": "Version",
@@ -2947,7 +2971,7 @@
                 }
             ],
             "parentModel": "rate",
-            "description": "Interact with the rates collection.",
+            "description": "Get exchange rates.",
             "pathUsesChildId": false
         },
         {
@@ -2976,7 +3000,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "payIn",
+                            "name": "amount",
                             "description": "The amount to be transferred.",
                             "type": "number",
                             "expectedInResponses": true,
@@ -2985,17 +3009,8 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "payOut",
-                            "description": "The amount that will be recieved.",
-                            "type": "number",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "double",
-                            "paramType": "body"
-                        },
-                        {
                             "name": "fixedTarget",
-                            "description": "Is it a fixed target?",
+                            "description": "Is it a fixed target amount or source amount?",
                             "type": "boolean",
                             "expectedInResponses": true,
                             "required": true,
@@ -3014,11 +3029,20 @@
                         },
                         {
                             "name": "rateTolerance",
-                            "description": "The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                            "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
                             "type": "number",
                             "expectedInResponses": true,
                             "required": true,
                             "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "transferRequestId",
+                            "description": "(Optional) is the quote to pay a transfer-request, if so the amount is no longer required as this is dictated by the transfer-request...",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "idModel": "transfer-request",
+                            "format": "id",
                             "paramType": "body"
                         },
                         {
@@ -3305,6 +3329,14 @@
                             "format": "string"
                         },
                         {
+                            "name": "boolean",
+                            "description": "Return only the required fields.",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "format": "boolean"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -3388,6 +3420,14 @@
                                 "card"
                             ],
                             "format": "string"
+                        },
+                        {
+                            "name": "required",
+                            "description": "Return only the required fields.",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "format": "boolean"
                         },
                         {
                             "name": "Version",
@@ -3609,9 +3649,125 @@
                         "type": "business",
                         "$ref": "business"
                     }
+                },
+                {
+                    "method": "POST",
+                    "type": "business",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "The name of the business.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "info",
+                            "description": "Key/value data about the business.  The required keys will be returned by the business-requirements end point.",
+                            "type": "array",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "isDictionary": true,
+                            "items": {
+                                "type": "string",
+                                "format": "string"
+                            },
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "country",
+                            "description": "The home country for this business, iso3166 2 digit country code.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "US",
+                                "GB",
+                                "FR"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "type",
+                            "description": "The type of the business.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "enum": [
+                                "ltd-company",
+                                "partnership",
+                                "sole-trader",
+                                "limited-guarantee",
+                                "other"
+                            ],
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "number",
+                            "description": "The registered business number in the home country.",
+                            "type": "string",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Create a new business.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "postDataModel": "business",
+                    "$ref": "business"
                 }
             ],
-            "description": "Get the list of businesses available to the current user.",
+            "description": "Create a business or list the businesses available to the current user.",
             "parentModel": "business",
             "pathUsesChildId": false
         },
@@ -4036,6 +4192,14 @@
                                 "other"
                             ],
                             "format": "string"
+                        },
+                        {
+                            "name": "required",
+                            "description": "Return only the required fields.",
+                            "required": false,
+                            "type": "boolean",
+                            "paramType": "query",
+                            "format": "boolean"
                         },
                         {
                             "name": "Version",
@@ -4513,7 +4677,8 @@
                 }
             ],
             "description": "This endpoint provides information about the current user.",
-            "parentModel": "user"
+            "parentModel": "user",
+            "pathUsesChildId": false
         }
     ],
     "models": {
@@ -4619,8 +4784,8 @@
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
+                    "required": false,
+                    "requiredPut": false,
                     "example": "/accounts/4321",
                     "format": "id",
                     "idModel": "account"
@@ -4727,7 +4892,6 @@
             },
             "required": [
                 "targetAccount",
-                "sendingAccount",
                 "quote",
                 "reference",
                 "payInMethod"
@@ -6281,8 +6445,8 @@
                     "example": "gbp",
                     "format": "string"
                 },
-                "payIn": {
-                    "name": "payIn",
+                "amount": {
+                    "name": "amount",
                     "description": "The amount to be transferred.",
                     "type": "number",
                     "usedInResponses": true,
@@ -6294,18 +6458,18 @@
                     "example": 1000,
                     "format": "double"
                 },
-                "payOut": {
-                    "name": "payOut",
-                    "description": "The amount that will be recieved.",
-                    "type": "number",
+                "fixedTarget": {
+                    "name": "fixedTarget",
+                    "description": "Is it a fixed target amount or source amount?",
+                    "type": "boolean",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
                     "required": true,
                     "requiredPut": false,
-                    "example": 632,
-                    "format": "double"
+                    "example": true,
+                    "format": "boolean"
                 },
                 "rate": {
                     "name": "rate",
@@ -6344,19 +6508,6 @@
                     "example": true,
                     "format": "boolean"
                 },
-                "fixedTarget": {
-                    "name": "fixedTarget",
-                    "description": "Is it a fixed target?",
-                    "type": "boolean",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": false,
-                    "required": true,
-                    "requiredPut": false,
-                    "example": true,
-                    "format": "boolean"
-                },
                 "businessId": {
                     "name": "businessId",
                     "description": "(Optional) If this quote is for a business supply the business id.  If you do not supply a business id you will not be able to create a transfer for business account using this quote.",
@@ -6370,6 +6521,32 @@
                     "format": "id",
                     "idModel": "business"
                 },
+                "rateTolerance": {
+                    "name": "rateTolerance",
+                    "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": true,
+                    "requiredPut": false,
+                    "example": 3,
+                    "format": "double"
+                },
+                "transferRequestId": {
+                    "name": "transferRequestId",
+                    "description": "(Optional) is the quote to pay a transfer-request, if so the amount is no longer required as this is dictated by the transfer-request...",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "idModel": "transfer-request",
+                    "format": "id"
+                },
                 "createdTime": {
                     "name": "createdTime",
                     "description": "When was the quote created?",
@@ -6381,19 +6558,6 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
-                },
-                "rateTolerance": {
-                    "name": "rateTolerance",
-                    "description": "The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
-                    "type": "number",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": false,
-                    "required": true,
-                    "requiredPut": false,
-                    "example": 3,
-                    "format": "double"
                 },
                 "createdByUser": {
                     "name": "createdByUser",
@@ -6412,8 +6576,7 @@
             "required": [
                 "source",
                 "target",
-                "payIn",
-                "payOut",
+                "amount",
                 "fixedTarget",
                 "businessId",
                 "rateTolerance"
