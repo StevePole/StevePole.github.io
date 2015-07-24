@@ -322,7 +322,7 @@
                         },
                         {
                             "name": "reference",
-                            "description": "?",
+                            "description": "The payment reference as given by a payment processing partner.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -507,7 +507,7 @@
                         },
                         {
                             "name": "reference",
-                            "description": "?",
+                            "description": "The payment reference as given by a payment processing partner.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -622,7 +622,7 @@
                         },
                         {
                             "name": "reference",
-                            "description": "?",
+                            "description": "The payment reference as given by a payment processing partner.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -3018,6 +3018,15 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "rateTolerance",
+                            "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "businessId",
                             "description": "(Optional) If this quote is for a business supply the business id.  If you do not supply a business id you will not be able to create a transfer for business account using this quote.",
                             "type": "integer",
@@ -3025,15 +3034,6 @@
                             "required": true,
                             "format": "id",
                             "idModel": "business",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "rateTolerance",
-                            "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
-                            "type": "number",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "double",
                             "paramType": "body"
                         },
                         {
@@ -4726,9 +4726,26 @@
                     "usedInPuts": true,
                     "usedInPosts": true,
                     "required": false
+                },
+                "properties": {
+                    "name": "properties",
+                    "description": "Problems with specific properties",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "items": {
+                        "type": "property-error",
+                        "$ref": "property-error"
+                    }
                 }
             },
-            "required": [],
+            "required": [
+                "properties"
+            ],
             "isEnvelope": false
         },
         "transfer": {
@@ -4815,6 +4832,7 @@
                     "required": false,
                     "requiredPut": false,
                     "enum": [
+                        "payment_sent",
                         "payment_received",
                         "paid_out",
                         "complete"
@@ -4823,7 +4841,7 @@
                 },
                 "reference": {
                     "name": "reference",
-                    "description": "?",
+                    "description": "The payment reference as given by a payment processing partner.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6471,42 +6489,18 @@
                     "example": true,
                     "format": "boolean"
                 },
-                "rate": {
-                    "name": "rate",
-                    "description": "For fixed rate quotes this is the fixed rate, for variable rate quotes this is the rate we at the time the quote was created, it does not guarantee the transfer will be at this rate.",
-                    "type": "rate",
+                "rateTolerance": {
+                    "name": "rateTolerance",
+                    "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                    "type": "number",
                     "usedInResponses": true,
                     "expectedInResponses": true,
-                    "usedInPosts": false,
+                    "usedInPosts": true,
                     "usedInPuts": false,
-                    "required": false,
+                    "required": true,
                     "requiredPut": false,
-                    "$ref": "rate"
-                },
-                "expires": {
-                    "name": "expires",
-                    "description": "The date and time that the quote expires.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "format": "date-time"
-                },
-                "fixedRate": {
-                    "name": "fixedRate",
-                    "description": "Is it a fixed rate?",
-                    "type": "boolean",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": true,
-                    "format": "boolean"
+                    "example": 3,
+                    "format": "double"
                 },
                 "businessId": {
                     "name": "businessId",
@@ -6521,19 +6515,6 @@
                     "format": "id",
                     "idModel": "business"
                 },
-                "rateTolerance": {
-                    "name": "rateTolerance",
-                    "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
-                    "type": "number",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": false,
-                    "required": true,
-                    "requiredPut": false,
-                    "example": 3,
-                    "format": "double"
-                },
                 "transferRequestId": {
                     "name": "transferRequestId",
                     "description": "(Optional) is the quote to pay a transfer-request, if so the amount is no longer required as this is dictated by the transfer-request...",
@@ -6547,6 +6528,58 @@
                     "idModel": "transfer-request",
                     "format": "id"
                 },
+                "fixedRate": {
+                    "name": "fixedRate",
+                    "description": "Is it a fixed rate quote?",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": true,
+                    "format": "boolean"
+                },
+                "rate": {
+                    "name": "rate",
+                    "description": "For fixed rate quotes this is the fixed rate, for variable rate quotes this is the rate we at the time the quote was created, it does not guarantee the transfer will be at this rate.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": 1.44,
+                    "format": "double"
+                },
+                "rateMin": {
+                    "name": "rateMin",
+                    "description": "If the rate moves below this value the quote will become invalid and any associated transfer will be cancelled.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": 1.39,
+                    "format": "double"
+                },
+                "expires": {
+                    "name": "expires",
+                    "description": "The date and time that the quote expires.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time",
+                    "example": "2015-07-25 15:23:10"
+                },
                 "createdTime": {
                     "name": "createdTime",
                     "description": "When was the quote created?",
@@ -6557,7 +6590,8 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
-                    "format": "date-time"
+                    "format": "date-time",
+                    "example": "2015-07-24 15:23:10"
                 },
                 "createdByUser": {
                     "name": "createdByUser",
@@ -6578,8 +6612,8 @@
                 "target",
                 "amount",
                 "fixedTarget",
-                "businessId",
-                "rateTolerance"
+                "rateTolerance",
+                "businessId"
             ],
             "id": "quote",
             "isEnvelope": false,
@@ -7150,6 +7184,76 @@
             "id": "value-name",
             "isEnvelope": false,
             "notes": "A combination of a value which acts an identifier, and a localised name which is human readable."
+        },
+        "property-error": {
+            "name": "property-error",
+            "properties": {
+                "path": {
+                    "name": "path",
+                    "description": "The path to property in supplied model.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "isId": true,
+                    "example": "state",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "type": {
+                    "name": "type",
+                    "description": "The type of error",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "enum": [
+                        "incompatible",
+                        "format",
+                        "invalid-key"
+                    ],
+                    "format": "string"
+                },
+                "message": {
+                    "name": "message",
+                    "description": "A localised human readable error message describing the problem.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "State: 'California' is not a compatible with country 'United Kingdom''",
+                    "format": "string"
+                },
+                "incomatibleWith": {
+                    "name": "incomatibleWith",
+                    "description": "The path to a property this value was incompatible with.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "country",
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "required": [],
+            "notes": "Description of an problem with a specific property.  The path indicates how to find the problematic property in the supplied JSON object."
         }
     },
     "jsonp": {
