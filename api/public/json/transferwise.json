@@ -344,6 +344,15 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "transferRequestId",
+                            "description": "If the transfer is related to a transfer request, specify the id, this is the only way to update that the transfer request has been paid, it will automatically update as soon as the transfer completes.",
+                            "type": "integer",
+                            "expectedInResponses": false,
+                            "idModel": "transfer-request",
+                            "format": "id",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -3010,10 +3019,9 @@
                         },
                         {
                             "name": "amountType",
-                            "description": "Is it the amount for source currency or target currency?  Default to source.",
+                            "description": "(Optional) Is it the amount for source currency or target currency?  Defaults to source.",
                             "type": "string",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "string",
                             "enum": [
                                 "source",
@@ -3026,7 +3034,6 @@
                             "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.  Default is 3%.",
                             "type": "number",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "double",
                             "paramType": "body"
                         },
@@ -3035,18 +3042,8 @@
                             "description": "(Optional) If this quote is for a business supply the business id.  If you do not supply a business id you will not be able to create a transfer for business account using this quote.",
                             "type": "integer",
                             "expectedInResponses": true,
-                            "required": true,
                             "format": "id",
                             "idModel": "business",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "transferRequestId",
-                            "description": "(Optional) is the quote to pay a transfer-request, if so the amount is no longer required as this is dictated by the transfer-request...",
-                            "type": "integer",
-                            "expectedInResponses": true,
-                            "idModel": "transfer-request",
-                            "format": "id",
                             "paramType": "body"
                         },
                         {
@@ -4910,6 +4907,19 @@
                     "requiredPut": false,
                     "idModel": "user",
                     "format": "id"
+                },
+                "transferRequestId": {
+                    "name": "transferRequestId",
+                    "description": "If the transfer is related to a transfer request, specify the id, this is the only way to update that the transfer request has been paid, it will automatically update as soon as the transfer completes.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "idModel": "transfer-request",
+                    "format": "id"
                 }
             },
             "required": [
@@ -6482,13 +6492,13 @@
                 },
                 "amountType": {
                     "name": "amountType",
-                    "description": "Is it the amount for source currency or target currency?  Default to source.",
+                    "description": "(Optional) Is it the amount for source currency or target currency?  Defaults to source.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
-                    "required": true,
+                    "required": false,
                     "requiredPut": false,
                     "example": false,
                     "format": "string",
@@ -6505,7 +6515,7 @@
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
-                    "required": true,
+                    "required": false,
                     "requiredPut": false,
                     "example": 3,
                     "format": "double"
@@ -6518,23 +6528,10 @@
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
-                    "required": true,
+                    "required": false,
                     "requiredPut": false,
                     "format": "id",
                     "idModel": "business"
-                },
-                "transferRequestId": {
-                    "name": "transferRequestId",
-                    "description": "(Optional) is the quote to pay a transfer-request, if so the amount is no longer required as this is dictated by the transfer-request...",
-                    "type": "integer",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "idModel": "transfer-request",
-                    "format": "id"
                 },
                 "fixedRate": {
                     "name": "fixedRate",
@@ -6605,10 +6602,7 @@
             "required": [
                 "source",
                 "target",
-                "amount",
-                "amountType",
-                "rateTolerance",
-                "businessId"
+                "amount"
             ],
             "id": "quote",
             "isEnvelope": false,
