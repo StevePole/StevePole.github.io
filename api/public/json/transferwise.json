@@ -6530,29 +6530,29 @@
                 },
                 "fixedRate": {
                     "name": "fixedRate",
-                    "description": "Is it a fixed rate quote?",
-                    "type": "boolean",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": true,
-                    "format": "boolean"
-                },
-                "rate": {
-                    "name": "rate",
-                    "description": "For fixed rate quotes this is the fixed rate, for variable rate quotes this is the rate we at the time the quote was created, it does not guarantee the transfer will be at this rate.",
+                    "description": "If a fixed rate quote is available this will field will be present with the fixed rate.",
                     "type": "number",
                     "usedInResponses": true,
-                    "expectedInResponses": true,
+                    "expectedInResponses": false,
                     "usedInPosts": false,
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
                     "example": 1.44,
                     "format": "double"
+                },
+                "fixedExpiry": {
+                    "name": "fixedExpiry",
+                    "description": "The date and time that a fixed rate offer (if available) expires.  If payment is received after this time the variable rate will be used, assuming the rate is still above the minimumm, otherwise the quote will be invalidated and the transfer cancelled.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time",
+                    "example": "2015-07-25 15:23:10"
                 },
                 "rateMin": {
                     "name": "rateMin",
@@ -6566,19 +6566,6 @@
                     "requiredPut": false,
                     "example": 1.39,
                     "format": "double"
-                },
-                "expires": {
-                    "name": "expires",
-                    "description": "The date and time that the quote expires.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "format": "date-time",
-                    "example": "2015-07-25 15:23:10"
                 },
                 "createdTime": {
                     "name": "createdTime",
