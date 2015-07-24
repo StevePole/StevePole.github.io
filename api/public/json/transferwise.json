@@ -3009,17 +3009,21 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "fixedTarget",
-                            "description": "Is it a fixed target amount or source amount?",
-                            "type": "boolean",
+                            "name": "amountType",
+                            "description": "Is it the amount for source currency or target currency?  Default to source.",
+                            "type": "string",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "boolean",
+                            "format": "string",
+                            "enum": [
+                                "source",
+                                "target"
+                            ],
                             "paramType": "body"
                         },
                         {
                             "name": "rateTolerance",
-                            "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                            "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.  Default is 3%.",
                             "type": "number",
                             "expectedInResponses": true,
                             "required": true,
@@ -6476,22 +6480,26 @@
                     "example": 1000,
                     "format": "double"
                 },
-                "fixedTarget": {
-                    "name": "fixedTarget",
-                    "description": "Is it a fixed target amount or source amount?",
-                    "type": "boolean",
+                "amountType": {
+                    "name": "amountType",
+                    "description": "Is it the amount for source currency or target currency?  Default to source.",
+                    "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
                     "required": true,
                     "requiredPut": false,
-                    "example": true,
-                    "format": "boolean"
+                    "example": false,
+                    "format": "string",
+                    "enum": [
+                        "source",
+                        "target"
+                    ]
                 },
                 "rateTolerance": {
                     "name": "rateTolerance",
-                    "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.",
+                    "description": "(Optional) The percentage movement before the quote would become invalid e.g. a value of 3 would mean the rate could deteriate by 3% until the quote became invalid and the transfer was paused.If the rate falls below this limit the quote would become invalid.  Default is 3%.",
                     "type": "number",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6598,13 +6606,13 @@
                 "source",
                 "target",
                 "amount",
-                "fixedTarget",
+                "amountType",
                 "rateTolerance",
                 "businessId"
             ],
             "id": "quote",
             "isEnvelope": false,
-            "notes": "Quotes contain the rates and fees that we are our offering to the customer for a specific transfer, depending on route, amount or other factors we may be to offer a fixed rate or a variable rate with limits that will cause the transfer to be cancelled and money returned.  \n\nA quote is required to create a transfer.  Quotes may also contain an expiry time after which it will no longer be possible to use that quote when creating a transfer, or a set of rate bounds, if the rate moves outside of the bounds the quote would also become invalid.  Depending on situation the API client may elect to handle quote expiry transparently, generating a new quote if required without user input."
+            "notes": "Quotes contain the rates and expiry criteria that we are our offering to the customer.  Quotes are used to create a transfer, based on that offer.  Depending on route, amount, or other factors, we may be to offer a fixed rate for a certain period of time, if payment is received in that time period we will perform the exchange at the fixed rate otherwise we will fall back to the mid market rate.\n\nIf the rate has fallen beyond a given amount (customisable, but 3% by default) the quote will become invalid and will cause the transfer to be cancelled and money returned.  \n\nIf the quote is going to be used to create a transfer for a business the businessId must be specified when creating the quote as businesses may receive different offers.\n\nA quote is required to create a transfer.  Quotes may also contain an expiry time after which it will no longer be possible to use that quote when creating a transfer, or a set of rate bounds, if the rate moves outside of the bounds the quote would also become invalid.  Depending on situation the API client may elect to handle quote expiry transparently, generating a new quote if required without user input."
         },
         "fee": {
             "name": "fee",
