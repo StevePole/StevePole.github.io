@@ -929,7 +929,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "requestAmount",
+                            "name": "amount",
                             "description": "The amount the user is requesting.",
                             "type": "number",
                             "expectedInResponses": true,
@@ -956,7 +956,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "dueDate",
+                            "name": "due",
                             "description": "The date on which the payment is due.",
                             "type": "string",
                             "expectedInResponses": true,
@@ -6891,18 +6891,6 @@
                     "example": "SE34TGSA",
                     "format": "string"
                 },
-                "userId": {
-                    "name": "userId",
-                    "description": "The user requesting the payment",
-                    "type": "integer",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "format": "int64"
-                },
                 "accountId": {
                     "name": "accountId",
                     "description": "The account into which the user would like the money paid.",
@@ -6915,8 +6903,8 @@
                     "requiredPut": false,
                     "format": "int64"
                 },
-                "requestAmount": {
-                    "name": "requestAmount",
+                "amount": {
+                    "name": "amount",
                     "description": "The amount the user is requesting.",
                     "type": "number",
                     "usedInResponses": true,
@@ -6970,8 +6958,20 @@
                     ],
                     "format": "string"
                 },
-                "recievedAmount": {
-                    "name": "recievedAmount",
+                "due": {
+                    "name": "due",
+                    "description": "The date on which the payment is due.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "date-time"
+                },
+                "receivedAmount": {
+                    "name": "receivedAmount",
                     "description": "How much money has the requestor received.",
                     "type": "number",
                     "usedInResponses": true,
@@ -6996,18 +6996,6 @@
                     "example": "https://pay.transferwise.com/SE34TGSA",
                     "format": "string"
                 },
-                "dueDate": {
-                    "name": "dueDate",
-                    "description": "The date on which the payment is due.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": false,
-                    "requiredPut": false,
-                    "format": "date-time"
-                },
                 "createdTime": {
                     "name": "createdTime",
                     "description": "The date on which this transfer request was created.",
@@ -7019,15 +7007,27 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
+                },
+                "createdByUser": {
+                    "name": "createdByUser",
+                    "description": "The user requesting the payment",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "int64"
                 }
             },
             "required": [
                 "accountId",
-                "requestAmount",
+                "amount",
                 "email",
                 "message"
             ],
-            "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer.",
+            "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer.  The currency",
             "id": "transfer-request",
             "isEnvelope": false
         },
@@ -7242,7 +7242,9 @@
                 }
             },
             "required": [],
-            "notes": "Description of an problem with a specific property.  The path indicates how to find the problematic property in the supplied JSON object."
+            "notes": "Description of an problem with a specific property.  The path indicates how to find the problematic property in the supplied JSON object.",
+            "id": "property-error",
+            "isEnvelope": false
         }
     },
     "jsonp": {
