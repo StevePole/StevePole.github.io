@@ -917,7 +917,7 @@
                 },
                 {
                     "method": "POST",
-                    "type": "string",
+                    "type": "transfer-request",
                     "parameters": [
                         {
                             "name": "accountId",
@@ -1012,7 +1012,7 @@
                     "nickname": "",
                     "requiresAuth": true,
                     "postDataModel": "transfer-request",
-                    "format": "string"
+                    "$ref": "transfer-request"
                 }
             ],
             "description": "Create transfer requests and list requests for the current user.",
