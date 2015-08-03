@@ -302,7 +302,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "sendingAccount",
+                            "name": "sourceAccount",
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -344,7 +344,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "transferRequestId",
+                            "name": "transferRequest",
                             "description": "If the transfer is related to a transfer request, specify the id, this is the only way to update that the transfer request has been paid, it will automatically update as soon as the transfer completes.",
                             "type": "integer",
                             "expectedInResponses": false,
@@ -496,7 +496,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "sendingAccount",
+                            "name": "sourceAccount",
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -611,7 +611,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "sendingAccount",
+                            "name": "sourceAccount",
                             "description": "The account which is sending the funds and into which any refunds should be paid.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -920,21 +920,13 @@
                     "type": "transfer-request",
                     "parameters": [
                         {
-                            "name": "accountId",
+                            "name": "account",
                             "description": "The account into which the user would like the money paid.",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
-                            "paramType": "body"
-                        },
-                        {
-                            "name": "amount",
-                            "description": "The amount the user is requesting.",
-                            "type": "number",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "format": "double",
+                            "format": "id",
+                            "idModel": "account",
                             "paramType": "body"
                         },
                         {
@@ -953,6 +945,24 @@
                             "expectedInResponses": true,
                             "required": true,
                             "format": "string",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "amount",
+                            "description": "The amount the user is requesting.",
+                            "type": "number",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "format": "double",
+                            "paramType": "body"
+                        },
+                        {
+                            "name": "business",
+                            "description": "(optional) If this request is for a business, supply the business id.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "idModel": "business",
+                            "format": "id",
                             "paramType": "body"
                         },
                         {
@@ -1389,7 +1399,7 @@
                     "type": "account",
                     "parameters": [
                         {
-                            "name": "businessId",
+                            "name": "business",
                             "description": "An optional businessId, used if this account is owned by a business rather than the currenct user.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -1408,7 +1418,7 @@
                         },
                         {
                             "name": "currency",
-                            "description": "The currency used by the account, , iso4217 3-digit currency code.",
+                            "description": "The currency used by the account, iso4217 3-digit currency code.",
                             "type": "string",
                             "expectedInResponses": true,
                             "required": true,
@@ -1460,7 +1470,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "accountNumber",
+                            "name": "number",
                             "description": "The account number",
                             "type": "string",
                             "expectedInResponses": true,
@@ -3038,7 +3048,7 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "businessId",
+                            "name": "business",
                             "description": "(Optional) If this quote is for a business supply the business id.  If you do not supply a business id you will not be able to create a transfer for business account using this quote.",
                             "type": "integer",
                             "expectedInResponses": true,
@@ -4768,7 +4778,7 @@
                 },
                 "user": {
                     "name": "user",
-                    "description": "The user who initiated the transfer.",
+                    "description": "The user whoe created this transfer.",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -4776,9 +4786,8 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
-                    "example": "/users/98765",
-                    "format": "id",
-                    "idModel": "user"
+                    "idModel": "user",
+                    "format": "id"
                 },
                 "targetAccount": {
                     "name": "targetAccount",
@@ -4794,8 +4803,8 @@
                     "format": "id",
                     "idModel": "account"
                 },
-                "sendingAccount": {
-                    "name": "sendingAccount",
+                "sourceAccount": {
+                    "name": "sourceAccount",
                     "description": "The account which is sending the funds and into which any refunds should be paid.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -4863,7 +4872,7 @@
                     "usedInPuts": false,
                     "required": false,
                     "requiredPut": false,
-                    "example": 1,
+                    "example": 1.44,
                     "format": "double"
                 },
                 "payInMethod": {
@@ -4883,8 +4892,8 @@
                     ],
                     "format": "string"
                 },
-                "createdTime": {
-                    "name": "createdTime",
+                "created": {
+                    "name": "created",
                     "description": "The date at which this transfer was created.",
                     "type": "string",
                     "usedInResponses": true,
@@ -4895,21 +4904,8 @@
                     "requiredPut": false,
                     "format": "date-time"
                 },
-                "createdByUser": {
-                    "name": "createdByUser",
-                    "description": "The user whoe created this transfer.",
-                    "type": "integer",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "idModel": "user",
-                    "format": "id"
-                },
-                "transferRequestId": {
-                    "name": "transferRequestId",
+                "transferRequest": {
+                    "name": "transferRequest",
                     "description": "If the transfer is related to a transfer request, specify the id, this is the only way to update that the transfer request has been paid, it will automatically update as soon as the transfer completes.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -5324,8 +5320,8 @@
                     "example": 500.1,
                     "format": "double"
                 },
-                "createdTime": {
-                    "name": "createdTime",
+                "created": {
+                    "name": "created",
                     "description": "When was payment record created.",
                     "type": "string",
                     "usedInResponses": true,
@@ -5401,8 +5397,8 @@
                     "example": 1234,
                     "format": "int64"
                 },
-                "businessId": {
-                    "name": "businessId",
+                "business": {
+                    "name": "business",
                     "description": "An optional businessId, used if this account is owned by a business rather than the currenct user.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -5430,7 +5426,7 @@
                 },
                 "currency": {
                     "name": "currency",
-                    "description": "The currency used by the account, , iso4217 3-digit currency code.",
+                    "description": "The currency used by the account, iso4217 3-digit currency code.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -5495,8 +5491,8 @@
                         "format": "string"
                     }
                 },
-                "accountNumber": {
-                    "name": "accountNumber",
+                "number": {
+                    "name": "number",
                     "description": "The account number",
                     "type": "string",
                     "usedInResponses": true,
@@ -5508,8 +5504,8 @@
                     "example": "1234 5678",
                     "format": "string"
                 },
-                "createdByUser": {
-                    "name": "createdByUser",
+                "user": {
+                    "name": "user",
                     "description": "The user who created this account.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -5527,7 +5523,7 @@
                 "currency",
                 "country",
                 "type",
-                "accountNumber"
+                "number"
             ],
             "id": "account",
             "isEnvelope": false,
@@ -6520,8 +6516,8 @@
                     "example": 3,
                     "format": "double"
                 },
-                "businessId": {
-                    "name": "businessId",
+                "business": {
+                    "name": "business",
                     "description": "(Optional) If this quote is for a business supply the business id.  If you do not supply a business id you will not be able to create a transfer for business account using this quote.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -6572,8 +6568,8 @@
                     "example": 1.39,
                     "format": "double"
                 },
-                "createdTime": {
-                    "name": "createdTime",
+                "created": {
+                    "name": "created",
                     "description": "When was the quote created?",
                     "type": "string",
                     "usedInResponses": true,
@@ -6585,8 +6581,8 @@
                     "format": "date-time",
                     "example": "2015-07-24 15:23:10"
                 },
-                "createdByUser": {
-                    "name": "createdByUser",
+                "user": {
+                    "name": "user",
                     "description": "Which user created the quote.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -6891,8 +6887,8 @@
                     "example": "SE34TGSA",
                     "format": "string"
                 },
-                "accountId": {
-                    "name": "accountId",
+                "account": {
+                    "name": "account",
                     "description": "The account into which the user would like the money paid.",
                     "type": "integer",
                     "usedInResponses": true,
@@ -6901,20 +6897,8 @@
                     "usedInPuts": false,
                     "required": true,
                     "requiredPut": false,
-                    "format": "int64"
-                },
-                "amount": {
-                    "name": "amount",
-                    "description": "The amount the user is requesting.",
-                    "type": "number",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": 500.5,
-                    "format": "double"
+                    "format": "id",
+                    "idModel": "account"
                 },
                 "email": {
                     "name": "email",
@@ -6923,9 +6907,9 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "example": "example@example.com",
                     "format": "string"
                 },
@@ -6936,11 +6920,63 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "example": "Please can you pay me the £500 you owe me?",
                     "format": "string"
+                },
+                "amount": {
+                    "name": "amount",
+                    "description": "The amount the user is requesting.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": true,
+                    "requiredPut": false,
+                    "example": 500.5,
+                    "format": "double"
+                },
+                "currency": {
+                    "name": "currency",
+                    "description": "The currency in which the amount is specified, the currency will be determined automatically based on the supplied account.  Iso4217 3-digit currency code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "usd",
+                    "format": "string"
+                },
+                "user": {
+                    "name": "user",
+                    "description": "The user requesting the payment",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "id",
+                    "idModel": "user"
+                },
+                "business": {
+                    "name": "business",
+                    "description": "(optional) If this request is for a business, supply the business id.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "idModel": "business",
+                    "format": "id"
                 },
                 "status": {
                     "name": "status",
@@ -6949,12 +6985,13 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": false,
-                    "usedInPuts": false,
+                    "usedInPuts": true,
                     "required": false,
                     "requiredPut": false,
                     "enum": [
                         "unpaid",
-                        "paid"
+                        "paid",
+                        "cancelled"
                     ],
                     "format": "string"
                 },
@@ -6970,8 +7007,8 @@
                     "requiredPut": false,
                     "format": "date-time"
                 },
-                "receivedAmount": {
-                    "name": "receivedAmount",
+                "received": {
+                    "name": "received",
                     "description": "How much money has the requestor received.",
                     "type": "number",
                     "usedInResponses": true,
@@ -6996,8 +7033,8 @@
                     "example": "https://pay.transferwise.com/SE34TGSA",
                     "format": "string"
                 },
-                "createdTime": {
-                    "name": "createdTime",
+                "created": {
+                    "name": "created",
                     "description": "The date on which this transfer request was created.",
                     "type": "string",
                     "usedInResponses": true,
@@ -7007,25 +7044,13 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
-                },
-                "createdByUser": {
-                    "name": "createdByUser",
-                    "description": "The user requesting the payment",
-                    "type": "integer",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "format": "int64"
                 }
             },
             "required": [
-                "accountId",
-                "amount",
+                "account",
                 "email",
-                "message"
+                "message",
+                "amount"
             ],
             "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer.  The currency",
             "id": "transfer-request",
