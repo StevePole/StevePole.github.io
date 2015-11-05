@@ -948,6 +948,16 @@
                             "paramType": "body"
                         },
                         {
+                            "name": "source",
+                            "description": "Optional default source currency.",
+                            "type": "integer",
+                            "expectedInResponses": true,
+                            "required": true,
+                            "idModel": "currency",
+                            "format": "id",
+                            "paramType": "body"
+                        },
+                        {
                             "name": "amount",
                             "description": "The amount the user is requesting.",
                             "type": "number",
@@ -2237,7 +2247,7 @@
                     "type": "array",
                     "parameters": [
                         {
-                            "name": "quoteId",
+                            "name": "quote",
                             "description": "The quote the user generated.",
                             "required": true,
                             "type": "integer",
@@ -2245,8 +2255,8 @@
                             "format": "int64"
                         },
                         {
-                            "name": "profileId",
-                            "description": "The profile you wish to use for the transfer.",
+                            "name": "business",
+                            "description": "Supply a business id to get the verification documents for that business.",
                             "required": true,
                             "type": "integer",
                             "paramType": "query",
@@ -2333,12 +2343,12 @@
                             "paramType": "body"
                         },
                         {
-                            "name": "profileId",
-                            "description": "The profile asscoiated with this document",
+                            "name": "business",
+                            "description": "(optional) The business associated with this document",
                             "type": "integer",
                             "expectedInResponses": true,
-                            "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
@@ -2491,18 +2501,6 @@
                             "format": "string"
                         },
                         {
-                            "name": "key",
-                            "description": "The key for this data, this key is used to update the associated profile.",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "enum": [
-                                "passport"
-                            ],
-                            "format": "string",
-                            "paramType": "body"
-                        },
-                        {
                             "name": "Version",
                             "description": "Optional value to reference earlier versions of the API.",
                             "type": "integer",
@@ -2566,18 +2564,6 @@
                             "type": "string",
                             "paramType": "path",
                             "format": "string"
-                        },
-                        {
-                            "name": "key",
-                            "description": "The key for this data, this key is used to update the associated profile.",
-                            "type": "string",
-                            "expectedInResponses": true,
-                            "required": true,
-                            "enum": [
-                                "passport"
-                            ],
-                            "format": "string",
-                            "paramType": "body"
                         },
                         {
                             "name": "Version",
@@ -2929,7 +2915,7 @@
                         },
                         {
                             "name": "date",
-                            "description": "Get the rates on a specific dates, defaults to now.",
+                            "description": "Get the rates on a specific date and time, defaults to now.",
                             "required": false,
                             "type": "string",
                             "paramType": "query",
@@ -3527,10 +3513,10 @@
                             "name": "amount",
                             "description": "Filter the payment methods to those valid for specific amount.",
                             "required": false,
-                            "type": "string",
+                            "type": "number",
                             "paramType": "query",
-                            "example": "1000",
-                            "format": "date-time"
+                            "example": 1000.5,
+                            "format": "double"
                         },
                         {
                             "name": "Version",
@@ -4337,29 +4323,31 @@
                         {
                             "name": "id",
                             "description": "The id of the model.",
-                            "type": "string",
+                            "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
                             "isId": true,
-                            "format": "string",
+                            "format": "int64",
                             "paramType": "body"
                         },
                         {
-                            "name": "userId",
+                            "name": "user",
                             "description": "Associated user",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
-                            "name": "companyId",
-                            "description": "Associated company",
+                            "name": "business",
+                            "description": "Associated business",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
@@ -4436,29 +4424,31 @@
                         {
                             "name": "id",
                             "description": "The id of the model.",
-                            "type": "string",
+                            "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
                             "isId": true,
-                            "format": "string",
+                            "format": "int64",
                             "paramType": "body"
                         },
                         {
-                            "name": "userId",
+                            "name": "user",
                             "description": "Associated user",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
-                            "name": "companyId",
-                            "description": "Associated company",
+                            "name": "business",
+                            "description": "Associated business",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
@@ -4532,29 +4522,31 @@
                         {
                             "name": "id",
                             "description": "The id of the model.",
-                            "type": "string",
+                            "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
                             "isId": true,
-                            "format": "string",
+                            "format": "int64",
                             "paramType": "body"
                         },
                         {
-                            "name": "userId",
+                            "name": "user",
                             "description": "Associated user",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
-                            "name": "companyId",
-                            "description": "Associated company",
+                            "name": "business",
+                            "description": "Associated business",
                             "type": "integer",
                             "expectedInResponses": true,
                             "required": true,
-                            "format": "int64",
+                            "format": "id",
+                            "idModel": "business",
                             "paramType": "body"
                         },
                         {
@@ -4690,6 +4682,91 @@
             "description": "This endpoint provides information about the current user.",
             "parentModel": "user",
             "pathUsesChildId": false
+        },
+        {
+            "path": "/delivery-estimates",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "delivery-estimate",
+                    "parameters": [
+                        {
+                            "name": "source",
+                            "description": "The source currency",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string"
+                        },
+                        {
+                            "name": "target",
+                            "description": "The target currency",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string"
+                        },
+                        {
+                            "name": "payInMethod",
+                            "description": "The pay in method",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string"
+                        },
+                        {
+                            "name": "Version",
+                            "description": "Optional value to reference earlier versions of the API.",
+                            "type": "integer",
+                            "paramType": "header",
+                            "example": 0,
+                            "format": "int32",
+                            "global": true
+                        },
+                        {
+                            "name": "Accept",
+                            "description": "The response format, defaults to JSON.",
+                            "type": "string",
+                            "enum": [
+                                "application/json",
+                                "application/xml"
+                            ],
+                            "paramType": "header",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "jsonp",
+                            "description": "Indicates the server should respond in JSONP format, the value should be the name of the callback.",
+                            "type": "string",
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        },
+                        {
+                            "name": "method",
+                            "description": "Some browsers do not support certain HTTP methods (e.g. PUT, PATCH and DELETE), this optional parameter enables you to use a POST request but ask the server to treat the request as a PUT, PATCH or DELETE.",
+                            "type": "string",
+                            "enum": [
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "paramType": "query",
+                            "format": "string",
+                            "global": true
+                        }
+                    ],
+                    "responseMessages": [],
+                    "summary": "Get the collection.",
+                    "notes": "",
+                    "nickname": "",
+                    "requiresAuth": true,
+                    "$ref": "delivery-estimate"
+                }
+            ],
+            "description": "Interact with the list of resources.",
+            "parentModel": "delivery-estimate"
         }
     ],
     "models": {
@@ -5603,17 +5680,18 @@
                     "requiredPut": false,
                     "format": "string"
                 },
-                "profileId": {
-                    "name": "profileId",
-                    "description": "The profile asscoiated with this document",
+                "business": {
+                    "name": "business",
+                    "description": "(optional) The business associated with this document",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
                     "usedInPuts": false,
-                    "required": true,
+                    "required": false,
                     "requiredPut": false,
-                    "format": "int64"
+                    "format": "id",
+                    "idModel": "business"
                 },
                 "key": {
                     "name": "key",
@@ -5622,9 +5700,9 @@
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
-                    "usedInPuts": true,
+                    "usedInPuts": false,
                     "required": true,
-                    "requiredPut": true,
+                    "requiredPut": false,
                     "enum": [
                         "passport"
                     ],
@@ -5633,7 +5711,6 @@
             },
             "required": [
                 "document",
-                "profileId",
                 "key"
             ],
             "id": "verification",
@@ -6304,6 +6381,20 @@
                     "format": "id",
                     "idModel": "country"
                 },
+                "sourceCurrency": {
+                    "name": "sourceCurrency",
+                    "description": "The source currency, iso4217 3-digit currency code.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "us",
+                    "idModel": "currency",
+                    "format": "id"
+                },
                 "targetCountry": {
                     "name": "targetCountry",
                     "description": "The iso3166 2 digit code for the target country.",
@@ -6318,6 +6409,156 @@
                     "format": "id",
                     "idModel": "country"
                 },
+                "targetCurrency": {
+                    "name": "targetCurrency",
+                    "description": "The target currency, iso4217 3-digit currency code.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "gbp",
+                    "idModel": "currency",
+                    "format": "id"
+                },
+                "minSource": {
+                    "name": "minSource",
+                    "description": "The minimum amount of source currency for fixed source transfers.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 10,
+                    "format": "double"
+                },
+                "maxSource": {
+                    "name": "maxSource",
+                    "description": "The maximum amount of source currency for fixed source transfers.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 1000000,
+                    "format": "double"
+                },
+                "minTarget": {
+                    "name": "minTarget",
+                    "description": "The minimum amount of target currency for fixed target transfers.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 10,
+                    "format": "double"
+                },
+                "maxTarget": {
+                    "name": "maxTarget",
+                    "description": "The maximum amount of target currency for fixed target transfers.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 1000000,
+                    "format": "double"
+                },
+                "payInMethods": {
+                    "name": "payInMethods",
+                    "description": "The methods available to pay in on this route.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "ADYEN",
+                        "STRIPE",
+                        "TRANSFER"
+                    ],
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "payOutMethods": {
+                    "name": "payOutMethods",
+                    "description": "The methods available for us to pay out.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "IBAN",
+                        "EMAIL"
+                    ],
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "recipientRequirements": {
+                    "name": "recipientRequirements",
+                    "description": "Additonal requirments for recieving accounts",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "BIC",
+                        "EMAIL"
+                    ],
+                    "items": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                },
+                "referenceAllowed": {
+                    "name": "referenceAllowed",
+                    "description": "Can the payer supply a payment reference.",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                },
+                "referenceMaxLength": {
+                    "name": "referenceMaxLength",
+                    "description": "The maximum allowable length of a payment reference.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 10,
+                    "format": "int32"
+                },
                 "default": {
                     "name": "default",
                     "description": "Is this the default route for the current user.",
@@ -6331,21 +6572,8 @@
                     "example": true,
                     "format": "boolean"
                 },
-                "typicalFeePercentage": {
-                    "name": "typicalFeePercentage",
-                    "description": "The typical fee charges on this route.",
-                    "type": "number",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": 0.005,
-                    "format": "double"
-                },
-                "typicalDuration": {
-                    "name": "typicalDuration",
+                "deliveryEstimate": {
+                    "name": "deliveryEstimate",
                     "description": "The typical duration of a transfer in hours",
                     "type": "integer",
                     "usedInResponses": true,
@@ -6356,15 +6584,41 @@
                     "requiredPut": true,
                     "example": 4,
                     "format": "int32"
+                },
+                "fees": {
+                    "name": "fees",
+                    "description": "The fees applicable on this route.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "items": {
+                        "type": "fee-range",
+                        "$ref": "fee-range"
+                    }
                 }
             },
             "required": [
                 "id",
                 "sourceCountry",
+                "sourceCurrency",
                 "targetCountry",
+                "targetCurrency",
+                "minSource",
+                "maxSource",
+                "minTarget",
+                "maxTarget",
+                "payInMethods",
+                "payOutMethods",
+                "recipientRequirements",
+                "referenceAllowed",
+                "referenceMaxLength",
                 "default",
-                "typicalFeePercentage",
-                "typicalDuration"
+                "deliveryEstimate",
+                "fees"
             ],
             "notes": "Routes are specific country/currency corridors for which we can perform transfers.  Routes are not always available in both directions.",
             "id": "route",
@@ -6807,7 +7061,7 @@
                 "id": {
                     "name": "id",
                     "description": "The id of the model.",
-                    "type": "string",
+                    "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
                     "usedInPosts": true,
@@ -6815,11 +7069,11 @@
                     "required": true,
                     "requiredPut": true,
                     "isId": true,
-                    "example": "345",
-                    "format": "string"
+                    "example": 345,
+                    "format": "int64"
                 },
-                "userId": {
-                    "name": "userId",
+                "user": {
+                    "name": "user",
                     "description": "Associated user",
                     "type": "integer",
                     "usedInResponses": true,
@@ -6829,11 +7083,12 @@
                     "required": true,
                     "requiredPut": true,
                     "example": 3456,
-                    "format": "int64"
+                    "format": "id",
+                    "idModel": "business"
                 },
-                "companyId": {
-                    "name": "companyId",
-                    "description": "Associated company",
+                "business": {
+                    "name": "business",
+                    "description": "Associated business",
                     "type": "integer",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6842,7 +7097,8 @@
                     "required": true,
                     "requiredPut": true,
                     "example": 3456,
-                    "format": "int64"
+                    "format": "id",
+                    "idModel": "business"
                 },
                 "role": {
                     "name": "role",
@@ -6863,8 +7119,8 @@
             },
             "required": [
                 "id",
-                "userId",
-                "companyId",
+                "user",
+                "business",
                 "role"
             ],
             "id": "role",
@@ -6926,6 +7182,32 @@
                     "example": "Please can you pay me the £500 you owe me?",
                     "format": "string"
                 },
+                "source": {
+                    "name": "source",
+                    "description": "Optional default source currency.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "idModel": "currency",
+                    "format": "id"
+                },
+                "target": {
+                    "name": "target",
+                    "description": "The target currency in which the amount is specified, the currency will be determined automatically based on the supplied account.  Iso4217 3-digit currency code.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "usd",
+                    "format": "string"
+                },
                 "amount": {
                     "name": "amount",
                     "description": "The amount the user is requesting.",
@@ -6938,19 +7220,6 @@
                     "requiredPut": false,
                     "example": 500.5,
                     "format": "double"
-                },
-                "currency": {
-                    "name": "currency",
-                    "description": "The currency in which the amount is specified, the currency will be determined automatically based on the supplied account.  Iso4217 3-digit currency code.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": "usd",
-                    "format": "string"
                 },
                 "user": {
                     "name": "user",
@@ -7044,12 +7313,25 @@
                     "required": false,
                     "requiredPut": false,
                     "format": "date-time"
+                },
+                "requester": {
+                    "name": "requester",
+                    "description": "The name of the person requesting this transfer.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "format": "string"
                 }
             },
             "required": [
                 "account",
                 "email",
                 "message",
+                "source",
                 "amount"
             ],
             "notes": "A request for payment, mad by an existing TransferWise user.  The specified email address will be message to ask for payment, which will be setup as a regular transfer.  The currency",
@@ -7270,6 +7552,138 @@
             "notes": "Description of an problem with a specific property.  The path indicates how to find the problematic property in the supplied JSON object.",
             "id": "property-error",
             "isEnvelope": false
+        },
+        "fee-range": {
+            "name": "fee-range",
+            "properties": {
+                "min": {
+                    "name": "min",
+                    "description": "The minimum amount at which this fee applies.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "10",
+                    "format": "string"
+                },
+                "max": {
+                    "name": "max",
+                    "description": "The maximum amount at which this fee applies.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "1000000",
+                    "format": "string"
+                },
+                "fee": {
+                    "name": "fee",
+                    "description": "Either the fee amount or the percentage of the amount.",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 0.005,
+                    "format": "double"
+                },
+                "feeType": {
+                    "name": "feeType",
+                    "description": "The type of fee, either a fixed amount or a percentage of the source amount.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "enum": [
+                        "percentage",
+                        "fixed"
+                    ],
+                    "format": "string"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A localised description of the reason for this fee.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "TransferWise's fee for processing this transfer.",
+                    "format": "string"
+                }
+            },
+            "required": [
+                "min",
+                "max",
+                "fee",
+                "feeType",
+                "description"
+            ],
+            "id": "fee-range",
+            "isEnvelope": false
+        },
+        "delivery-estimate": {
+            "name": "delivery-estimate",
+            "properties": {
+                "id": {
+                    "name": "id",
+                    "description": "The id of the model.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "format": "string"
+                },
+                "90thPercentile": {
+                    "name": "90thPercentile",
+                    "description": "Expected time in hours for fastest 90 percent of transfers.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 3,
+                    "format": "int32"
+                },
+                "99thPercentile": {
+                    "name": "99thPercentile",
+                    "description": "Expected time in hours for fastest 99 percent of transfers.",
+                    "type": "integer",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": 12,
+                    "format": "int32"
+                }
+            },
+            "required": [
+                "id",
+                "90thPercentile",
+                "99thPercentile"
+            ]
         }
     },
     "jsonp": {
