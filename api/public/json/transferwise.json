@@ -4766,7 +4766,8 @@
                 }
             ],
             "description": "Interact with the list of resources.",
-            "parentModel": "delivery-estimate"
+            "parentModel": "delivery-estimate",
+            "pathUsesChildId": false
         }
     ],
     "models": {
@@ -5903,7 +5904,7 @@
                     "required": true,
                     "requiredPut": true,
                     "isId": true,
-                    "example": "firstName",
+                    "example": "iban",
                     "format": "string"
                 },
                 "type": {
@@ -5924,57 +5925,18 @@
                     ],
                     "format": "string"
                 },
-                "name": {
-                    "name": "name",
-                    "description": "A localise name for this property",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": "First Name",
-                    "format": "string"
-                },
-                "description": {
-                    "name": "description",
-                    "description": "A localised description of the property",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": "Your first name",
-                    "format": "string"
-                },
-                "regexp": {
-                    "name": "regexp",
-                    "description": "A regular expression that the value must satisfy.  Only for text and number types.",
-                    "type": "string",
+                "required": {
+                    "name": "required",
+                    "description": "Most fields are required by default, but occasionally a part of a group is optional, e.g. address2 in an address group may be desirable to show, but optional from a validation perspective.",
+                    "type": "boolean",
                     "usedInResponses": true,
                     "expectedInResponses": false,
                     "usedInPosts": true,
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": "/^[a-z]*$/",
-                    "format": "string"
-                },
-                "validationDescription": {
-                    "name": "validationDescription",
-                    "description": "A localised human readable description of the validation.",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": false,
-                    "usedInPosts": true,
-                    "usedInPuts": true,
-                    "required": true,
-                    "requiredPut": true,
-                    "example": "Lowercase letters",
-                    "format": "string"
+                    "example": true,
+                    "format": "boolean"
                 },
                 "values": {
                     "name": "values",
@@ -5991,18 +5953,33 @@
                         "$ref": "value-name"
                     }
                 },
-                "optional": {
-                    "name": "optional",
-                    "description": "Most fields are required by default, but occasionally a part of a group is optional, e.g. address2 in an address group may be desirable to show, but optional from a validation perspective.",
-                    "type": "boolean",
+                "valuesAsync": {
+                    "name": "valuesAsync",
+                    "description": "If there is a longer list of allowed values these may be fetched asynchronously, this value is the URL to query",
+                    "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": false,
                     "usedInPosts": true,
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": false,
-                    "format": "boolean"
+                    "example": "https://api.transferwise.com/value-lists/ibans",
+                    "format": "string"
+                },
+                "valuesAsyncParams": {
+                    "name": "valuesAsyncParams",
+                    "description": "Parameters that may be sent to filter the list of values returned asynchronously",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "items": {
+                        "type": "asyncParam",
+                        "$ref": "asyncParam"
+                    }
                 },
                 "minLength": {
                     "name": "minLength",
@@ -6014,7 +5991,7 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": 6,
+                    "example": 12,
                     "format": "int32"
                 },
                 "maxLength": {
@@ -6027,12 +6004,12 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": 10,
+                    "example": 32,
                     "format": "int32"
                 },
-                "displayMask": {
-                    "name": "displayMask",
-                    "description": "A sequence of characters and spacers for breaking up the single value into separate input elements.  The client may choose to implement this functionality or not.",
+                "validationRegexp": {
+                    "name": "validationRegexp",
+                    "description": "A regular expression that the value must satisfy.  Only for text and number types.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": false,
@@ -6040,12 +6017,12 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
-                    "example": "**-**-**",
+                    "example": "^[0-9 A-Z]*$",
                     "format": "string"
                 },
-                "example": {
-                    "name": "example",
-                    "description": "An example value.",
+                "validationDescription": {
+                    "name": "validationDescription",
+                    "description": "A localised human readable description of the validation.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": false,
@@ -6053,7 +6030,36 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
+                    "example": "Between 12 and 32 letters and numbers.",
                     "format": "string"
+                },
+                "validationAsync": {
+                    "name": "validationAsync",
+                    "description": "Sometime a regex and min/max length is not sufficient to validate a property and it must be checked on the server.  This is the URL to send the value to be validated.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "https://api.transferwise.com/validators/iban",
+                    "format": "string"
+                },
+                "validationAsyncParams": {
+                    "name": "validationAsyncParams",
+                    "description": "Parameters to send when validating this value, normally this will just be the value the user has entered.",
+                    "type": "array",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "items": {
+                        "type": "asyncParam",
+                        "$ref": "asyncParam"
+                    }
                 },
                 "default": {
                     "name": "default",
@@ -6067,9 +6073,9 @@
                     "requiredPut": true,
                     "format": "string"
                 },
-                "image": {
-                    "name": "image",
-                    "description": "The URL of an image which helps visualise the field.",
+                "example": {
+                    "name": "example",
+                    "description": "An example value that could be helpful to show the user what this normally looks like.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": false,
@@ -6077,35 +6083,50 @@
                     "usedInPuts": true,
                     "required": true,
                     "requiredPut": true,
+                    "format": "string",
+                    "example": "GB29 RBOS 6016 1331 9268 19"
+                },
+                "displayMask": {
+                    "name": "displayMask",
+                    "description": "A sequence of characters and spacers for breaking up the single value into separate input elements.  The client may choose to implement this functionality or not.",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": false,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "**-**-**",
                     "format": "string"
                 }
             },
             "required": [
                 "key",
                 "type",
-                "name",
-                "description",
-                "regexp",
-                "validationDescription",
+                "required",
                 "values",
-                "optional",
+                "valuesAsync",
+                "valuesAsyncParams",
                 "minLength",
                 "maxLength",
-                "displayMask",
-                "example",
+                "validationRegexp",
+                "validationDescription",
+                "validationAsync",
+                "validationAsyncParams",
                 "default",
-                "image"
+                "example",
+                "displayMask"
             ],
-            "notes": "Required verifications are pieces of information that we need added to the users profile to be able to create a transfer using their chosen quote (route, amount, payment method).  This may be additional information like a users address, or it may be a document that we need to prove the users identity.\n\nREQUIRES FURTHER CONSIDERATION.",
+            "notes": "Pieces of information that we need to create dynamics objects like accounts, which vary depending on the country and/or currency.  The response contains the key that must be used when creating the actual object.\n\nFor example, if creating a EURO account you may be asked for an IBAN, if the key is 'iban', you would be expected to POST {currency: \"EUR\", iban: <user input>, ...} to the /accounts endpoint.  You must supply all of the required fields to successfully create the object.",
             "id": "field-required",
             "isEnvelope": false
         },
         "field-required-group": {
             "name": "field-required-group",
             "properties": {
-                "key": {
-                    "name": "key",
-                    "description": "The key for this group of fields",
+                "name": {
+                    "name": "name",
+                    "description": "A localised name for the group of fields, suitable to be used as a label in a form.",
                     "type": "string",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6114,12 +6135,25 @@
                     "required": false,
                     "requiredPut": false,
                     "isId": true,
-                    "example": "address",
+                    "example": "IBAN number",
+                    "format": "string"
+                },
+                "description": {
+                    "name": "description",
+                    "description": "A longer localised description that may be suitable for tooltips or more verbose forms..",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "The IBAN number is the long alpha numeric code for your bank account.",
                     "format": "string"
                 },
                 "group": {
                     "name": "group",
-                    "description": "The fields in this group",
+                    "description": "The fields in this group, normally there is just one entry in a group, but on occasions there could several",
                     "type": "array",
                     "usedInResponses": true,
                     "expectedInResponses": true,
@@ -6131,39 +6165,10 @@
                         "type": "field-required",
                         "$ref": "field-required"
                     }
-                },
-                "alternatives": {
-                    "name": "alternatives",
-                    "description": "The keys of alternative groups that could be completed instead of this group.",
-                    "type": "array",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": "ssn",
-                    "items": {
-                        "type": "string",
-                        "format": "string"
-                    }
-                },
-                "name": {
-                    "name": "name",
-                    "description": "A localised name for the group of fields",
-                    "type": "string",
-                    "usedInResponses": true,
-                    "expectedInResponses": true,
-                    "usedInPosts": false,
-                    "usedInPuts": false,
-                    "required": false,
-                    "requiredPut": false,
-                    "example": "Address details",
-                    "format": "string"
                 }
             },
             "required": [],
-            "notes": "A group of fields which must be added to the users profile.  Groups can have alternatives where one group OR the other may be supplied.",
+            "notes": "Pieces of information that we need to create dynamics objects like accounts, which vary depending on the country and/or currency.  The response contains the key that must be used when creating the actual object.\n\nFor example, if creating a EURO account you may be asked for an IBAN, if the key is 'iban', you would be expected to POST {currency: \"EUR\", iban: <user input>, ...} to the /accounts endpoint.  You must supply all of the required fields to successfully create the object.",
             "id": "field-required-group",
             "isEnvelope": false
         },
@@ -6847,6 +6852,32 @@
                     "requiredPut": false,
                     "idModel": "user",
                     "format": "id"
+                },
+                "transferFee": {
+                    "name": "transferFee",
+                    "description": "Fee for the transfer",
+                    "type": "number",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": 10,
+                    "format": "double"
+                },
+                "transferFeeRate": {
+                    "name": "transferFeeRate",
+                    "description": "Rate of the fee",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": false,
+                    "usedInPuts": false,
+                    "required": false,
+                    "requiredPut": false,
+                    "example": "0.5",
+                    "format": "string"
                 }
             },
             "required": [
@@ -7683,7 +7714,61 @@
                 "id",
                 "90thPercentile",
                 "99thPercentile"
-            ]
+            ],
+            "id": "delivery-estimate",
+            "isEnvelope": false
+        },
+        "asyncParam": {
+            "name": "asyncParam",
+            "properties": {
+                "key": {
+                    "name": "key",
+                    "description": "The object key to send",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "isId": true,
+                    "example": "iban",
+                    "format": "string"
+                },
+                "parameterName": {
+                    "name": "parameterName",
+                    "description": "Tha parameter name to use when sending the value",
+                    "type": "string",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": "value",
+                    "format": "string"
+                },
+                "required": {
+                    "name": "required",
+                    "description": "Is this parameter required",
+                    "type": "boolean",
+                    "usedInResponses": true,
+                    "expectedInResponses": true,
+                    "usedInPosts": true,
+                    "usedInPuts": true,
+                    "required": true,
+                    "requiredPut": true,
+                    "example": true,
+                    "format": "boolean"
+                }
+            },
+            "required": [
+                "key",
+                "parameterName",
+                "required"
+            ],
+            "id": "asyncParam",
+            "isEnvelope": false
         }
     },
     "jsonp": {

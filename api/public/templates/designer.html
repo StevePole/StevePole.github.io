@@ -47,7 +47,7 @@
 
     <div class="row">
         <div class="col-md-7">
-            <textarea id="api_spec" class="form-control"></textarea>
+            <textarea id="api_spec" class="form-control" ng-bind="vm.inputJson"></textarea>
 
             <div class="btn-toolbar">
                 <input type="button"
@@ -118,9 +118,7 @@
     <diff-report></diff-report>
 
     <pre>
-        vm.JSON: {{vm.json.basePath | json}}
-
-        JSON: {{json.basePath | json}}
+vm.json.basePath: {{vm.json.basePath}} 
     </pre>
 
     <meta-design

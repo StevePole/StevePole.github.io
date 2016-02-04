@@ -1,10 +1,9 @@
 {
   "name": "animate.css",
-  "version": "3.3.0",
   "main": "./animate.css",
   "ignore": [
     ".*",
-    "src",
+    "source",
     "*.yml",
     "Gemfile",
     "Gemfile.lock",

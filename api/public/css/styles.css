@@ -24,6 +24,9 @@ footer {
 #api_spec {
   height: 300px;
 }
+.diff-json {
+  height: 450px !important;
+}
 td .close {
   margin-left: 0;
   margin-top: 4px;
